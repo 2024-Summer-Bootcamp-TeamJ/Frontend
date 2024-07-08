@@ -1,13 +1,14 @@
 import React from 'react';
-import './App.css';
-import FirstPage from './pages/FirstPage';
+import ChatBubble from './components/ChatBubble/ChatBubble';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <FirstPage />
+      <header className="App-header">
+        <ChatBubble />
+      </header>
     </div>
   );
-}
+};
 
 export default App;
