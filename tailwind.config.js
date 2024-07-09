@@ -28,6 +28,7 @@ module.exports = {
         dateColor: "#FCFEF0",
         dateTextColor: "#5F5151",
         dateHoverColor: "#FFCFC3",
+        postboxNameColor: "#885050",
       },
       borderRadius: {
         "4xl": "2rem",

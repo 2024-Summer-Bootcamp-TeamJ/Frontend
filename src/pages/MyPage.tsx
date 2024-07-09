@@ -30,9 +30,14 @@ const MyPage: React.FC = () => {
         </Link>
       </div>
       <div className="flex space-x-6">
-        <div className="flex flex-col justify-end">
+        <div className="flex flex-col justify-end relative">
           <img src={PostBox} alt="PostBox" className="w-96 mb-10" />
-        </div>{" "}
+          <div className="absolute inset-0 flex items-center justify-center mt-44">
+            <span className="text-4xl text-postboxNameColor font-MoonFlower">
+              Wooni's
+            </span>
+          </div>
+        </div>
         <div
           style={{ width: "48rem", height: "36rem" }}
           className="bg-lettersColor p-6 rounded-100px shadow-lg "
