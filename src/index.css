@@ -1,8 +1,11 @@
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@font-face {
+  font-family: "NoticiaText";
+  src: url("assets/fonts/NoticiaText.ttf");
+}
 
 html,
 body,

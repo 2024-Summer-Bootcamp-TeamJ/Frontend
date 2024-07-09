@@ -13,10 +13,14 @@ module.exports = {
       },
       colors: {
         lettersColor: "#EEF0E2",
+        dateColor: "#FCFEF0",
       },
       borderRadius: {
         "4xl": "2rem",
         "100px": "100px",
+      },
+      fontFamily: {
+        NoticiaText: ["NoticiaText"],
       },
     },
   },
