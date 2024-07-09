@@ -15,6 +15,7 @@ module.exports = {
         lettersColor: "#EEF0E2",
         dateColor: "#FCFEF0",
         dateTextColor: "#5F5151",
+        dateHoverColor: "#FFCFC3",
       },
       borderRadius: {
         "4xl": "2rem",

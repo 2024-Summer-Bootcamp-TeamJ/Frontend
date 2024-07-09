@@ -8,6 +8,8 @@ import letterButton from "../assets/images/letterButton.svg";
 import React, { useState } from "react";
 
 const MyPage: React.FC = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-blue-100 relative"
@@ -33,22 +35,22 @@ const MyPage: React.FC = () => {
             <img src={letterButton} alt="Letter Button" className="w-60" />
           </div>
           <div className="flex flex-col items-center space-y-4">
-            <div className="flex items-center space-x-2 p-2 bg-gray-100 rounded-md w-full">
-              <img src={IconMouse} alt="Mouse Icon" className="w-6 h-6" />
-              <img src={IconLetter} alt="Letter Icon" className="w-6 h-6" />
-              <span className="text-gray-700">2024.07.06</span>
-            </div>
             {/* 동일한 요소들을 여러 개 추가 */}
             {[...Array(5)].map((_, index) => (
               <div
                 key={index}
-                className="flex items-center space-x-2 p-2 bg-dateColor rounded-3xl w-full h-16"
+                className="flex items-center space-x-2 p-2 bg-dateColor rounded-3xl w-full h-16 hover:bg-dateHoverColor transition-colors duration-300"
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
               >
                 <img
                   src={IconLetter}
                   alt="Letter Icon"
                   className="w-16 transform translate-y-1"
                 />
+                {hoveredIndex === index && (
+                  <img src={IconMouse} alt="Mouse Icon" className="w-16" />
+                )}
                 <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
                   2024.07.06
                 </span>
