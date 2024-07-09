@@ -6,7 +6,7 @@ const CharacterImage = () => {
   console.log('CharacterImage theme:', theme);
 
   return (
-    <div className="w-[100px] h-[100px] rotate-[12deg]">
+    <div className="w-[200px] h-[200px] rotate-[12deg]">
       <img src={theme.characterImage} alt="캐릭터" className="w-full h-full" />
     </div>
   );

@@ -1,38 +1,33 @@
 import React from 'react';
-import MentorChatBubble from './components/MentorChatBubble/ChatBubble';
-import MyChatBubble from './components/MyChatBubble/MyChatBubble';
-import { ThemeProvider, useTheme } from './ThemeContext';
-import { themes } from './theme';
-
-const ThemeSelector = () => {
-  const { setTheme, theme } = useTheme();
-
-  const handleThemeChange = (newTheme: typeof themes.beak) => {
-    console.log('Changing theme to:', newTheme);
-    setTheme(newTheme);
-    console.log('Current theme:', theme);
-  };
-
-  return (
-    <div>
-      <button onClick={() => handleThemeChange(themes.oh)}>oh</button>
-      <button onClick={() => handleThemeChange(themes.beak)}>beak</button>
-      <button onClick={() => handleThemeChange(themes.shin)}>shin</button>
-    </div>
-  );
-};
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import ChattingPageBaek from './pages/ChattingPage/ChattingPage_Baek';
+import ChattingPageOh from './pages/ChattingPage/ChattingPage_Oh';
+import ChattingPageShin from './pages/ChattingPage/ChattingPage_Shin';
 
 const App = () => {
   return (
-    <ThemeProvider>
+    <Router>
       <div className="App">
-        <header className="App-header">
-          <ThemeSelector />
-          <MentorChatBubble />
-          <MyChatBubble />
-        </header>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/baek">Baek</Link>
+            </li>
+            <li>
+              <Link to="/oh">Oh</Link>
+            </li>
+            <li>
+              <Link to="/shin">Shin</Link>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route path="/baek" element={<ChattingPageBaek />} />
+          <Route path="/oh" element={<ChattingPageOh />} />
+          <Route path="/shin" element={<ChattingPageShin />} />
+        </Routes>
       </div>
-    </ThemeProvider>
+    </Router>
   );
 };
 

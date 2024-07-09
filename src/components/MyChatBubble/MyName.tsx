@@ -7,7 +7,7 @@ const MyName = () => {
 
   return (
     <div
-      className="w-[110px] h-[35px] rounded-[20px] rotate-[6deg] flex justify-center items-center text-sm"
+      className="w-[120px] h-[40px] rounded-[20px] rotate-[6deg] flex justify-center items-center text-sm"
       style={{ backgroundColor: theme.mentorNameBg }}
     >
       멘토

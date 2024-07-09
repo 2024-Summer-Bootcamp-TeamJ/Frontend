@@ -15,10 +15,11 @@ export const useTheme = () => useContext(ThemeContext);
 
 type ThemeProviderProps = {
   children: ReactNode;
+  initialTheme?: Theme;
 };
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(themes.oh);
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, initialTheme = themes.oh }) => {
+  const [theme, setTheme] = useState<Theme>(initialTheme);
 
   useEffect(() => {
     console.log('Theme updated:', theme);
