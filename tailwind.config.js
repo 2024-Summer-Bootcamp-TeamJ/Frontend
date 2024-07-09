@@ -11,6 +11,18 @@ module.exports = {
         192: "48rem", // 192 단위로 48rem (768px)
         256: "64rem", // 256 단위로 64rem (1024px)
       },
+      width: {
+        104: "26rem", // w-104
+        112: "28rem", // w-112
+        120: "30rem", // w-120
+        128: "32rem", // w-128
+        136: "34rem", // w-136
+        144: "36rem", // w-144
+        152: "38rem", // w-152
+        160: "40rem", // w-160
+        168: "42rem", // w-168
+        176: "44rem", // w-176
+      },
       colors: {
         lettersColor: "#EEF0E2",
         dateColor: "#FCFEF0",

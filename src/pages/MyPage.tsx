@@ -41,12 +41,15 @@ const MyPage: React.FC = () => {
           <div className="flex justify-center mb-4">
             <img src={letterButton} alt="Letter Button" className="w-60" />
           </div>
-          <div className="flex flex-col items-center space-y-4">
+          <div
+            className="flex flex-col items-center space-y-4 overflow-y-auto"
+            style={{ maxHeight: "24rem" }} // 이 높이 설정을 조정할 수 있습니다.
+          >
             {/* 동일한 요소들을 여러 개 추가 */}
-            {[...Array(5)].map((_, index) => (
+            {[...Array(10)].map((_, index) => (
               <div
                 key={index}
-                className="flex items-center space-x-2 p-2 bg-dateColor rounded-3xl w-full h-16 hover:bg-dateHoverColor transition-colors duration-300"
+                className="flex items-center space-x-2 p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
