@@ -42,7 +42,7 @@ const MyPage: React.FC = () => {
             <img src={letterButton} alt="Letter Button" className="w-60" />
           </div>
           <div
-            className="flex flex-col items-center space-y-4 overflow-y-auto"
+            className="flex flex-col items-center space-y-4 overflow-y-auto scrollbar"
             style={{ maxHeight: "24rem" }} // 이 높이 설정을 조정할 수 있습니다.
           >
             {/* 동일한 요소들을 여러 개 추가 */}
