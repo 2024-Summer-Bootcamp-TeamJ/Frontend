@@ -42,10 +42,14 @@ const MyPage: React.FC = () => {
             {[...Array(5)].map((_, index) => (
               <div
                 key={index}
-                className="flex items-center space-x-2 p-2 bg-gray-100 rounded-md w-full"
+                className="flex items-center space-x-2 p-2 bg-dateColor rounded-3xl w-full h-16"
               >
-                <img src={IconLetter} alt="Letter Icon" className="w-6 h-6" />
-                <span className="text-gray-700 font-['NoticiaText']">
+                <img
+                  src={IconLetter}
+                  alt="Letter Icon"
+                  className="w-16 transform translate-y-1"
+                />
+                <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
                   2024.07.06
                 </span>
               </div>
