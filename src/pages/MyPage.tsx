@@ -4,6 +4,12 @@ import IconToHome from "../assets/images/IconToHome.svg";
 import PostBox from "../assets/images/PostBox.svg";
 import MyPageBackground from "../assets/images/MyPageBackground.svg";
 import letterButton from "../assets/images/letterButton.svg";
+import RedButtonBaek from "../assets/images/RedButtonBaek.svg";
+import RedButtonBaekHover from "../assets/images/RedButtonBaekHover.svg";
+import RedButtonShinHover from "../assets/images/RedButtonShinHover.svg";
+import RedButtonShin from "../assets/images/RedButtonShin.svg";
+import RedButtonOhHover from "../assets/images/RedButtonOhHover.svg";
+import RedButtonOh from "../assets/images/RedButtonOh.svg";
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
