@@ -14,6 +14,10 @@ module.exports = {
       colors: {
         lettersColor: "#EEF0E2",
       },
+      borderRadius: {
+        "4xl": "2rem",
+        "100px": "100px",
+      },
     },
   },
   plugins: [],

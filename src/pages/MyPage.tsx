@@ -19,11 +19,13 @@ const MyPage: React.FC = () => {
       <div className="absolute top-4 left-4">
         <img src={IconToHome} alt="To Home Icon" className="w-14" />
       </div>
-      <div className="flex space-x-10">
-        <img src={PostBox} alt="PostBox" className="w-80" />
+      <div className="flex space-x-6">
+        <div className="flex flex-col justify-end">
+          <img src={PostBox} alt="PostBox" className="w-96 mb-10" />
+        </div>{" "}
         <div
-          style={{ width: "48rem", height: "32rem" }}
-          className="bg-lettersColor p-6 rounded-3xl shadow-lg "
+          style={{ width: "48rem", height: "36rem" }}
+          className="bg-lettersColor p-6 rounded-100px shadow-lg "
         >
           {/* 여기 안에 필요한 내용을 추가하세요 */}
         </div>
