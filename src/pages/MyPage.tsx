@@ -49,18 +49,18 @@ const MyPage: React.FC = () => {
             {[...Array(10)].map((_, index) => (
               <div
                 key={index}
-                className="flex items-center space-x-2 p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
+                className="flex items-center  p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
+                {hoveredIndex === index && (
+                  <img src={IconMouse} alt="Mouse Icon" className="w-16" />
+                )}
                 <img
                   src={IconLetter}
                   alt="Letter Icon"
                   className="w-16 transform translate-y-1"
                 />
-                {hoveredIndex === index && (
-                  <img src={IconMouse} alt="Mouse Icon" className="w-16" />
-                )}
                 <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
                   2024.07.06
                 </span>

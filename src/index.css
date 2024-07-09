@@ -6,6 +6,10 @@
   font-family: "NoticiaText";
   src: url("assets/fonts/NoticiaText.ttf");
 }
+@font-face {
+  font-family: "MoonFlower";
+  src: url("assets/fonts/MoonFlower.ttf");
+}
 
 html,
 body,
