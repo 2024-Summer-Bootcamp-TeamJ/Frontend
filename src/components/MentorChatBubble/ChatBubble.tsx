@@ -6,13 +6,13 @@ import CharacterImage from './CharacterImage';
 const ChatBubble = () => {
   return (
     <div className="relative flex items-center">
-      <div className="absolute top-20 z-30">
+      <div className="absolute top-16 z-30 left-2">
         <MentorName />
       </div>
-      <div className="relative top-20 z-20">
+      <div className="relative flex flex-col items-center top-20 z-20 ml-[100px] right-20">
         <ChatMessage />
       </div>
-      <div className="relative right-24 top-5 z-10">
+      <div className="absolute left-60 top-5 z-10">
         <CharacterImage />
       </div>
     </div>
