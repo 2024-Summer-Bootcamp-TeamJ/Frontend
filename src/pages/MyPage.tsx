@@ -26,12 +26,18 @@ const MyPage: React.FC = () => {
             src={IconToHome}
             alt="To Home Icon"
             className="w-14 cursor-pointer"
+            draggable="false"
           />
         </Link>
       </div>
       <div className="flex space-x-6">
         <div className="flex flex-col justify-end relative">
-          <img src={PostBox} alt="PostBox" className="w-96 mb-10" />
+          <img
+            src={PostBox}
+            alt="PostBox"
+            className="w-96 mb-10"
+            draggable="false"
+          />
           <div className="absolute inset-0 flex items-center justify-center mt-44">
             <span className="text-4xl text-postboxNameColor font-MoonFlower">
               Wooni's
@@ -44,7 +50,12 @@ const MyPage: React.FC = () => {
         >
           {/* 여기 안에 필요한 내용을 추가하세요 */}
           <div className="flex justify-center mb-4">
-            <img src={letterButton} alt="Letter Button" className="w-60" />
+            <img
+              src={letterButton}
+              alt="Letter Button"
+              className="w-60"
+              draggable="false"
+            />
           </div>
           <div
             className="flex flex-col items-center space-y-4 overflow-y-auto scrollbar"
@@ -59,12 +70,18 @@ const MyPage: React.FC = () => {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 {hoveredIndex === index && (
-                  <img src={IconMouse} alt="Mouse Icon" className="w-16" />
+                  <img
+                    src={IconMouse}
+                    alt="Mouse Icon"
+                    className="w-16"
+                    draggable="false"
+                  />
                 )}
                 <img
                   src={IconLetter}
                   alt="Letter Icon"
                   className="w-16 transform translate-y-1"
+                  draggable="false"
                 />
                 <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
                   2024.07.06
