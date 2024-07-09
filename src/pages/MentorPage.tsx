@@ -9,6 +9,7 @@ import backgroundGreen from "../assets/images/backgroundGreen.svg";
 import ChoosingButtonBaek from "../assets/images/ChoosingButtonBaek.svg";
 import ChoosingButtonOh from "../assets/images/ChoosingButtonOh.svg";
 import ChoosingButtonShin from "../assets/images/ChoosingButtonShin.svg";
+import { Link } from "react-router-dom";
 
 import React, { useState } from "react";
 
@@ -87,11 +88,13 @@ const MentorPage: React.FC = () => {
         </div>
       </div>
       <div className="absolute bottom-4 right-4">
-        <img
-          src={IconToMyPage}
-          alt="마이페이지 이동 아이콘"
-          className="w-12 h-12 cursor-pointer"
-        />
+        <Link to="/mypage">
+          <img
+            src={IconToMyPage}
+            alt="마이페이지 이동 아이콘"
+            className="w-12 h-12 cursor-pointer"
+          />
+        </Link>
       </div>
     </div>
   );

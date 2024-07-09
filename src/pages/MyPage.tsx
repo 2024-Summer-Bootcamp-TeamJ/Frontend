@@ -6,6 +6,7 @@ import MyPageBackground from "../assets/images/MyPageBackground.svg";
 import letterButton from "../assets/images/letterButton.svg";
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const MyPage: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -20,7 +21,13 @@ const MyPage: React.FC = () => {
       }}
     >
       <div className="absolute top-4 left-4">
-        <img src={IconToHome} alt="To Home Icon" className="w-14" />
+        <Link to="/mentor">
+          <img
+            src={IconToHome}
+            alt="To Home Icon"
+            className="w-14 cursor-pointer"
+          />
+        </Link>
       </div>
       <div className="flex space-x-6">
         <div className="flex flex-col justify-end">
