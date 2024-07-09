@@ -47,7 +47,7 @@ const MentorPage: React.FC = () => {
             <img
               src={ChoosingButtonBaek}
               alt="선택하기 버튼 백곰원"
-              className="absolute inset-0 m-auto  w-50"
+              className="absolute inset-0 mt-144 mx-auto  w-50"
             />
           )}
         </div>
@@ -64,8 +64,7 @@ const MentorPage: React.FC = () => {
             <img
               src={ChoosingButtonOh}
               alt="선택하기 버튼 오은양"
-              className="absolute inset-0 m-auto"
-              style={{ width: "50px", height: "50px" }}
+              className="absolute inset-0 mt-144 mx-auto  w-50"
             />
           )}
         </div>
@@ -82,8 +81,7 @@ const MentorPage: React.FC = () => {
             <img
               src={ChoosingButtonShin}
               alt="선택하기 버튼 신문엽"
-              className="absolute inset-0 m-auto"
-              style={{ width: "50px", height: "50px" }}
+              className="absolute inset-0 mt-144 mx-auto  w-50"
             />
           )}
         </div>
