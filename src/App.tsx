@@ -6,6 +6,7 @@ import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
+
 import React from "react";
 import ChatBubble from "./components/ChatBubble/ChatBubble";
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </Router>
+
 
   );
 };
