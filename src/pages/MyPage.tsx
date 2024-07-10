@@ -3,20 +3,29 @@ import IconLetter from "../assets/images/IconLetter.svg";
 import IconToHome from "../assets/images/IconToHome.svg";
 import PostBox from "../assets/images/PostBox.svg";
 import MyPageBackground from "../assets/images/MyPageBackground.svg";
-import letterButton from "../assets/images/letterButton.svg";
-import RedButtonBaek from "../assets/images/RedButtonBaek.svg";
-import RedButtonBaekHover from "../assets/images/RedButtonBaekHover.svg";
-import RedButtonShinHover from "../assets/images/RedButtonShinHover.svg";
-import RedButtonShin from "../assets/images/RedButtonShin.svg";
-import RedButtonOhHover from "../assets/images/RedButtonOhHover.svg";
-import RedButtonOh from "../assets/images/RedButtonOh.svg";
+
+import redButtonBaek from "../assets/images/redButtonBaek.svg";
+import fromBaek from "../assets/images/fromBaek.svg";
+import fromShin from "../assets/images/fromShin.svg";
+import redButtonShin from "../assets/images/redButtonShin.svg";
+import fromOh from "../assets/images/fromOh.svg";
+import redButtonOh from "../assets/images/redButtonOh.svg";
+import redButtonAll from "../assets/images/redButtonAll.svg";
+import AllLetter from "../assets/images/AllLetter.svg";
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const MyPage: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+  const handleMouseEnter = (buttonName: string) => {
+    setHoveredButton(buttonName);
+  };
 
+  const handleMouseLeave = () => {
+    setHoveredButton(null);
+  };
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-blue-100 relative"
@@ -55,14 +64,89 @@ const MyPage: React.FC = () => {
           className="bg-lettersColor p-6 rounded-100px shadow-lg "
         >
           {/* 여기 안에 필요한 내용을 추가하세요 */}
-          <div className="flex justify-center mb-4">
-            <img
-              src={letterButton}
-              alt="Letter Button"
-              className="w-60"
-              draggable="false"
-            />
+          <div className="flex justify-center mb-4 space-x-[-15px]">
+            <div
+              onMouseEnter={() => handleMouseEnter("All")}
+              onMouseLeave={handleMouseLeave}
+              className="relative"
+            >
+              <img
+                src={redButtonAll}
+                alt="RedButtonAll"
+                className="w-20"
+                draggable="false"
+              />
+              {hoveredButton === "All" && (
+                <img
+                  src={AllLetter}
+                  alt="From All"
+                  className="absolute top-0 left-0 w-20"
+                  draggable="false"
+                />
+              )}
+            </div>
+            <div
+              onMouseEnter={() => handleMouseEnter("Oh")}
+              onMouseLeave={handleMouseLeave}
+              className="relative"
+            >
+              <img
+                src={redButtonOh}
+                alt="RedButtonOh"
+                className="w-20"
+                draggable="false"
+              />
+              {hoveredButton === "Oh" && (
+                <img
+                  src={fromOh}
+                  alt="From Oh"
+                  className="absolute top-0 left-0 w-20"
+                  draggable="false"
+                />
+              )}
+            </div>
+            <div
+              onMouseEnter={() => handleMouseEnter("Baek")}
+              onMouseLeave={handleMouseLeave}
+              className="relative"
+            >
+              <img
+                src={redButtonBaek}
+                alt="RedButtonBaek"
+                className="w-20"
+                draggable="false"
+              />
+              {hoveredButton === "Baek" && (
+                <img
+                  src={fromBaek}
+                  alt="From Baek"
+                  className="absolute top-0 left-0 w-20"
+                  draggable="false"
+                />
+              )}
+            </div>
+            <div
+              onMouseEnter={() => handleMouseEnter("Shin")}
+              onMouseLeave={handleMouseLeave}
+              className="relative"
+            >
+              <img
+                src={redButtonShin}
+                alt="RedButtonShin"
+                className="w-20"
+                draggable="false"
+              />
+              {hoveredButton === "Shin" && (
+                <img
+                  src={fromShin}
+                  alt="From Shin"
+                  className="absolute top-0 left-0 w-20"
+                  draggable="false"
+                />
+              )}
+            </div>
           </div>
+
           <div
             className="flex flex-col items-center space-y-4 overflow-y-auto scrollbar"
             style={{ maxHeight: "24rem" }} // 이 높이 설정을 조정할 수 있습니다.
