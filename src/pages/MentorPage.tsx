@@ -9,6 +9,7 @@ import backgroundGreen from "../assets/images/backgroundGreen.svg";
 import ChoosingButtonBaek from "../assets/images/ChoosingButtonBaek.svg";
 import ChoosingButtonOh from "../assets/images/ChoosingButtonOh.svg";
 import ChoosingButtonShin from "../assets/images/ChoosingButtonShin.svg";
+import { Link } from "react-router-dom";
 
 import React, { useState } from "react";
 
@@ -28,6 +29,7 @@ const MentorPage: React.FC = () => {
   const toggleShinImage = () => {
     setIsShinBack(!isShinBack);
   };
+
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
@@ -42,12 +44,14 @@ const MentorPage: React.FC = () => {
             src={isBaekBack ? ProfileBackBaek : ProfileFrontBaek}
             alt="백곰원"
             className="w-100"
+            draggable="false"
           />
           {isBaekBack && (
             <img
               src={ChoosingButtonBaek}
               alt="선택하기 버튼 백곰원"
-              className="absolute inset-0 mt-152 mx-auto  w-50"
+              className="absolute inset-0 mt-152 mx-auto w-50"
+              draggable="false"
             />
           )}
         </div>
@@ -59,12 +63,14 @@ const MentorPage: React.FC = () => {
             src={isOhBack ? ProfileBackOh : ProfileFrontOh}
             alt="오은양"
             className="w-100"
+            draggable="false"
           />
           {isOhBack && (
             <img
               src={ChoosingButtonOh}
               alt="선택하기 버튼 오은양"
-              className="absolute inset-0 mt-152 mx-auto  w-50"
+              className="absolute inset-0 mt-152 mx-auto w-50"
+              draggable="false"
             />
           )}
         </div>
@@ -76,24 +82,30 @@ const MentorPage: React.FC = () => {
             src={isShinBack ? ProfileBackShin : ProfileFrontShin}
             alt="신문엽"
             className="w-100"
+            draggable="false"
           />
           {isShinBack && (
             <img
               src={ChoosingButtonShin}
               alt="선택하기 버튼 신문엽"
-              className="absolute inset-0 mt-152 mx-auto  w-50"
+              className="absolute inset-0 mt-152 mx-auto w-50"
+              draggable="false"
             />
           )}
         </div>
       </div>
       <div className="absolute bottom-4 right-4">
-        <img
-          src={IconToMyPage}
-          alt="마이페이지 이동 아이콘"
-          className="w-12 h-12 cursor-pointer"
-        />
+        <Link to="/mypage">
+          <img
+            src={IconToMyPage}
+            alt="마이페이지 이동 아이콘"
+            className="w-12 h-12 cursor-pointer"
+            draggable="false"
+          />
+        </Link>
       </div>
     </div>
   );
 };
+
 export default MentorPage;
