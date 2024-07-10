@@ -1,32 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ChattingPageBaek from './pages/ChattingPage/ChattingPage_Baek';
 import ChattingPageOh from './pages/ChattingPage/ChattingPage_Oh';
 import ChattingPageShin from './pages/ChattingPage/ChattingPage_Shin';
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <Router>
-      <div className="App">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/baek">Baek</Link>
-            </li>
-            <li>
-              <Link to="/oh">Oh</Link>
-            </li>
-            <li>
-              <Link to="/shin">Shin</Link>
-            </li>
-          </ul>
-        </nav>
-        <Routes>
-          <Route path="/baek" element={<ChattingPageBaek />} />
-          <Route path="/oh" element={<ChattingPageOh />} />
-          <Route path="/shin" element={<ChattingPageShin />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/chatting/baek" element={<ChattingPageBaek />} />
+        <Route path="/chatting/oh" element={<ChattingPageOh />} />
+        <Route path="/chatting/shin" element={<ChattingPageShin />} />
+        <Route path="/" element={
+          <div className="min-h-screen bg-gray-100 p-4 flex flex-col items-center">
+            <h1 className="text-2xl font-bold mb-4">Select a Chat</h1>
+            <div className="w-full max-w-md">
+              <a href="/chatting/baek" className="block mb-2 p-2 bg-red-500 text-white rounded">Chat with Baek</a>
+              <a href="/chatting/oh" className="block mb-2 p-2 bg-green-500 text-white rounded">Chat with Oh</a>
+              <a href="/chatting/shin" className="block p-2 bg-yellow-500 text-white rounded">Chat with Shin</a>
+            </div>
+          </div>
+        } />
+      </Routes>
     </Router>
   );
 };

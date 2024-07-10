@@ -1,27 +1,21 @@
 import React from 'react';
-import MentorChatBubble from '../../components/MentorChatBubble/ChatBubble';
-import MyChatBubble from '../../components/MyChatBubble/MyChatBubble';
-import { ThemeProvider } from '../../ThemeContext';
-import { themes } from '../../theme';
-import backgroundBeak from '../../assets/images/backgroundBeak.svg';
+import ChatContainer from '../../components/chat/ChatContainer';
+import backgroundBaek from '../../assets/images/backgroundBeak.svg';
+import characterBaek from '../../assets/images/beak.svg';
 
-const ChattingPageBaek = () => {
+const ChattingPageBaek: React.FC = () => {
   return (
-    <ThemeProvider initialTheme={themes.beak}>
-      <div 
-        className="min-h-screen bg-cover bg-center" 
-        style={{ backgroundImage: `url(${backgroundBeak})` }}
-      >
-        <header className="App-header">
-          <MentorChatBubble />
-          <MyChatBubble />
-          <MentorChatBubble />
-          <MyChatBubble />
-          <MentorChatBubble />
-          <MyChatBubble />
-        </header>
+    <div
+      className="min-h-screen bg-cover bg-center flex items-center justify-center"
+      style={{ backgroundImage: `url(${backgroundBaek})` }}
+    >
+      <div className="flex items-center justify-center w-full max-w-5xl p-4 bg-gray-100 bg-opacity-80 rounded-lg shadow-md">
+        <div className="flex items-center space-x-28 p-8">
+          <img src={characterBaek} alt="Baek" className="w-1/3 h-auto" />
+          <ChatContainer mentorBgColor="bg-[#F0FDDE]" myBgColor="bg-[#DEFFB2]" />
+        </div>
       </div>
-    </ThemeProvider>
+    </div>
   );
 };
 
