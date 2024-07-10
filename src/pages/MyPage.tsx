@@ -3,7 +3,6 @@ import IconLetter from "../assets/images/IconLetter.svg";
 import IconToHome from "../assets/images/IconToHome.svg";
 import PostBox from "../assets/images/PostBox.svg";
 import MyPageBackground from "../assets/images/MyPageBackground.svg";
-
 import redButtonBaek from "../assets/images/redButtonBaek.svg";
 import fromBaek from "../assets/images/fromBaek.svg";
 import fromShin from "../assets/images/fromShin.svg";
@@ -19,6 +18,7 @@ import { Link } from "react-router-dom";
 const MyPage: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+
   const handleMouseEnter = (buttonName: string) => {
     setHoveredButton(buttonName);
   };
@@ -80,7 +80,7 @@ const MyPage: React.FC = () => {
                 <img
                   src={AllLetter}
                   alt="From All"
-                  className="absolute top-0 left-0 w-20"
+                  className="absolute top-[-15px] left-0 w-24 transition-transform transform scale-125"
                   draggable="false"
                 />
               )}
@@ -100,7 +100,7 @@ const MyPage: React.FC = () => {
                 <img
                   src={fromOh}
                   alt="From Oh"
-                  className="absolute top-0 left-0 w-20"
+                  className="absolute top-[-15px] left-0 w-24 transition-transform transform scale-125"
                   draggable="false"
                 />
               )}
@@ -120,7 +120,7 @@ const MyPage: React.FC = () => {
                 <img
                   src={fromBaek}
                   alt="From Baek"
-                  className="absolute top-0 left-0 w-20"
+                  className="absolute top-[-15px] left-0 w-24 transition-transform transform scale-125"
                   draggable="false"
                 />
               )}
@@ -140,7 +140,7 @@ const MyPage: React.FC = () => {
                 <img
                   src={fromShin}
                   alt="From Shin"
-                  className="absolute top-0 left-0 w-20"
+                  className="absolute top-[-15px] left-0 w-24 transition-transform transform scale-125"
                   draggable="false"
                 />
               )}
