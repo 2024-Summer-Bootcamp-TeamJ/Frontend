@@ -6,8 +6,7 @@ import "./index.css";
 
 import React from 'react';
 import ChatBubble from './components/ChatBubble/ChatBubble';
-import FirstPage from './pages/FirstPage';
-
+import PrescriptionPage from './pages/PrescriptionPage';
 
 const App = () => {
   return (
@@ -15,7 +14,7 @@ const App = () => {
 
       <header className="App-header">
 
-        <MentorPage />
+        <PrescriptionPage />
 
       </header>
 
