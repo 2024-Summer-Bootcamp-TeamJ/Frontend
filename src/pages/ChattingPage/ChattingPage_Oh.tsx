@@ -9,13 +9,13 @@ const ChattingPageOh: React.FC = () => {
       className="min-h-screen bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${backgroundOh})` }}
     >
-      <div className="flex items-center justify-center w-full max-w-5xl p-4 bg-gray-100 bg-opacity-90 rounded-lg shadow-md">
+      {/* <div className="flex items-center justify-center w-full max-w-5xl p-4 bg-gray-100 bg-opacity-80 rounded-lg shadow-md"> */}
         <div className="flex items-center space-x-28 p-8">
           <img src={characterOh} alt="Oh" className="w-1/3 h-auto" />
           <ChatContainer mentorBgColor="bg-[#FFF9DD]" myBgColor="bg-[#FDF2BB]" />
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 
