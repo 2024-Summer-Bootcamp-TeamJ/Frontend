@@ -10,6 +10,7 @@ import ChoosingButtonBaek from "../assets/images/ChoosingButtonBaek.svg";
 import ChoosingButtonOh from "../assets/images/ChoosingButtonOh.svg";
 import ChoosingButtonShin from "../assets/images/ChoosingButtonShin.svg";
 import { Link } from "react-router-dom";
+import "../index.css";
 
 import React, { useState } from "react";
 
@@ -37,58 +38,84 @@ const MentorPage: React.FC = () => {
     >
       <div className="flex flex-row justify-center items-center gap-4">
         <div
-          className="relative flex items-center p-4 cursor-pointer"
+          className={`relative flex items-center p-4 cursor-pointer flip-card ${
+            isBaekBack ? "flip" : ""
+          }`}
           onClick={toggleBaekImage}
         >
           <img
-            src={isBaekBack ? ProfileBackBaek : ProfileFrontBaek}
+            src={ProfileFrontBaek}
             alt="백곰원"
-            className="w-100"
+            className={`w-100 flip-card-front ${isBaekBack ? "hidden" : ""}`}
+            draggable="false"
+          />
+          <img
+            src={ProfileBackBaek}
+            alt="백곰원 뒷면"
+            className={`w-100 flip-card-back ${isBaekBack ? "" : "hidden"}`}
             draggable="false"
           />
           {isBaekBack && (
             <img
               src={ChoosingButtonBaek}
               alt="선택하기 버튼 백곰원"
-              className="absolute inset-0 mt-152 mx-auto w-50"
+              className="absolute inset-0 mt-136 mx-auto w-50"
               draggable="false"
             />
           )}
         </div>
+
         <div
-          className="relative flex items-center p-4 cursor-pointer"
+          className={`relative flex items-center p-4 cursor-pointer flip-card ${
+            isOhBack ? "flip" : ""
+          }`}
           onClick={toggleOhImage}
         >
           <img
-            src={isOhBack ? ProfileBackOh : ProfileFrontOh}
+            src={ProfileFrontOh}
             alt="오은양"
-            className="w-100"
+            className={`w-100 flip-card-front ${isOhBack ? "hidden" : ""}`}
+            draggable="false"
+          />
+          <img
+            src={ProfileBackOh}
+            alt="오은양 뒷면"
+            className={`w-100 flip-card-back ${isOhBack ? "" : "hidden"}`}
             draggable="false"
           />
           {isOhBack && (
             <img
               src={ChoosingButtonOh}
               alt="선택하기 버튼 오은양"
-              className="absolute inset-0 mt-152 mx-auto w-50"
+              className="absolute inset-0 mt-136 mx-auto w-50"
               draggable="false"
             />
           )}
         </div>
+
         <div
-          className="relative flex items-center p-4 cursor-pointer"
+          className={`relative flex items-center p-4 cursor-pointer flip-card ${
+            isShinBack ? "flip" : ""
+          }`}
           onClick={toggleShinImage}
         >
           <img
-            src={isShinBack ? ProfileBackShin : ProfileFrontShin}
+            src={ProfileFrontShin}
             alt="신문엽"
-            className="w-100"
+            className={`w-100 flip-card-front ${isShinBack ? "hidden" : ""}`}
+            draggable="false"
+          />
+          <img
+            src={ProfileBackShin}
+            alt="신문엽 뒷면"
+            className={`w-100 flip-card-back ${isShinBack ? "" : "hidden"}`}
             draggable="false"
           />
           {isShinBack && (
             <img
               src={ChoosingButtonShin}
-              alt="선택하기 버튼 신문엽"
-              className="absolute inset-0 mt-152 mx-auto w-50"
+              alt="선택하기 버튼 "
+              className="absolute inset-0 mt-136 mx-auto w-50"
               draggable="false"
             />
           )}
