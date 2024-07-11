@@ -5,7 +5,6 @@ import MyPage from "./pages/MyPage";
 import PrescriptionPage from "./pages/PrescriptionPage";
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import useStore from "../store.js";
 
 import React from "react";
 import ChatBubble from "./components/ChatBubble/ChatBubble";
