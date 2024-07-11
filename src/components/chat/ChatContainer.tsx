@@ -11,8 +11,8 @@ interface ChatContainerProps {
 const ChatContainer: React.FC<ChatContainerProps> = ({ mentorBgColor, myBgColor }) => {
   return (
     <div className="relative w-full max-w-3xl mx-auto">
-      <div className="absolute inset-0 bg-gray-200 bg-opacity-90 rounded-3xl transform translate-x-2 translate-y-2"></div>
-      <div className="relative bg-white bg-opacity-70 rounded-3xl p-8 w-[60vh] h-[80vh] flex flex-col justify-between">
+      {/* <div className="absolute inset-0 bg-gray-200 bg-opacity-50 rounded-3xl transform translate-x-2 translate-y-2"></div> */}
+      <div className="relative bg-white bg-opacity-80 rounded-3xl p-8 w-[60vh] h-[80vh] flex flex-col justify-between">
         <div className="flex-grow overflow-y-auto">
           <MentorChatBubble chatMessage="어떤 상담이 필요하냐곰" bgColor={mentorBgColor} />
           <MyChatBubble chatMessage="백곰원님 제가 일식당을 차리려고 하는데 메뉴를 50개 정도 하고싶어요. 괜찮을까요?" bgColor={myBgColor} />

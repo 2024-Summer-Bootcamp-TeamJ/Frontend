@@ -12,7 +12,7 @@ const ChatMessage = () => {
         style={{ backgroundColor: theme.chatMessageBg }}
       >
         <p className="text-base leading-relaxed">
-          I've been thinkin' 'bout you, for quite a while You're on my mind every day and every night My every thought is you, the things you do Seem so satisfying to me, I must confess it, girl
+        미쳤냐곰 말도 안되는 소리 하지 말라곰 그러다 망한다곰
         </p>
       </div>
     </div>

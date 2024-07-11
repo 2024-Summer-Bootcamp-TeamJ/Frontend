@@ -1,12 +1,12 @@
-import beakImage from './assets/images/beak.svg';
+import baekImage from './assets/images/Baek.svg';
 import ohImage from './assets/images/oh.svg';
 import shinImage from './assets/images/shin.svg';
 
 export const themes = {
-  beak: {
+  baek: {
     mentorNameBg: '#F7F48D',
     chatMessageBg: '#FFF9DD',
-    characterImage: beakImage
+    characterImage: baekImage
   },
   oh: {
     mentorNameBg: '#CF8EC5',
