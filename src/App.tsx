@@ -1,13 +1,28 @@
+<<<<<<< HEAD
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ChattingPageBaek from './pages/ChattingPage/ChattingPage_Baek';
 import ChattingPageOh from './pages/ChattingPage/ChattingPage_Oh';
 import ChattingPageShin from './pages/ChattingPage/ChattingPage_Shin';
+=======
+import "./App.css";
+import FirstPage from "./pages/FirstPage";
+import MentorPage from "./pages/MentorPage";
+import MyPage from "./pages/MyPage";
+import PrescriptionPage from "./pages/PrescriptionPage";
+import "./index.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import useStore from "../store.js";
+
+import React from "react";
+import ChatBubble from "./components/ChatBubble/ChatBubble";
+>>>>>>> main
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
+<<<<<<< HEAD
         <Route path="/chatting/baek" element={<ChattingPageBaek />} />
         <Route path="/chatting/oh" element={<ChattingPageOh />} />
         <Route path="/chatting/shin" element={<ChattingPageShin />} />
@@ -21,6 +36,12 @@ const App: React.FC = () => {
             </div>
           </div>
         } />
+=======
+        <Route path="/" element={<MyPage />} />
+        <Route path="/mentor" element={<MentorPage />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/prescription" element={<PrescriptionPage />} />
+>>>>>>> main
       </Routes>
     </Router>
   );
