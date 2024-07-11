@@ -1,19 +1,15 @@
 import React from 'react';
 import MentorName from './MentorName';
 import ChatMessage from './ChatMessage';
-import CharacterImage from './CharacterImage';
 
 const ChatBubble = () => {
   return (
     <div className="relative flex items-center">
-      <div className="absolute top-20 z-30">
+      <div className="absolute top-10 left-10 z-30">
         <MentorName />
       </div>
-      <div className="relative top-20 z-20">
+      <div className="relative flex flex-col items-center top-16 z-20">
         <ChatMessage />
-      </div>
-      <div className="relative right-24 top-5 z-10">
-        <CharacterImage />
       </div>
     </div>
   );
