@@ -12,12 +12,14 @@ import redButtonOh from "../assets/images/redButtonOh.svg";
 import redButtonAll from "../assets/images/redButtonAll.svg";
 import AllLetter from "../assets/images/AllLetter.svg";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const MyPage: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+  const [nickname, setNickname] = useState<string>("");
 
   const handleMouseEnter = (buttonName: string) => {
     setHoveredButton(buttonName);
@@ -26,6 +28,20 @@ const MyPage: React.FC = () => {
   const handleMouseLeave = () => {
     setHoveredButton(null);
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/users/2");
+        setNickname(response.data.nickname);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-blue-100 relative"
@@ -55,7 +71,7 @@ const MyPage: React.FC = () => {
           />
           <div className="absolute inset-0 flex items-center justify-center mt-44">
             <span className="text-4xl text-postboxNameColor font-MoonFlower">
-              Wooni's
+              {nickname}'s
             </span>
           </div>
         </div>
