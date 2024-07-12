@@ -3,6 +3,7 @@ import React from 'react';
 interface ButtonProps {
   text?: string;
   color?: string;
+  onClick?: () => void; 
 }
 
 const Button: React.FC<ButtonProps> = ({ text = '확인', color = 'bg-gray-500' }) => {

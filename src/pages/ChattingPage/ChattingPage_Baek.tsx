@@ -13,9 +13,9 @@ const ChattingPageBaek: React.FC = () => {
       style={{ backgroundImage: `url(${backgroundBaek})` }}
     >
       <div className="absolute top-4 right-4">
-      <Link to="/prescription">
-        <Button text="대화 종료하기" color="bg-green-700 pt-3 pb-3" />
-      </Link>
+        <Link to="/prescription">
+          <Button text="대화 종료하기" color="bg-green-700 pt-3 pb-3" />
+        </Link>
       </div>
       <div className="relative flex items-center justify-center w-full max-w-6xl px-2 py-4 bg-green-50 bg-opacity-90 rounded-3xl shadow-md">
         <div className="relative flex items-center space-x-40 px-0 py-8 overflow-visible">
