@@ -38,7 +38,7 @@ const storage: PersistStorage<StoreState> = {
 const stateCreator: StateCreator<StoreState> = (set, get) => ({
   nickname: "",
   members: [],
-  memberId: 1,
+  memberId: null, // 우선 memberId를 1로
   // 닉네임 저장
   setNickname: (nickname) => set({ nickname }),
   setMemberId: (memberId) => set({ memberId }),
