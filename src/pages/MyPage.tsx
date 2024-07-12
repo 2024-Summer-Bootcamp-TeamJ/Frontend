@@ -21,6 +21,7 @@ const MyPage: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [prescriptions, setPrescriptions] = useState<any[]>([]);
+  const [selectedMentor, setSelectedMentor] = useState<number | null>(null);
 
   const { nickname, memberId, setNickname, setMemberId } = useStore();
 
@@ -33,8 +34,7 @@ const MyPage: React.FC = () => {
       if (memberId !== null) {
         try {
           const response = await axios.get(
-            // `http://localhost:8000/api/users/${memberId}`
-            `http://localhost:8000/api/users/1`
+            `http://localhost:8000/api/users/${memberId}`
           );
           setNickname(response.data.nickname);
           console.log("닉네임은", nickname, "멤버아이디는", memberId);
@@ -58,11 +58,28 @@ const MyPage: React.FC = () => {
           },
         }
       );
-      setPrescriptions(response.data);
+
+      // mentorId가 있는 항목만 필터링
+      const filteredData = response.data.filter(
+        (prescription: { mentor_id: number | null }) =>
+          prescription.mentor_id === mentorId
+      );
+
+      setPrescriptions(filteredData);
+      setSelectedMentor(mentorId); // 선택된 멘토 아이디 설정
+
+      console.log(
+        "멤버아이디는(fetchPrescriptions)",
+        memberId,
+        "멘토아이디는(fetchPrescriptions)",
+        mentorId
+      );
+      console.log("response.data", filteredData);
     } catch (error) {
       console.error("Error fetching prescriptions:", error);
     }
   };
+
   const handleMouseEnter = (buttonName: string) => {
     setHoveredButton(buttonName);
   };
@@ -108,7 +125,6 @@ const MyPage: React.FC = () => {
           style={{ width: "48rem", height: "36rem" }}
           className="bg-lettersColor p-6 rounded-100px shadow-lg "
         >
-          {/* 여기 안에 필요한 내용을 추가하세요 */}
           <div className="flex justify-center mb-4 space-x-[-15px]">
             <div
               onMouseEnter={() => handleMouseEnter("All")}
@@ -200,37 +216,38 @@ const MyPage: React.FC = () => {
             className="flex flex-col items-center space-y-4 overflow-y-auto scrollbar"
             style={{ maxHeight: "24rem" }} // 이 높이 설정을 조정할 수 있습니다.
           >
-            {/* 동일한 요소들을 여러 개 추가 */}
-            {prescriptions.map((prescription, index) => (
-              <div
-                key={prescription.id}
-                className="flex items-center  p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                {hoveredIndex === index && (
+            {selectedMentor !== null &&
+              prescriptions.map((prescription, index) => (
+                <div
+                  key={prescription.id}
+                  className="flex items-center p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  {hoveredIndex === index && (
+                    <img
+                      src={IconMouse}
+                      alt="Mouse Icon"
+                      className="w-16"
+                      draggable="false"
+                    />
+                  )}
                   <img
-                    src={IconMouse}
-                    alt="Mouse Icon"
-                    className="w-16"
+                    src={IconLetter}
+                    alt="Letter Icon"
+                    className="w-16 transform translate-y-1"
                     draggable="false"
                   />
-                )}
-                <img
-                  src={IconLetter}
-                  alt="Letter Icon"
-                  className="w-16 transform translate-y-1"
-                  draggable="false"
-                />
-                <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
-                  {new Date(prescription.created_at).toLocaleDateString()}
-                </span>
-              </div>
-            ))}
+                  <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
+                    {new Date(prescription.created_at).toLocaleDateString()}
+                  </span>
+                </div>
+              ))}
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 export default MyPage;
