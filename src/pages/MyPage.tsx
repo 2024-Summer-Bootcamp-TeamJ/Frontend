@@ -224,30 +224,32 @@ const MyPage: React.FC = () => {
             {(selectedMentor === null || selectedMentor !== null) &&
               prescriptions.length > 0 &&
               prescriptions.map((prescription, index) => (
-                <div
-                  key={prescription.id}
-                  className="flex items-center p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                >
-                  {hoveredIndex === index && (
+                <Link to="/prescription">
+                  <div
+                    key={prescription.id}
+                    className="flex items-center p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                  >
+                    {hoveredIndex === index && (
+                      <img
+                        src={IconMouse}
+                        alt="Mouse Icon"
+                        className="w-16"
+                        draggable="false"
+                      />
+                    )}
                     <img
-                      src={IconMouse}
-                      alt="Mouse Icon"
-                      className="w-16"
+                      src={IconLetter}
+                      alt="Letter Icon"
+                      className="w-16 transform translate-y-1"
                       draggable="false"
                     />
-                  )}
-                  <img
-                    src={IconLetter}
-                    alt="Letter Icon"
-                    className="w-16 transform translate-y-1"
-                    draggable="false"
-                  />
-                  <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
-                    {new Date(prescription.created_at).toLocaleDateString()}
-                  </span>
-                </div>
+                    <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
+                      {new Date(prescription.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                </Link>
               ))}
           </div>
         </div>
