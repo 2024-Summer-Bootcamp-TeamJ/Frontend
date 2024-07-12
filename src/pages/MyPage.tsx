@@ -20,6 +20,8 @@ import { useStore } from "../../store";
 const MyPage: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+  const [prescriptions, setPrescriptions] = useState<any[]>([]);
+
   const { nickname, memberId, setNickname } = useStore();
 
   useEffect(() => {
@@ -27,8 +29,7 @@ const MyPage: React.FC = () => {
       if (memberId !== null) {
         try {
           const response = await axios.get(
-            // `http://localhost:8000/api/users/${memberId}`
-            `http://localhost:8000/api/users/2`
+            `http://localhost:8000/api/users/${memberId}`
           );
           setNickname(response.data.nickname);
         } catch (error) {
@@ -39,6 +40,23 @@ const MyPage: React.FC = () => {
 
     fetchUserData();
   }, [memberId, setNickname]);
+
+  const fetchPrescriptions = async (mentorId: number | null = null) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/api/prescriptions",
+        {
+          params: {
+            user_id: memberId,
+            mentor_id: mentorId || undefined,
+          },
+        }
+      );
+      setPrescriptions(response.data);
+    } catch (error) {
+      console.error("Error fetching prescriptions:", error);
+    }
+  };
   const handleMouseEnter = (buttonName: string) => {
     setHoveredButton(buttonName);
   };
@@ -89,7 +107,8 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("All")}
               onMouseLeave={handleMouseLeave}
-              className="relative"
+              onClick={() => fetchPrescriptions()}
+              className="relative cursor-pointer"
             >
               <img
                 src={redButtonAll}
@@ -109,7 +128,8 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Oh")}
               onMouseLeave={handleMouseLeave}
-              className="relative"
+              onClick={() => fetchPrescriptions(2)}
+              className="relative cursor-pointer"
             >
               <img
                 src={redButtonOh}
@@ -129,7 +149,8 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Baek")}
               onMouseLeave={handleMouseLeave}
-              className="relative"
+              onClick={() => fetchPrescriptions(1)}
+              className="relative cursor-pointer"
             >
               <img
                 src={redButtonBaek}
@@ -149,7 +170,8 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Shin")}
               onMouseLeave={handleMouseLeave}
-              className="relative"
+              onClick={() => fetchPrescriptions(3)}
+              className="relative cursor-pointer"
             >
               <img
                 src={redButtonShin}
@@ -173,9 +195,9 @@ const MyPage: React.FC = () => {
             style={{ maxHeight: "24rem" }} // 이 높이 설정을 조정할 수 있습니다.
           >
             {/* 동일한 요소들을 여러 개 추가 */}
-            {[...Array(10)].map((_, index) => (
+            {prescriptions.map((prescription, index) => (
               <div
-                key={index}
+                key={prescription.id}
                 className="flex items-center  p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -195,7 +217,7 @@ const MyPage: React.FC = () => {
                   draggable="false"
                 />
                 <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
-                  2024.07.06
+                  {new Date(prescription.created_at).toLocaleDateString()}
                 </span>
               </div>
             ))}
