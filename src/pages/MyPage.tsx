@@ -15,12 +15,30 @@ import AllLetter from "../assets/images/AllLetter.svg";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useStore } from "../../store";
 
 const MyPage: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
-  const [nickname, setNickname] = useState<string>("");
+  const { nickname, memberId, setNickname } = useStore();
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (memberId !== null) {
+        try {
+          const response = await axios.get(
+            // `http://localhost:8000/api/users/${memberId}`
+            `http://localhost:8000/api/users/2`
+          );
+          setNickname(response.data.nickname);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [memberId, setNickname]);
   const handleMouseEnter = (buttonName: string) => {
     setHoveredButton(buttonName);
   };
@@ -28,19 +46,6 @@ const MyPage: React.FC = () => {
   const handleMouseLeave = () => {
     setHoveredButton(null);
   };
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/users/2");
-        setNickname(response.data.nickname);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
 
   return (
     <div

@@ -4,7 +4,6 @@ import { persist, PersistStorage } from "zustand/middleware";
 // 인터페이스 정의
 interface Member {
   id: number;
-
   nickName: string;
 }
 
@@ -40,6 +39,7 @@ const stateCreator: StateCreator<StoreState> = (set, get) => ({
   nickname: "",
   members: [],
   memberId: null,
+  // 닉네임 저장
   setNickname: (nickname) => set({ nickname }),
   setMemberId: (memberId) => set({ memberId }),
   setMembers: (members) => set({ members }),
