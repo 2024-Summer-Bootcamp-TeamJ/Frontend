@@ -46,6 +46,11 @@ const MyPage: React.FC = () => {
 
     fetchUserData();
   }, [memberId, setNickname]);
+
+  useEffect(() => {
+    fetchPrescriptions(); // 페이지 로드 시 전체 처방전 리스트를 불러옴
+  }, [memberId]);
+
   const fetchPrescriptions = async (mentorId: number | null = null) => {
     try {
       const response = await axios.get(
@@ -58,7 +63,6 @@ const MyPage: React.FC = () => {
         }
       );
 
-      // mentorId가 null이 아니면 필터링, 아니면 전체 데이터 사용
       const prescriptions = mentorId
         ? response.data.filter(
             (prescription: { mentor_id: number }) =>
@@ -67,7 +71,7 @@ const MyPage: React.FC = () => {
         : response.data;
 
       setPrescriptions(prescriptions);
-      setSelectedMentor(mentorId); // 선택된 멘토 아이디 설정
+      setSelectedMentor(mentorId);
 
       console.log(
         "멤버아이디는(fetchPrescriptions)",
