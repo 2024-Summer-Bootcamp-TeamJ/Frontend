@@ -38,6 +38,7 @@ module.exports = {
       fontFamily: {
         NoticiaText: ["NoticiaText"],
         MoonFlower: ["MoonFlower"],
+        syndinaroo: ["syndinaroo"]
       },
     },
   },
