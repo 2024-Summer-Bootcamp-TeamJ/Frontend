@@ -81,15 +81,16 @@ const MentorPage: React.FC = () => {
 
       if (response.status === 200 || response.status === 201) {
         console.log('Chatroom created successfully');
+        const chatroomId = response.data.id;
         switch (mentorId) {
           case 1:
-            navigate("/chat/baek");
+            navigate(`/chat/baek?chatroomId=${chatroomId}`);
             break;
           case 2:
-            navigate("/chat/oh");
+            navigate(`/chat/oh?chatroomId=${chatroomId}`);
             break;
           case 3:
-            navigate("/chat/shin");
+            navigate(`/chat/shin?chatroomId=${chatroomId}`);
             break;
           default:
             console.error('Invalid mentor ID');
@@ -102,10 +103,6 @@ const MentorPage: React.FC = () => {
     } catch (error) {
       console.error('Error creating chatroom:', error);
     }
-  };
-
-  const endChatAndGoToPrescription = () => {
-    navigate("/prescription");
   };
 
   return (
