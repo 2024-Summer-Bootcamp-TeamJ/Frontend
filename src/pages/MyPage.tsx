@@ -22,16 +22,22 @@ const MyPage: React.FC = () => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [prescriptions, setPrescriptions] = useState<any[]>([]);
 
-  const { nickname, memberId, setNickname } = useStore();
+  const { nickname, memberId, setNickname, setMemberId } = useStore();
+
+  useEffect(() => {
+    setMemberId(1); // 멤버 아이디를 1로 설정
+  }, [setMemberId]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       if (memberId !== null) {
         try {
           const response = await axios.get(
-            `http://localhost:8000/api/users/${memberId}`
+            // `http://localhost:8000/api/users/${memberId}`
+            `http://localhost:8000/api/users/1`
           );
           setNickname(response.data.nickname);
+          console.log("닉네임은", nickname, "멤버아이디는", memberId);
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
