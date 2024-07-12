@@ -15,6 +15,10 @@ body {
   font-family: "MoonFlower";
   src: url("assets/fonts/MoonFlower.ttf");
 }
+@font-face {
+  font-family: "syndinaroo";
+  src: url("assets/fonts/syndinaroo.ttf");
+}
 
 html,
 body,

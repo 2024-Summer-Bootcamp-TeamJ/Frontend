@@ -56,12 +56,14 @@ const MentorPage: React.FC = () => {
             draggable="false"
           />
           {isBaekBack && (
+             <Link to="/chat/baek">
             <img
               src={ChoosingButtonBaek}
               alt="선택하기 버튼 백곰원"
               className="absolute inset-0 mt-136 mx-auto w-50"
               draggable="false"
             />
+            </Link>
           )}
         </div>
 
@@ -84,12 +86,14 @@ const MentorPage: React.FC = () => {
             draggable="false"
           />
           {isOhBack && (
+            <Link to="/chat/oh">
             <img
               src={ChoosingButtonOh}
               alt="선택하기 버튼 오은양"
               className="absolute inset-0 mt-136 mx-auto w-50"
               draggable="false"
             />
+            </Link>
           )}
         </div>
 
@@ -112,12 +116,14 @@ const MentorPage: React.FC = () => {
             draggable="false"
           />
           {isShinBack && (
+            <Link to="/chat/shin">
             <img
               src={ChoosingButtonShin}
               alt="선택하기 버튼 "
               className="absolute inset-0 mt-136 mx-auto w-50"
               draggable="false"
             />
+            </Link>
           )}
         </div>
       </div>

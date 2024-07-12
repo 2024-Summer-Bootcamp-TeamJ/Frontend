@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import ChatContainer from '../../components/chat/ChatContainer';
 import backgroundBaek from '../../assets/images/backgroundBaek.svg';
 import characterBaek from '../../assets/images/Baek.svg';
 import chatBubbleImage from '../../assets/images/chatbubble.png';
+import Button from '../../components/FirstPage/Button';
 
 const ChattingPageBaek: React.FC = () => {
   return (
@@ -10,9 +12,14 @@ const ChattingPageBaek: React.FC = () => {
       className="relative min-h-screen bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${backgroundBaek})` }}
     >
+      <div className="absolute top-4 right-4">
+      <Link to="/prescription">
+        <Button text="대화 종료하기" color="bg-green-700 pt-3 pb-3" />
+      </Link>
+      </div>
       <div className="relative flex items-center justify-center w-full max-w-6xl px-2 py-4 bg-green-50 bg-opacity-90 rounded-3xl shadow-md">
-        <div className="relative flex items-center space-x-48 px-0 py-8 overflow-visible">
-          <div className="relative">
+        <div className="relative flex items-center space-x-40 px-0 py-8 overflow-visible">
+          <div className="relative ml-16 mb-12">
             <img src={characterBaek} alt="Baek" className="w-72 ml-16 h-auto relative" />
             <div className="absolute top-18 left-1/2 transform -translate-x-1/2 -translate-y-16">
               <img
@@ -25,8 +32,8 @@ const ChattingPageBaek: React.FC = () => {
                 className="absolute bottom-4 -left-8 w-full h-full flex items-center justify-center"
                 style={{ width: '180%', height: '100%' }}
               >
-                <p className="text-center text-2xl font-bold" style={{ transform: 'scale(1)' }}>
-                  하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하
+                <p className="text-center text-3xl text-dateTextColor font-syndinaroo" style={{ transform: 'scale(1)' }}>
+                  고민이 많아서 힘들었겠구나. 그렇다면 내가 하는 말을 잘 들어봐.
                 </p>
               </div>
             </div>
