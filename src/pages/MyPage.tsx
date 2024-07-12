@@ -46,7 +46,6 @@ const MyPage: React.FC = () => {
 
     fetchUserData();
   }, [memberId, setNickname]);
-
   const fetchPrescriptions = async (mentorId: number | null = null) => {
     try {
       const response = await axios.get(
@@ -59,13 +58,15 @@ const MyPage: React.FC = () => {
         }
       );
 
-      // mentorId가 있는 항목만 필터링
-      const filteredData = response.data.filter(
-        (prescription: { mentor_id: number | null }) =>
-          prescription.mentor_id === mentorId
-      );
+      // mentorId가 null이 아니면 필터링, 아니면 전체 데이터 사용
+      const prescriptions = mentorId
+        ? response.data.filter(
+            (prescription: { mentor_id: number }) =>
+              prescription.mentor_id === mentorId
+          )
+        : response.data;
 
-      setPrescriptions(filteredData);
+      setPrescriptions(prescriptions);
       setSelectedMentor(mentorId); // 선택된 멘토 아이디 설정
 
       console.log(
@@ -74,7 +75,7 @@ const MyPage: React.FC = () => {
         "멘토아이디는(fetchPrescriptions)",
         mentorId
       );
-      console.log("response.data", filteredData);
+      console.log("response.data", prescriptions);
     } catch (error) {
       console.error("Error fetching prescriptions:", error);
     }
@@ -216,7 +217,8 @@ const MyPage: React.FC = () => {
             className="flex flex-col items-center space-y-4 overflow-y-auto scrollbar"
             style={{ maxHeight: "24rem" }} // 이 높이 설정을 조정할 수 있습니다.
           >
-            {selectedMentor !== null &&
+            {(selectedMentor === null || selectedMentor !== null) &&
+              prescriptions.length > 0 &&
               prescriptions.map((prescription, index) => (
                 <div
                   key={prescription.id}
