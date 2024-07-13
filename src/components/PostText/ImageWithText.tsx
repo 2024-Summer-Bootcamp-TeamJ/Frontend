@@ -48,7 +48,7 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
         className="mb-16 text-3xl font-bold text-amber-700"
         style={{ marginLeft: "15px", paddingLeft: "3px" }}
       >
-        {nickname}
+        {nickname} 님
       </p>
       <HighlightText text={summaryText} />
       <p
@@ -60,8 +60,7 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
           paddingBottom: "10px",
         }}
       >
-        {mentorId !== null ? `멘토 ID: ${mentorId}` : "멘토 ID 없음"}{" "}
-        {/* 멘토 ID 표시 */}
+        {mentorId !== null ? `멘토 ID: ${mentorId}` : ""} {/* 멘토 ID 표시 */}
       </p>
     </div>
   );

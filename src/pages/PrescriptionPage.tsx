@@ -5,6 +5,8 @@ import "../index.css";
 import ImageWithText from "@components/PostText/ImageWithText";
 import { Link } from "react-router-dom";
 import IconToMyPage from "../assets/images/IconToMyPage.svg";
+import backgroundGreen from "../assets/images/backgroundGreen.svg";
+import prescriptionimg from "../assets/images/prescriptionimg.svg";
 
 const PrescriptionPage: React.FC = () => {
   const { prescription_id } = useParams<{ prescription_id: string }>();
@@ -37,8 +39,8 @@ const PrescriptionPage: React.FC = () => {
       }}
     >
       <img
-        src="src/assets/images/backgroundGreen.svg"
-        alt="prescription"
+        src={backgroundGreen}
+        alt="배경"
         style={{
           position: "relative",
           width: "100%",
@@ -49,8 +51,8 @@ const PrescriptionPage: React.FC = () => {
         }}
       />
       <img
-        src="src/assets/images/prescription.svg"
-        alt="postcard"
+        src={prescriptionimg}
+        alt="엽서이미지"
         style={{
           position: "absolute",
           width: "100%",
@@ -58,13 +60,7 @@ const PrescriptionPage: React.FC = () => {
           zIndex: 1,
         }}
       />
-      {prescription && (
-        <div style={{ position: "absolute", zIndex: 2 }}>
-          <h1>{prescription.content}</h1>
-          <p>작성일: {new Date(prescription.created_at).toLocaleString()}</p>
-          <p>수정일: {new Date(prescription.updated_at).toLocaleString()}</p>
-        </div>
-      )}
+      {prescription && <div style={{ position: "absolute", zIndex: 2 }}></div>}
       <ImageWithText prescriptionId={Number(prescription_id)} />{" "}
       {/* prescription_id를 number로 변환하여 전달 */}
       {/* prescription_id 전달 */}
