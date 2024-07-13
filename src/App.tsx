@@ -8,7 +8,6 @@ import PrescriptionPage from "./pages/PrescriptionPage";
 import FirstPage from "./pages/FirstPage";
 
 import "./index.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import React from "react";
 
@@ -28,7 +27,6 @@ function App() {
           path="/prescription/:prescription_id"
           element={<PrescriptionPage />}
         />
-
       </Routes>
     </Router>
   );

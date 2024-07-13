@@ -26,25 +26,28 @@ const MyPage: React.FC = () => {
   const [prescriptions, setPrescriptions] = useState<any[]>([]);
   const [selectedMentor, setSelectedMentor] = useState<number | null>(null);
 
-  const { nickname, memberId, setNickname, setMemberId } = useStore();
+  const { nickname, userId, setNickname } = useStore();
 
-  useEffect(() => {
-    setMemberId(1); // 멤버 아이디를 1로 설정
-  }, [setMemberId]);
   useEffect(() => {
     // 페이지 초기 로드 시 redButtonAll을 선택된 상태로 설정
     setSelectedButton("All");
     fetchPrescriptions(null);
   }, []);
+
   useEffect(() => {
     const fetchUserData = async () => {
-      if (memberId !== null) {
+      if (userId !== null) {
         try {
           const response = await axios.get(
-            `http://localhost:8000/api/users/${memberId}`
+            `http://localhost:8000/api/users/${userId}`
           );
           setNickname(response.data.nickname);
-          console.log("닉네임은", nickname, "멤버아이디는", memberId);
+          console.log(
+            "닉네임은",
+            response.data.nickname,
+            "유저아이디는",
+            userId
+          );
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
@@ -52,11 +55,11 @@ const MyPage: React.FC = () => {
     };
 
     fetchUserData();
-  }, [memberId, setNickname]);
+  }, [userId, setNickname]);
 
   useEffect(() => {
     fetchPrescriptions(); // 페이지 로드 시 전체 처방전 리스트를 불러옴
-  }, [memberId]);
+  }, [userId]);
 
   const fetchPrescriptions = async (mentorId: number | null = null) => {
     try {
@@ -64,7 +67,7 @@ const MyPage: React.FC = () => {
         "http://localhost:8000/api/prescriptions",
         {
           params: {
-            user_id: memberId,
+            user_id: userId,
             mentor_id: mentorId || undefined,
           },
         }
@@ -81,8 +84,8 @@ const MyPage: React.FC = () => {
       setSelectedMentor(mentorId);
 
       console.log(
-        "멤버아이디는(fetchPrescriptions)",
-        memberId,
+        "유저아이디는(fetchPrescriptions)",
+        userId,
         "멘토아이디는(fetchPrescriptions)",
         mentorId
       );

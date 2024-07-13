@@ -8,15 +8,15 @@ interface ImageWithTextProps {
 }
 
 const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
-  const { nickname } = useStore();
-  const [mentorId, setMentorId] = useState<number | null>(null); // 멘토 ID를 저장할 상태 추가
+  const { nickname, userId } = useStore();
+  const [mentorId, setMentorId] = useState<number | null>(null);
   const [summaryText, setSummaryText] = useState<string>("");
 
   useEffect(() => {
     const fetchMentorId = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/prescriptions/${prescriptionId}?user_id=1`
+          `http://localhost:8000/api/prescriptions/${prescriptionId}?user_id=${userId}`
         );
         setMentorId(response.data.mentor_id);
         console.log("멘토아이디는", response.data.mentor_id);
@@ -28,19 +28,22 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
     const fetchPrescription = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/prescriptions/${prescriptionId}?user_id=1`
+          `http://localhost:8000/api/prescriptions/${prescriptionId}?user_id=${userId}`
         );
 
-        setSummaryText(response.data.content); // 가져온 처방전의 내용을 summaryText에 설정
-        console.log("처방전 ID는", response.data.id); // prescription.id 출력
+        setSummaryText(response.data.content);
+        console.log("처방전 ID는", response.data.id);
       } catch (error) {
         console.error("Error fetching prescription:", error);
       }
     };
 
-    fetchMentorId();
-    fetchPrescription();
-  }, [prescriptionId]);
+    if (userId) {
+      fetchMentorId();
+      fetchPrescription();
+    }
+  }, [prescriptionId, userId]);
+
   const getMentorName = (id: number | null) => {
     switch (id) {
       case 1:
@@ -53,6 +56,7 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
         return "뉘슈?";
     }
   };
+
   return (
     <div className="absolute" style={{ zIndex: 1, width: "710px" }}>
       <p
@@ -71,8 +75,7 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
           paddingBottom: "10px",
         }}
       >
-        {mentorId !== null ? ` ${getMentorName(mentorId)} 드림` : ""}{" "}
-        {/* 멘토 ID 표시 */}
+        {mentorId !== null ? ` ${getMentorName(mentorId)} 드림` : ""}
       </p>
     </div>
   );
