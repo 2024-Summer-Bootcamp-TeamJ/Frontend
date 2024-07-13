@@ -4,8 +4,13 @@ import ChattingPage_Baek from "./pages/ChattingPage/ChattingPage_Baek";
 import ChattingPage_Oh from "./pages/ChattingPage/ChattingPage_Oh";
 import ChattingPage_Shin from "./pages/ChattingPage/ChattingPage_Shin";
 import MyPage from "./pages/MyPage";
-import PrescriptionPage from "./pages/PrescriptionPage"; 
+import PrescriptionPage from "./pages/PrescriptionPage";
 import FirstPage from "./pages/FirstPage";
+
+import "./index.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import React from "react";
 
 function App() {
   return (
@@ -18,6 +23,12 @@ function App() {
         <Route path="/chat/shin" element={<ChattingPage_Shin />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/prescription" element={<PrescriptionPage />} />
+        <Route path="/first" element={<FirstPage />} />
+        <Route
+          path="/prescription/:prescription_id"
+          element={<PrescriptionPage />}
+        />
+
       </Routes>
     </Router>
   );

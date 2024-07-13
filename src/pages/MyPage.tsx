@@ -13,13 +13,84 @@ import redButtonAll from "../assets/images/redButtonAll.svg";
 import AllLetter from "../assets/images/AllLetter.svg";
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useStore } from "../../store";
 
 const MyPage: React.FC = () => {
+  const navigate = useNavigate(); // useHistory 훅 사용
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
-  const [nickname, setNickname] = useState<string>("");
+  const [selectedButton, setSelectedButton] = useState<string | null>(null);
+  const [prescriptions, setPrescriptions] = useState<any[]>([]);
+  const [selectedMentor, setSelectedMentor] = useState<number | null>(null);
+
+  const { nickname, memberId, setNickname, setMemberId } = useStore();
+
+  useEffect(() => {
+    setMemberId(1); // 멤버 아이디를 1로 설정
+  }, [setMemberId]);
+  useEffect(() => {
+    // 페이지 초기 로드 시 redButtonAll을 선택된 상태로 설정
+    setSelectedButton("All");
+    fetchPrescriptions(null);
+  }, []);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (memberId !== null) {
+        try {
+          const response = await axios.get(
+            `http://localhost:8000/api/users/${memberId}`
+          );
+          setNickname(response.data.nickname);
+          console.log("닉네임은", nickname, "멤버아이디는", memberId);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [memberId, setNickname]);
+
+  useEffect(() => {
+    fetchPrescriptions(); // 페이지 로드 시 전체 처방전 리스트를 불러옴
+  }, [memberId]);
+
+  const fetchPrescriptions = async (mentorId: number | null = null) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/api/prescriptions",
+        {
+          params: {
+            user_id: memberId,
+            mentor_id: mentorId || undefined,
+          },
+        }
+      );
+
+      const prescriptions = mentorId
+        ? response.data.filter(
+            (prescription: { mentor_id: number }) =>
+              prescription.mentor_id === mentorId
+          )
+        : response.data;
+
+      setPrescriptions(prescriptions);
+      setSelectedMentor(mentorId);
+
+      console.log(
+        "멤버아이디는(fetchPrescriptions)",
+        memberId,
+        "멘토아이디는(fetchPrescriptions)",
+        mentorId
+      );
+      console.log("response.data", prescriptions);
+    } catch (error) {
+      console.error("Error fetching prescriptions:", error);
+    }
+  };
 
   const handleMouseEnter = (buttonName: string) => {
     setHoveredButton(buttonName);
@@ -29,18 +100,10 @@ const MyPage: React.FC = () => {
     setHoveredButton(null);
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/users/2");
-        setNickname(response.data.nickname);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const handleClick = (buttonName: string, mentorId: number | null) => {
+    fetchPrescriptions(mentorId);
+    setSelectedButton(buttonName);
+  };
 
   return (
     <div
@@ -79,12 +142,12 @@ const MyPage: React.FC = () => {
           style={{ width: "48rem", height: "36rem" }}
           className="bg-lettersColor p-6 rounded-100px shadow-lg "
         >
-          {/* 여기 안에 필요한 내용을 추가하세요 */}
           <div className="flex justify-center mb-4 space-x-[-15px]">
             <div
               onMouseEnter={() => handleMouseEnter("All")}
               onMouseLeave={handleMouseLeave}
-              className="relative"
+              onClick={() => handleClick("All", null)}
+              className="relative cursor-pointer"
             >
               <img
                 src={redButtonAll}
@@ -92,7 +155,8 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {hoveredButton === "All" && (
+              {(hoveredButton === "All" ||
+                (selectedButton === "All" && !hoveredButton)) && (
                 <img
                   src={AllLetter}
                   alt="From All"
@@ -104,7 +168,8 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Oh")}
               onMouseLeave={handleMouseLeave}
-              className="relative"
+              onClick={() => handleClick("Oh", 2)}
+              className="relative cursor-pointer"
             >
               <img
                 src={redButtonOh}
@@ -112,7 +177,8 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {hoveredButton === "Oh" && (
+              {(hoveredButton === "Oh" ||
+                (selectedButton === "Oh" && !hoveredButton)) && (
                 <img
                   src={fromOh}
                   alt="From Oh"
@@ -124,7 +190,8 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Baek")}
               onMouseLeave={handleMouseLeave}
-              className="relative"
+              onClick={() => handleClick("Baek", 1)}
+              className="relative cursor-pointer"
             >
               <img
                 src={redButtonBaek}
@@ -132,7 +199,8 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {hoveredButton === "Baek" && (
+              {(hoveredButton === "Baek" ||
+                (selectedButton === "Baek" && !hoveredButton)) && (
                 <img
                   src={fromBaek}
                   alt="From Baek"
@@ -144,7 +212,8 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Shin")}
               onMouseLeave={handleMouseLeave}
-              className="relative"
+              onClick={() => handleClick("Shin", 3)}
+              className="relative cursor-pointer"
             >
               <img
                 src={redButtonShin}
@@ -152,7 +221,8 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {hoveredButton === "Shin" && (
+              {(hoveredButton === "Shin" ||
+                (selectedButton === "Shin" && !hoveredButton)) && (
                 <img
                   src={fromShin}
                   alt="From Shin"
@@ -165,39 +235,42 @@ const MyPage: React.FC = () => {
 
           <div
             className="flex flex-col items-center space-y-4 overflow-y-auto scrollbar"
-            style={{ maxHeight: "24rem" }} // 이 높이 설정을 조정할 수 있습니다.
+            style={{ maxHeight: "24rem", overflowX: "hidden" }} // 이 높이 설정을 조정할 수 있습니다.
           >
-            {/* 동일한 요소들을 여러 개 추가 */}
-            {[...Array(10)].map((_, index) => (
-              <div
-                key={index}
-                className="flex items-center  p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                {hoveredIndex === index && (
+            {(selectedMentor === null || selectedMentor !== null) &&
+              prescriptions.length > 0 &&
+              prescriptions.map((prescription, index) => (
+                <div
+                  key={prescription.id}
+                  className="flex items-center p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  onClick={() => navigate(`/prescription/${prescription.id}`)} // useNavigate로 변경
+                >
+                  {hoveredIndex === index && (
+                    <img
+                      src={IconMouse}
+                      alt="Mouse Icon"
+                      className="w-16"
+                      draggable="false"
+                    />
+                  )}
                   <img
-                    src={IconMouse}
-                    alt="Mouse Icon"
-                    className="w-16"
+                    src={IconLetter}
+                    alt="Letter Icon"
+                    className="w-16 transform translate-y-1"
                     draggable="false"
                   />
-                )}
-                <img
-                  src={IconLetter}
-                  alt="Letter Icon"
-                  className="w-16 transform translate-y-1"
-                  draggable="false"
-                />
-                <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
-                  2024.07.06
-                </span>
-              </div>
-            ))}
+                  <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
+                    {new Date(prescription.created_at).toLocaleDateString()}
+                  </span>
+                </div>
+              ))}
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 export default MyPage;
