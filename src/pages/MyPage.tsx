@@ -22,6 +22,7 @@ const MyPage: React.FC = () => {
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+  const [selectedButton, setSelectedButton] = useState<string | null>(null);
   const [prescriptions, setPrescriptions] = useState<any[]>([]);
   const [selectedMentor, setSelectedMentor] = useState<number | null>(null);
 
@@ -95,6 +96,11 @@ const MyPage: React.FC = () => {
     setHoveredButton(null);
   };
 
+  const handleClick = (buttonName: string, mentorId: number | null) => {
+    fetchPrescriptions(mentorId);
+    setSelectedButton(buttonName);
+  };
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-blue-100 relative"
@@ -136,7 +142,7 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("All")}
               onMouseLeave={handleMouseLeave}
-              onClick={() => fetchPrescriptions()}
+              onClick={() => handleClick("All", null)}
               className="relative cursor-pointer"
             >
               <img
@@ -145,7 +151,7 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {hoveredButton === "All" && (
+              {(hoveredButton === "All" || selectedButton === "All") && (
                 <img
                   src={AllLetter}
                   alt="From All"
@@ -157,7 +163,7 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Oh")}
               onMouseLeave={handleMouseLeave}
-              onClick={() => fetchPrescriptions(2)}
+              onClick={() => handleClick("Oh", 2)}
               className="relative cursor-pointer"
             >
               <img
@@ -166,7 +172,7 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {hoveredButton === "Oh" && (
+              {(hoveredButton === "Oh" || selectedButton === "Oh") && (
                 <img
                   src={fromOh}
                   alt="From Oh"
@@ -178,7 +184,7 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Baek")}
               onMouseLeave={handleMouseLeave}
-              onClick={() => fetchPrescriptions(1)}
+              onClick={() => handleClick("Baek", 1)}
               className="relative cursor-pointer"
             >
               <img
@@ -187,7 +193,7 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {hoveredButton === "Baek" && (
+              {(hoveredButton === "Baek" || selectedButton === "Baek") && (
                 <img
                   src={fromBaek}
                   alt="From Baek"
@@ -199,7 +205,7 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Shin")}
               onMouseLeave={handleMouseLeave}
-              onClick={() => fetchPrescriptions(3)}
+              onClick={() => handleClick("Shin", 3)}
               className="relative cursor-pointer"
             >
               <img
@@ -208,7 +214,7 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {hoveredButton === "Shin" && (
+              {(hoveredButton === "Shin" || selectedButton === "Shin") && (
                 <img
                   src={fromShin}
                   alt="From Shin"
