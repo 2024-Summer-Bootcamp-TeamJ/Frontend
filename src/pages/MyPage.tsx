@@ -31,7 +31,11 @@ const MyPage: React.FC = () => {
   useEffect(() => {
     setMemberId(1); // 멤버 아이디를 1로 설정
   }, [setMemberId]);
-
+  useEffect(() => {
+    // 페이지 초기 로드 시 redButtonAll을 선택된 상태로 설정
+    setSelectedButton("All");
+    fetchPrescriptions(null);
+  }, []);
   useEffect(() => {
     const fetchUserData = async () => {
       if (memberId !== null) {
