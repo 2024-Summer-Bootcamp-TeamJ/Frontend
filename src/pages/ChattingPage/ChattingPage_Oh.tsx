@@ -10,7 +10,7 @@ import Button from '../../components/FirstPage/Button';
 const ChattingPageOh: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const chatroomId = new URLSearchParams(location.search).get('chatroomId');
+  const chatroomId = location.state?.chatroomId;
 
   const endChatAndGoToPrescription = async () => {
     try {

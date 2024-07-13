@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate  } from "react-router-dom";
+import axios from "axios";
 import IconMouse from "../assets/images/IconMouse.svg";
 import IconLetter from "../assets/images/IconLetter.svg";
 import IconToHome from "../assets/images/IconToHome.svg";
@@ -11,11 +14,8 @@ import fromOh from "../assets/images/fromOh.svg";
 import redButtonOh from "../assets/images/redButtonOh.svg";
 import redButtonAll from "../assets/images/redButtonAll.svg";
 import AllLetter from "../assets/images/AllLetter.svg";
-
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useStore } from "../../store";
+
 
 const MyPage: React.FC = () => {
   const navigate = useNavigate(); // useHistory 훅 사용
@@ -108,6 +108,14 @@ const MyPage: React.FC = () => {
     setSelectedButton(buttonName);
   };
 
+  const handleMouseEnter = (buttonName: string) => {
+    setHoveredButton(buttonName);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredButton(null);
+  };
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-blue-100 relative"
@@ -118,7 +126,7 @@ const MyPage: React.FC = () => {
       }}
     >
       <div className="absolute top-4 left-4">
-        <Link to="/mentor">
+        <Link to="/mentor" state={{ userId }}>
           <img
             src={IconToHome}
             alt="To Home Icon"

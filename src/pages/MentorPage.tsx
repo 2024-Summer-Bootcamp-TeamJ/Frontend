@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import ProfileFrontShin from "../assets/images/ProfileFrontShin.svg";
 import ProfileFrontBaek from "../assets/images/ProfileFrontBaek.svg";
@@ -24,37 +24,52 @@ interface Mentor {
   choosingButtonImage: string;
 }
 
-const mentorsData: Mentor[] = [
-  {
-    id: 1,
-    name: "Baek",
-    description: "Description for Baek",
+const mentorImages: { [key: number]: any } = {
+  1: {
     frontImage: ProfileFrontBaek,
     backImage: ProfileBackBaek,
     choosingButtonImage: ChoosingButtonBaek,
+    name: "baek"
   },
-  {
-    id: 2,
-    name: "Oh",
-    description: "Description for Oh",
+  2: {
     frontImage: ProfileFrontOh,
     backImage: ProfileBackOh,
     choosingButtonImage: ChoosingButtonOh,
+    name: "oh"
   },
-  {
-    id: 3,
-    name: "Shin",
-    description: "Description for Shin",
+  3: {
     frontImage: ProfileFrontShin,
     backImage: ProfileBackShin,
     choosingButtonImage: ChoosingButtonShin,
-  },
-];
+    name: "shin"
+  }
+};
 
 const MentorPage: React.FC = () => {
   const [flippedMentorId, setFlippedMentorId] = useState<number | null>(null);
-  const { userId } = useStore(); // 전역 상태에서 userId 가져오기
+  const [mentors, setMentors] = useState<Mentor[]>([]);
+  const location = useLocation();
+  const userId = location.state?.userId;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchMentors = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/mentors');
+        const mentorsData = response.data
+          .filter((mentor: any) => mentor.id >= 1 && mentor.id <= 3)
+          .map((mentor: any) => ({
+            ...mentor,
+            ...mentorImages[mentor.id]
+          }));
+        setMentors(mentorsData);
+      } catch (error) {
+        console.error('Error fetching mentors:', error);
+      }
+    };
+
+    fetchMentors();
+  }, []);
 
   const toggleMentorImage = (mentorId: number) => {
     if (flippedMentorId === mentorId) {
@@ -83,19 +98,12 @@ const MentorPage: React.FC = () => {
       if (response.status === 200 || response.status === 201) {
         console.log("Chatroom created successfully");
         const chatroomId = response.data.id;
-        switch (mentorId) {
-          case 1:
-            navigate(`/chat/baek?chatroomId=${chatroomId}`);
-            break;
-          case 2:
-            navigate(`/chat/oh?chatroomId=${chatroomId}`);
-            break;
-          case 3:
-            navigate(`/chat/shin?chatroomId=${chatroomId}`);
-            break;
-          default:
-            console.error("Invalid mentor ID");
-            throw new Error("Chatroom creation failed");
+        const mentor = mentors.find((mentor) => mentor.id === mentorId);
+        if (mentor) {
+          navigate(`/chat/${mentorImages[mentor.id].name}`, { state: { chatroomId } });
+        } else {
+          console.error('Invalid mentor ID');
+          throw new Error('Chatroom creation failed');
         }
       } else {
         console.error("Unexpected response status:", response.status);
@@ -112,7 +120,7 @@ const MentorPage: React.FC = () => {
       style={{ backgroundImage: `url(${backgroundGreen})` }}
     >
       <div className="flex flex-row justify-center items-center gap-4">
-        {mentorsData.map((mentor) => (
+        {mentors.map((mentor) => (
           <div
             key={mentor.id}
             className={`relative flex items-center p-4 cursor-pointer flip-card ${
