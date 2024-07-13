@@ -13,6 +13,7 @@ import ChoosingButtonBaek from "../assets/images/ChoosingButtonBaek.svg";
 import ChoosingButtonOh from "../assets/images/ChoosingButtonOh.svg";
 import ChoosingButtonShin from "../assets/images/ChoosingButtonShin.svg";
 import "../index.css";
+import { useStore } from "../../store";
 
 interface Mentor {
   id: number;
@@ -30,7 +31,7 @@ const mentorsData: Mentor[] = [
     description: "Description for Baek",
     frontImage: ProfileFrontBaek,
     backImage: ProfileBackBaek,
-    choosingButtonImage: ChoosingButtonBaek
+    choosingButtonImage: ChoosingButtonBaek,
   },
   {
     id: 2,
@@ -38,7 +39,7 @@ const mentorsData: Mentor[] = [
     description: "Description for Oh",
     frontImage: ProfileFrontOh,
     backImage: ProfileBackOh,
-    choosingButtonImage: ChoosingButtonOh
+    choosingButtonImage: ChoosingButtonOh,
   },
   {
     id: 3,
@@ -46,13 +47,13 @@ const mentorsData: Mentor[] = [
     description: "Description for Shin",
     frontImage: ProfileFrontShin,
     backImage: ProfileBackShin,
-    choosingButtonImage: ChoosingButtonShin
-  }
+    choosingButtonImage: ChoosingButtonShin,
+  },
 ];
 
 const MentorPage: React.FC = () => {
   const [flippedMentorId, setFlippedMentorId] = useState<number | null>(null);
-  const userId = 1; // 실제 유저 ID로 대체해야 함
+  const { userId } = useStore(); // 전역 상태에서 userId 가져오기
   const navigate = useNavigate();
 
   const toggleMentorImage = (mentorId: number) => {
@@ -64,23 +65,23 @@ const MentorPage: React.FC = () => {
   };
 
   const createChatroom = async (mentorId: number) => {
-    console.log('Creating chatroom with mentorId:', mentorId);
+    console.log("Creating chatroom with mentorId:", mentorId);
 
     if (!userId) {
-      console.error('User ID is not set');
+      console.error("User ID is not set");
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/api/chatrooms', {
+      const response = await axios.post("http://localhost:8000/api/chatrooms", {
         user_id: userId,
-        mentor_id: mentorId
+        mentor_id: mentorId,
       });
 
-      console.log('Response from server:', response);
+      console.log("Response from server:", response);
 
       if (response.status === 200 || response.status === 201) {
-        console.log('Chatroom created successfully');
+        console.log("Chatroom created successfully");
         const chatroomId = response.data.id;
         switch (mentorId) {
           case 1:
@@ -93,15 +94,15 @@ const MentorPage: React.FC = () => {
             navigate(`/chat/shin?chatroomId=${chatroomId}`);
             break;
           default:
-            console.error('Invalid mentor ID');
-            throw new Error('Chatroom creation failed');
+            console.error("Invalid mentor ID");
+            throw new Error("Chatroom creation failed");
         }
       } else {
-        console.error('Unexpected response status:', response.status);
-        throw new Error('Chatroom creation failed');
+        console.error("Unexpected response status:", response.status);
+        throw new Error("Chatroom creation failed");
       }
     } catch (error) {
-      console.error('Error creating chatroom:', error);
+      console.error("Error creating chatroom:", error);
     }
   };
 
@@ -122,13 +123,17 @@ const MentorPage: React.FC = () => {
             <img
               src={mentor.frontImage}
               alt={mentor.name}
-              className={`w-100 flip-card-front ${flippedMentorId === mentor.id ? "hidden" : ""}`}
+              className={`w-100 flip-card-front ${
+                flippedMentorId === mentor.id ? "hidden" : ""
+              }`}
               draggable="false"
             />
             <img
               src={mentor.backImage}
               alt={`${mentor.name} 뒷면`}
-              className={`w-100 flip-card-back ${flippedMentorId === mentor.id ? "" : "hidden"}`}
+              className={`w-100 flip-card-back ${
+                flippedMentorId === mentor.id ? "" : "hidden"
+              }`}
               draggable="false"
             />
             {flippedMentorId === mentor.id && (

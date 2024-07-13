@@ -1,17 +1,21 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../index.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "./../components/FirstPage/Button";
 import Input from "./../components/FirstPage/Input";
 import StartButton from "./../components/FirstPage/StartButton";
-
 import { useStore } from "../../store";
 
 const FirstPage: React.FC = () => {
   const [nickname, setNickname] = useState("");
   const setUserId = useStore((state) => state.setUserId);
+  const userId = useStore((state) => state.userId);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("Updated user_id:", userId);
+  }, [userId]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(event.target.value);
@@ -33,11 +37,17 @@ const FirstPage: React.FC = () => {
         console.log("Response:", response.data);
         const message = `User created: ${response.data.nickname}`;
         alert(message);
-        setUserId(response.data.user_id);
+        setUserId(response.data.id);
+        console.log("Stored user_id:", userId);
+        console.log("리스폰스데이타", response.data);
+        console.log("리스폰스데이타.아이디", response.data.id);
       } else if (response.status === 200) {
         const message = `User created: ${response.data.nickname}`;
         alert(message);
-        setUserId(response.data.user_id);
+        setUserId(response.data.id);
+        console.log("Stored user_id:", userId);
+        console.log("리스폰스데이타", response.data);
+        console.log("리스폰스데이타.아이디", response.data.id);
       }
     } catch (error: any) {
       let message = "An error occurred";
@@ -51,6 +61,11 @@ const FirstPage: React.FC = () => {
       alert(message);
       console.error("Error:", error);
     }
+  };
+
+  const handleStartButtonClick = () => {
+    console.log("Stored user_id:", userId);
+    navigate("/mentor");
   };
 
   return (
@@ -101,9 +116,7 @@ const FirstPage: React.FC = () => {
       </div>
 
       <div className="absolute z-10 flex mt-96">
-        <Link to="/mentor">
-          <StartButton />
-        </Link>
+        <StartButton onClick={handleStartButtonClick} />
       </div>
     </div>
   );
