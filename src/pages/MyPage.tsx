@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import IconMouse from "../assets/images/IconMouse.svg";
 import IconLetter from "../assets/images/IconLetter.svg";
@@ -106,14 +106,6 @@ const MyPage: React.FC = () => {
   const handleClick = (buttonName: string, mentorId: number | null) => {
     fetchPrescriptions(mentorId);
     setSelectedButton(buttonName);
-  };
-
-  const handleMouseEnter = (buttonName: string) => {
-    setHoveredButton(buttonName);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredButton(null);
   };
 
   return (

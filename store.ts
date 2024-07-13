@@ -11,11 +11,11 @@ interface AppState {
   members: Member[];
   nickname: string;
   memberId: number | null;
-  userId: string | null;
+  userId: number | null;
   setNickname: (nickname: string) => void;
   setMemberId: (memberId: number) => void;
   setMembers: (members: Member[]) => void;
-  setUserId: (userId: string) => void;
+  setUserId: (userId: number) => void;
 }
 
 interface StoreState extends AppState {
@@ -66,3 +66,4 @@ export const useStore = create<StoreState>()(
     storage: storage, // localStorage를 persist storage로 변환하여 사용
   })
 );
+

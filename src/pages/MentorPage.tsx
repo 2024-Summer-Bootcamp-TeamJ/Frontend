@@ -48,8 +48,7 @@ const mentorImages: { [key: number]: any } = {
 const MentorPage: React.FC = () => {
   const [flippedMentorId, setFlippedMentorId] = useState<number | null>(null);
   const [mentors, setMentors] = useState<Mentor[]>([]);
-  const location = useLocation();
-  const userId = location.state?.userId;
+  const userId = useStore((state) => state.userId);
   const navigate = useNavigate();
 
   useEffect(() => {
