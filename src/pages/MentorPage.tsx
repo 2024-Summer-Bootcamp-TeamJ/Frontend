@@ -13,6 +13,7 @@ import ChoosingButtonBaek from "../assets/images/ChoosingButtonBaek.svg";
 import ChoosingButtonOh from "../assets/images/ChoosingButtonOh.svg";
 import ChoosingButtonShin from "../assets/images/ChoosingButtonShin.svg";
 import "../index.css";
+import { useStore } from "../../store";
 
 interface Mentor {
   id: number;
@@ -79,23 +80,23 @@ const MentorPage: React.FC = () => {
   };
 
   const createChatroom = async (mentorId: number) => {
-    console.log('Creating chatroom with mentorId:', mentorId);
+    console.log("Creating chatroom with mentorId:", mentorId);
 
     if (!userId) {
-      console.error('User ID is not set');
+      console.error("User ID is not set");
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/api/chatrooms', {
+      const response = await axios.post("http://localhost:8000/api/chatrooms", {
         user_id: userId,
-        mentor_id: mentorId
+        mentor_id: mentorId,
       });
 
-      console.log('Response from server:', response);
+      console.log("Response from server:", response);
 
       if (response.status === 200 || response.status === 201) {
-        console.log('Chatroom created successfully');
+        console.log("Chatroom created successfully");
         const chatroomId = response.data.id;
         const mentor = mentors.find((mentor) => mentor.id === mentorId);
         if (mentor) {
@@ -105,11 +106,11 @@ const MentorPage: React.FC = () => {
           throw new Error('Chatroom creation failed');
         }
       } else {
-        console.error('Unexpected response status:', response.status);
-        throw new Error('Chatroom creation failed');
+        console.error("Unexpected response status:", response.status);
+        throw new Error("Chatroom creation failed");
       }
     } catch (error) {
-      console.error('Error creating chatroom:', error);
+      console.error("Error creating chatroom:", error);
     }
   };
 
@@ -130,13 +131,17 @@ const MentorPage: React.FC = () => {
             <img
               src={mentor.frontImage}
               alt={mentor.name}
-              className={`w-100 flip-card-front ${flippedMentorId === mentor.id ? "hidden" : ""}`}
+              className={`w-100 flip-card-front ${
+                flippedMentorId === mentor.id ? "hidden" : ""
+              }`}
               draggable="false"
             />
             <img
               src={mentor.backImage}
               alt={`${mentor.name} 뒷면`}
-              className={`w-100 flip-card-back ${flippedMentorId === mentor.id ? "" : "hidden"}`}
+              className={`w-100 flip-card-back ${
+                flippedMentorId === mentor.id ? "" : "hidden"
+              }`}
               draggable="false"
             />
             {flippedMentorId === mentor.id && (

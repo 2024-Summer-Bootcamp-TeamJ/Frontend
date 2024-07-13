@@ -1,59 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import "../index.css";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-import '../index.css';
-import Button from './../components/FirstPage/Button';
-import Input from './../components/FirstPage/Input';
-import StartButton from './../components/FirstPage/StartButton';
+import axios from "axios";
+import Button from "./../components/FirstPage/Button";
+import Input from "./../components/FirstPage/Input";
+import StartButton from "./../components/FirstPage/StartButton";
+import { useStore } from "../../store";
 
 const FirstPage: React.FC = () => {
-    const [nickname, setNickname] = useState('');
-    const [userId, setUserId] = useState<number | null>(null);
-    const navigate = useNavigate();
+  const [nickname, setNickname] = useState("");
+  const setUserId = useStore((state) => state.setUserId);
+  const userId = useStore((state) => state.userId);
+  const navigate = useNavigate();
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNickname(event.target.value);
-    };
+  useEffect(() => {
+    console.log("Updated user_id:", userId);
+  }, [userId]);
 
-    const handleButtonClick = async () => {
-        try {
-            const payload = { "nickname": nickname };
-            const response = await axios.post('http://localhost:8000/api/users', payload, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (response.status === 201 || response.status === 200) {
-                console.log('Response:', response.data);
-                setUserId(response.data.id);
-                const message = `User created: ${response.data.nickname}`;
-                alert(message);
-            }
-        } catch (error: any) {
-            let message = 'An error occurred';
-            if (error.response) {
-                if (error.response.status === 422) {
-                    message = 'Unprocessable Entity';
-                } else if (error.response.status === 404) {
-                    message = 'Not Found';
-                }
-            }
-            alert(message);
-            console.error('Error:', error);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(event.target.value);
+  };
+
+  const handleButtonClick = async () => {
+    try {
+      const payload = { nickname: nickname };
+      const response = await axios.post(
+        "http://localhost:8000/api/users",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-    };
-
-    const handleStartButtonClick = () => {
-        console.log('Start button clicked. userId:', userId); // 디버깅용 콘솔 로그
-        if (userId) {
-            navigate('/mentor', { state: { userId } });
-        } else {
-            alert('Please create a user first.');
+      );
+      if (response.status === 201) {
+        console.log("Response:", response.data);
+        const message = `User created: ${response.data.nickname}`;
+        alert(message);
+        setUserId(response.data.id);
+        console.log("Stored user_id:", userId);
+        console.log("리스폰스데이타", response.data);
+        console.log("리스폰스데이타.아이디", response.data.id);
+      } else if (response.status === 200) {
+        const message = `User created: ${response.data.nickname}`;
+        alert(message);
+        setUserId(response.data.id);
+        console.log("Stored user_id:", userId);
+        console.log("리스폰스데이타", response.data);
+        console.log("리스폰스데이타.아이디", response.data.id);
+      }
+    } catch (error: any) {
+      let message = "An error occurred";
+      if (error.response) {
+        if (error.response.status === 422) {
+          message = "Unprocessable Entity";
+        } else if (error.response.status === 404) {
+          message = "Not Found";
         }
-    };
+      }
+      alert(message);
+      console.error("Error:", error);
+    }
+  };
 
-    return (
-        <div 
+  const handleStartButtonClick = () => {
+    console.log("Stored user_id:", userId);
+    navigate("/mentor");
+  };
+
+  return (
+    <div 
             className="relative flex items-center justify-center overflow-hidden w-screen h-screen"
         >
             <img 
@@ -82,7 +98,7 @@ const FirstPage: React.FC = () => {
                 <StartButton onClick={handleStartButtonClick} />
             </div>
         </div>
-    );
+  );
 };
 
 export default FirstPage;
