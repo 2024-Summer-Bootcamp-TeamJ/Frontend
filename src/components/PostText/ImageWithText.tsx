@@ -41,7 +41,18 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
     fetchMentorId();
     fetchPrescription();
   }, [prescriptionId]);
-
+  const getMentorName = (id: number | null) => {
+    switch (id) {
+      case 1:
+        return "백곰원";
+      case 2:
+        return "오은양";
+      case 3:
+        return "신문엽";
+      default:
+        return "뉘슈?";
+    }
+  };
   return (
     <div className="absolute" style={{ zIndex: 1, width: "710px" }}>
       <p
@@ -60,7 +71,8 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
           paddingBottom: "10px",
         }}
       >
-        {mentorId !== null ? `멘토 ID: ${mentorId}` : ""} {/* 멘토 ID 표시 */}
+        {mentorId !== null ? ` ${getMentorName(mentorId)} 드림` : ""}{" "}
+        {/* 멘토 ID 표시 */}
       </p>
     </div>
   );
