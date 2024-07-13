@@ -151,7 +151,8 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {(hoveredButton === "All" || selectedButton === "All") && (
+              {(hoveredButton === "All" ||
+                (selectedButton === "All" && !hoveredButton)) && (
                 <img
                   src={AllLetter}
                   alt="From All"
@@ -172,7 +173,8 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {(hoveredButton === "Oh" || selectedButton === "Oh") && (
+              {(hoveredButton === "Oh" ||
+                (selectedButton === "Oh" && !hoveredButton)) && (
                 <img
                   src={fromOh}
                   alt="From Oh"
@@ -193,7 +195,8 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {(hoveredButton === "Baek" || selectedButton === "Baek") && (
+              {(hoveredButton === "Baek" ||
+                (selectedButton === "Baek" && !hoveredButton)) && (
                 <img
                   src={fromBaek}
                   alt="From Baek"
@@ -214,7 +217,8 @@ const MyPage: React.FC = () => {
                 className="w-20"
                 draggable="false"
               />
-              {(hoveredButton === "Shin" || selectedButton === "Shin") && (
+              {(hoveredButton === "Shin" ||
+                (selectedButton === "Shin" && !hoveredButton)) && (
                 <img
                   src={fromShin}
                   alt="From Shin"
