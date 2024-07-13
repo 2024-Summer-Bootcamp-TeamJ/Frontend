@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 import IconMouse from "../assets/images/IconMouse.svg";
 import IconLetter from "../assets/images/IconLetter.svg";
 import IconToHome from "../assets/images/IconToHome.svg";
@@ -12,14 +15,25 @@ import redButtonOh from "../assets/images/redButtonOh.svg";
 import redButtonAll from "../assets/images/redButtonAll.svg";
 import AllLetter from "../assets/images/AllLetter.svg";
 
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-
 const MyPage: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [nickname, setNickname] = useState<string>("");
+  const [userId, setUserId] = useState<number | null>(null);
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/users/2");
+        setNickname(response.data.nickname);
+        setUserId(response.data.id);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleMouseEnter = (buttonName: string) => {
     setHoveredButton(buttonName);
@@ -28,19 +42,6 @@ const MyPage: React.FC = () => {
   const handleMouseLeave = () => {
     setHoveredButton(null);
   };
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/users/2");
-        setNickname(response.data.nickname);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
 
   return (
     <div
@@ -52,7 +53,7 @@ const MyPage: React.FC = () => {
       }}
     >
       <div className="absolute top-4 left-4">
-        <Link to="/mentor">
+        <Link to="/mentor" state={{ userId }}>
           <img
             src={IconToHome}
             alt="To Home Icon"
@@ -167,7 +168,6 @@ const MyPage: React.FC = () => {
             className="flex flex-col items-center space-y-4 overflow-y-auto scrollbar"
             style={{ maxHeight: "24rem" }} // 이 높이 설정을 조정할 수 있습니다.
           >
-            {/* 동일한 요소들을 여러 개 추가 */}
             {[...Array(10)].map((_, index) => (
               <div
                 key={index}
@@ -200,4 +200,5 @@ const MyPage: React.FC = () => {
     </div>
   );
 };
+
 export default MyPage;

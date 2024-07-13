@@ -3,12 +3,18 @@ import React from 'react';
 interface ButtonProps {
   text: string;
   color: string;
-  onClick?: () => void; 
+  onClick?: () => void;
+  width?: string; 
+  height?: string; 
 }
 
-const Button: React.FC<ButtonProps> = ({ text, color, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ text, color, onClick, width, height }) => {
   return (
-    <button onClick={onClick} className={`py-2 px-4 ${color} rounded`}>
+    <button 
+      onClick={onClick} 
+      className={`py-2 px-4 text-white ${color} rounded-md`} 
+      style={{ width, height }}
+    >
       {text}
     </button>
   );
