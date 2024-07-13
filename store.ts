@@ -11,9 +11,11 @@ interface AppState {
   members: Member[];
   nickname: string;
   memberId: number | null;
+  userId: string | null;
   setNickname: (nickname: string) => void;
   setMemberId: (memberId: number) => void;
   setMembers: (members: Member[]) => void;
+  setUserId: (userId: string) => void;
 }
 
 interface StoreState extends AppState {
@@ -39,17 +41,20 @@ const stateCreator: StateCreator<StoreState> = (set, get) => ({
   nickname: "",
   members: [],
   memberId: null,
+  userId: null,
 
   // 닉네임 저장
   setNickname: (nickname) => set({ nickname }),
   setMemberId: (memberId) => set({ memberId }),
   setMembers: (members) => set({ members }),
+  setUserId: (userId) => set({ userId }),
 
   resetState: () => {
     set({
       nickname: "",
       memberId: null,
       members: [],
+      userId: null,
     });
   },
 });
