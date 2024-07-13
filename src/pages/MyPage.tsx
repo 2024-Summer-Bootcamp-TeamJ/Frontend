@@ -235,7 +235,7 @@ const MyPage: React.FC = () => {
 
           <div
             className="flex flex-col items-center space-y-4 overflow-y-auto scrollbar"
-            style={{ maxHeight: "24rem" }} // 이 높이 설정을 조정할 수 있습니다.
+            style={{ maxHeight: "24rem", overflowX: "hidden" }} // 이 높이 설정을 조정할 수 있습니다.
           >
             {(selectedMentor === null || selectedMentor !== null) &&
               prescriptions.length > 0 &&
