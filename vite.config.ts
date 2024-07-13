@@ -1,11 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path' //추가
+import path from 'path'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  resolve:{ //추가
+  resolve:{
     alias:[
       {
         find: "@src",
@@ -16,5 +15,14 @@ export default defineConfig({
         replacement: path.resolve(__dirname, "src/components")
       }
     ]
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000', // 백엔드 서버 주소로 변경
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })
