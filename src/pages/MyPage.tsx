@@ -13,11 +13,13 @@ import redButtonAll from "../assets/images/redButtonAll.svg";
 import AllLetter from "../assets/images/AllLetter.svg";
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useStore } from "../../store";
 
 const MyPage: React.FC = () => {
+  const navigate = useNavigate(); // useHistory 훅 사용
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [prescriptions, setPrescriptions] = useState<any[]>([]);
@@ -224,32 +226,31 @@ const MyPage: React.FC = () => {
             {(selectedMentor === null || selectedMentor !== null) &&
               prescriptions.length > 0 &&
               prescriptions.map((prescription, index) => (
-                <Link to="/prescription">
-                  <div
-                    key={prescription.id}
-                    className="flex items-center p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                  >
-                    {hoveredIndex === index && (
-                      <img
-                        src={IconMouse}
-                        alt="Mouse Icon"
-                        className="w-16"
-                        draggable="false"
-                      />
-                    )}
+                <div
+                  key={prescription.id}
+                  className="flex items-center p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  onClick={() => navigate(`/prescription/${prescription.id}`)} // useNavigate로 변경
+                >
+                  {hoveredIndex === index && (
                     <img
-                      src={IconLetter}
-                      alt="Letter Icon"
-                      className="w-16 transform translate-y-1"
+                      src={IconMouse}
+                      alt="Mouse Icon"
+                      className="w-16"
                       draggable="false"
                     />
-                    <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
-                      {new Date(prescription.created_at).toLocaleDateString()}
-                    </span>
-                  </div>
-                </Link>
+                  )}
+                  <img
+                    src={IconLetter}
+                    alt="Letter Icon"
+                    className="w-16 transform translate-y-1"
+                    draggable="false"
+                  />
+                  <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
+                    {new Date(prescription.created_at).toLocaleDateString()}
+                  </span>
+                </div>
               ))}
           </div>
         </div>

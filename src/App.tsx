@@ -3,9 +3,9 @@ import FirstPage from "./pages/FirstPage";
 import MentorPage from "./pages/MentorPage";
 import MyPage from "./pages/MyPage";
 import PrescriptionPage from "./pages/PrescriptionPage";
-import ChattingPageBaek from "./pages/ChattingPage/ChattingPage_Baek"
-import ChattingPageOh from "./pages/ChattingPage/ChattingPage_Oh"
-import ChattingPageShin from "./pages/ChattingPage/ChattingPage_Shin"
+import ChattingPageBaek from "./pages/ChattingPage/ChattingPage_Baek";
+import ChattingPageOh from "./pages/ChattingPage/ChattingPage_Oh";
+import ChattingPageShin from "./pages/ChattingPage/ChattingPage_Shin";
 
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -24,6 +24,10 @@ const App = () => {
         <Route path="/chat/baek" element={<ChattingPageBaek />} />
         <Route path="/chat/oh" element={<ChattingPageOh />} />
         <Route path="/chat/Shin" element={<ChattingPageShin />} />
+        <Route
+          path="/prescription/:prescription_id"
+          element={<PrescriptionPage />}
+        />
       </Routes>
     </Router>
   );
