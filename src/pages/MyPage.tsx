@@ -14,7 +14,7 @@ import fromOh from "../assets/images/fromOh.svg";
 import redButtonOh from "../assets/images/redButtonOh.svg";
 import redButtonAll from "../assets/images/redButtonAll.svg";
 import AllLetter from "../assets/images/AllLetter.svg";
-import { useStore } from "../../store";
+import { useStore } from "../store/store";
 
 
 const MyPage: React.FC = () => {

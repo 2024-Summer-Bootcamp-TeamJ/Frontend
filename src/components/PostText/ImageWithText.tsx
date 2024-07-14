@@ -1,7 +1,7 @@
 import HighlightText from "./HightlightText";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useStore } from "../../../store";
+import { useStore } from "../../store/store";
 
 interface ImageWithTextProps {
   prescriptionId: number;
