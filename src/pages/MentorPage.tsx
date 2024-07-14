@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfileFrontShin from "../assets/images/ProfileFrontShin.svg";
 import ProfileFrontBaek from "../assets/images/ProfileFrontBaek.svg";
@@ -13,16 +13,7 @@ import ChoosingButtonBaek from "../assets/images/ChoosingButtonBaek.svg";
 import ChoosingButtonOh from "../assets/images/ChoosingButtonOh.svg";
 import ChoosingButtonShin from "../assets/images/ChoosingButtonShin.svg";
 import "../index.css";
-import { useStore } from "../../store";
-
-interface Mentor {
-  id: number;
-  name: string;
-  description: string;
-  frontImage: string;
-  backImage: string;
-  choosingButtonImage: string;
-}
+import { useStore } from "../store/store";
 
 const mentorImages: { [key: number]: any } = {
   1: {
@@ -47,9 +38,9 @@ const mentorImages: { [key: number]: any } = {
 
 const MentorPage: React.FC = () => {
   const [flippedMentorId, setFlippedMentorId] = useState<number | null>(null);
-  const [mentors, setMentors] = useState<Mentor[]>([]);
-  const location = useLocation();
-  const userId = location.state?.userId;
+  const mentors = useStore((state) => state.mentors);
+  const setMentors = useStore((state) => state.setMentors);
+  const userId = useStore((state) => state.userId);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,7 +60,7 @@ const MentorPage: React.FC = () => {
     };
 
     fetchMentors();
-  }, []);
+  }, [setMentors]);
 
   const toggleMentorImage = (mentorId: number) => {
     if (flippedMentorId === mentorId) {

@@ -7,8 +7,25 @@ interface Member {
   nickName: string;
 }
 
+interface Mentor {
+  id: number;
+  name: string;
+  description: string;
+  frontImage: string;
+  backImage: string;
+  choosingButtonImage: string;
+}
+
+interface Chatroom {
+  id: number;
+  userId: number;
+  mentorId: number;
+}
+
 interface AppState {
   members: Member[];
+  mentors: Mentor[];
+  chatrooms: Chatroom[];
   nickname: string;
   memberId: number | null;
   userId: number | null;
@@ -16,6 +33,8 @@ interface AppState {
   setMemberId: (memberId: number) => void;
   setMembers: (members: Member[]) => void;
   setUserId: (userId: number) => void;
+  setMentors: (mentors: Mentor[]) => void;
+  setChatrooms: (chatrooms: Chatroom[]) => void;
 }
 
 interface StoreState extends AppState {
@@ -40,6 +59,8 @@ const storage: PersistStorage<StoreState> = {
 const stateCreator: StateCreator<StoreState> = (set, get) => ({
   nickname: "",
   members: [],
+  mentors: [],
+  chatrooms: [],
   memberId: null,
   userId: null,
 
@@ -48,12 +69,16 @@ const stateCreator: StateCreator<StoreState> = (set, get) => ({
   setMemberId: (memberId) => set({ memberId }),
   setMembers: (members) => set({ members }),
   setUserId: (userId) => set({ userId }),
+  setMentors: (mentors) => set({ mentors }),
+  setChatrooms: (chatrooms) => set({ chatrooms }),
 
   resetState: () => {
     set({
       nickname: "",
       memberId: null,
       members: [],
+      mentors: [],
+      chatrooms: [],
       userId: null,
     });
   },
@@ -66,4 +91,3 @@ export const useStore = create<StoreState>()(
     storage: storage, // localStorage를 persist storage로 변환하여 사용
   })
 );
-
