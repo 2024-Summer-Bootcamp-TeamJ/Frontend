@@ -11,7 +11,8 @@ interface Mentor {
   id: number;
   name: string;
   description: string;
-  frontImage: string;
+  frontCharImage: string;
+  frontCardImage: string;
   backImage: string;
   choosingButtonImage: string;
 }
