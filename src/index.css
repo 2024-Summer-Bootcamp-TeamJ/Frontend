@@ -44,10 +44,22 @@ body,
   border-radius: 8px; /* 손잡이의 모서리 반경 */
 }
 
-.scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #c11218; /* 마우스를 올렸을 때 손잡이 색상 */
+.scrollbar2::-webkit-scrollbar {
+  width: 16px;
 }
 
+/* .scrollbar2::-webkit-scrollbar-track 
+  border-radius: 8px;
+} */
+
+.scrollbar2::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-color, #c11218); /* 기본 색상은 #c11218 */
+  border-radius: 8px;
+}
+
+.scrollbar2::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-color, #c11218); /* 마우스를 올렸을 때 색상 */
+}
 .flip-card {
   transition: transform 0.6s; /* 0.6초 동안 변환이 일어남 */
   transform-style: preserve-3d; /* 3D 변환을 유지 */
@@ -101,5 +113,5 @@ body,
 }
 
 .front-card-container:hover .front-char-image {
-  transform: translate(-50%, -50%) scale(1.5);
+  transform: translate(-50%, -50%) scale(1.3);
 }
