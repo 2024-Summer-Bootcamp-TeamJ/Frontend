@@ -8,7 +8,8 @@ import StartButton from "./../components/FirstPage/StartButton";
 import { useStore } from "../../store";
 
 const FirstPage: React.FC = () => {
-  const [nickname, setNickname] = useState("");
+  const [nickname, setNicknameState] = useState("");
+  const setNickname = useStore((state) => state.setNickname);
   const setUserId = useStore((state) => state.setUserId);
   const userId = useStore((state) => state.userId);
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const FirstPage: React.FC = () => {
   }, [userId]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(event.target.value);
+    setNicknameState(event.target.value);
   };
 
   const handleButtonClick = async () => {
@@ -33,21 +34,12 @@ const FirstPage: React.FC = () => {
           },
         }
       );
-      if (response.status === 201) {
-        console.log("Response:", response.data);
+      if (response.status === 201 || response.status === 200) {
         const message = `User created: ${response.data.nickname}`;
         alert(message);
         setUserId(response.data.id);
-        console.log("Stored user_id:", userId);
-        console.log("리스폰스데이타", response.data);
-        console.log("리스폰스데이타.아이디", response.data.id);
-      } else if (response.status === 200) {
-        const message = `User created: ${response.data.nickname}`;
-        alert(message);
-        setUserId(response.data.id);
-        console.log("Stored user_id:", userId);
-        console.log("리스폰스데이타", response.data);
-        console.log("리스폰스데이타.아이디", response.data.id);
+        setNickname(response.data.nickname);
+        console.log("Stored user_id:", response.data.id);
       }
     } catch (error: any) {
       let message = "An error occurred";
@@ -69,53 +61,30 @@ const FirstPage: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-        width: "100vw",
-        height: "100vh",
-      }}
-    >
+    <div className="relative flex items-center justify-center overflow-hidden w-screen h-screen">
       <img
         src="src/assets/images/backgroundGreen.svg"
         alt="background"
-        style={{
-          position: "relative",
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: -1,
-          backgroundSize: "cover",
-        }}
+        className="absolute inset-0 w-full h-full object-cover z-[-1] bg-cover"
       />
 
       <img
         src="src/assets/images/groupLogo.svg"
         alt="logo"
-        style={{
-          position: "absolute",
-          justifyContent: "center",
-          width: "60%",
-          height: "75%",
-          marginTop: "-240px",
-          marginLeft: "43px",
-          zIndex: 1,
-        }}
+        className="absolute justify-center w-3/5 h-3/4 mt-[-240px] ml-[43px] z-1"
       />
-
-      <div className="absolute z-10 flex gap-3 mt-72">
+      <div className="absolute bottom-48 flex gap-3 z-10">
         <Input value={nickname} onChange={handleInputChange} />
         <Button
           text="확인"
-          color="x-6 py-2 text-white bg-gray-500 rounded-md"
+          color="bg-gray-500"
           onClick={handleButtonClick}
+          // width="80px"
+          // height="56px"
         />
       </div>
 
-      <div className="absolute z-10 flex mt-96">
+      <div className="absolute bottom-32 z-10">
         <StartButton onClick={handleStartButtonClick} />
       </div>
     </div>
