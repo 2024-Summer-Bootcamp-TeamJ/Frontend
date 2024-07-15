@@ -5,7 +5,7 @@ import axios from "axios";
 import Button from "./../components/FirstPage/Button";
 import Input from "./../components/FirstPage/Input";
 import StartButton from "./../components/FirstPage/StartButton";
-import { useStore } from "../../store";
+import { useStore } from "../store/store";
 
 const FirstPage: React.FC = () => {
   const [nickname, setNicknameState] = useState("");
@@ -62,29 +62,29 @@ const FirstPage: React.FC = () => {
 
   return (
     <div className="relative flex items-center justify-center overflow-hidden w-screen h-screen">
-      <img
-        src="src/assets/images/backgroundGreen.svg"
+      <img 
+        src="src/assets/images/backgroundGreen.svg" 
         alt="background"
         className="absolute inset-0 w-full h-full object-cover z-[-1] bg-cover"
       />
 
-      <img
-        src="src/assets/images/groupLogo.svg"
+      <img 
+        src="src/assets/images/groupLogo.svg" 
         alt="logo"
         className="absolute justify-center w-3/5 h-3/4 mt-[-240px] ml-[43px] z-1"
       />
-      <div className="absolute bottom-48 flex gap-3 z-10">
+      <div className='absolute bottom-48 flex gap-3 z-10'>
         <Input value={nickname} onChange={handleInputChange} />
-        <Button
-          text="확인"
-          color="bg-gray-500"
-          onClick={handleButtonClick}
-          // width="80px"
-          // height="56px"
+        <Button 
+          text="확인" 
+          color="bg-gray-500" 
+          onClick={handleButtonClick} 
+          width="80px"
+          height="56px"
         />
       </div>
 
-      <div className="absolute bottom-32 z-10">
+      <div className='absolute bottom-32 z-10'>
         <StartButton onClick={handleStartButtonClick} />
       </div>
     </div>

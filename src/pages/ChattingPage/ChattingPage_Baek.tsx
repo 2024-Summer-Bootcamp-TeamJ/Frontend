@@ -10,13 +10,13 @@ import Button from '../../components/FirstPage/Button';
 const ChattingPageBaek: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const chatroomId = new URLSearchParams(location.search).get('chatroomId');
+  const chatroomId = location.state?.chatroomId;
 
   const endChatAndGoToPrescription = async () => {
     try {
       await axios.delete(`http://localhost:8000/api/chatrooms/${chatroomId}`);
       console.log('Chatroom deleted successfully');
-      navigate("/prescription");
+      navigate("/prescription", { state: { chatroomId } });
     } catch (error) {
       console.error('Error deleting chatroom:', error);
     }

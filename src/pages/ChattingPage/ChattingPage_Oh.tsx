@@ -10,7 +10,7 @@ import Button from '../../components/FirstPage/Button';
 const ChattingPageOh: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const chatroomId = new URLSearchParams(location.search).get('chatroomId');
+  const chatroomId = location.state?.chatroomId;
 
   const endChatAndGoToPrescription = async () => {
     try {
@@ -33,16 +33,16 @@ const ChattingPageOh: React.FC = () => {
       <div className="relative flex items-center justify-center w-full max-w-6xl px-2 py-4 bg-gray-100 bg-opacity-90 rounded-3xl shadow-md">
         <div className="relative flex items-center space-x-40 px-0 py-8 overflow-visible">
           <div className="relative ml-16 mb-12">
-            <img src={characterOh} alt="Oh" className="w-72 ml-16 h-auto relative" />
+            <img src={characterOh} alt="Oh" className="w-80 ml-8 h-auto relative" />
             <div className="absolute top-18 left-1/2 transform -translate-x-1/2 -translate-y-16">
               <img
                 src={chatBubbleImage}
                 alt="Chat Bubble"
-                className="w-60 h-auto z-20 ml-8 -mt-4"
+                className="w-60 h-auto z-20 ml-4 -mt-4"
                 style={{ transform: 'scale(2.5)' }}
               />
               <div
-                className="absolute bottom-4 -left-8 w-full h-full flex items-center justify-center"
+                className="absolute bottom-4 -left-12 w-full h-full flex items-center justify-center"
                 style={{ width: '180%', height: '100%' }}
               >
                 <p className="text-center text-3xl text-dateTextColor font-syndinaroo" style={{ transform: 'scale(1)' }}>
