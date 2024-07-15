@@ -108,17 +108,17 @@ const MyPage: React.FC = () => {
     setSelectedButton(buttonName);
   };
 
-  const handleMouseEnter = (buttonName: string) => {
-    setHoveredButton(buttonName);
-  };
+  // const handleMouseEnter = (buttonName: string) => {
+  //   setHoveredButton(buttonName);
+  // };
 
-  const handleMouseLeave = () => {
-    setHoveredButton(null);
-  };
+  // const handleMouseLeave = () => {
+  //   setHoveredButton(null);
+  // };
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-blue-100 relative"
+      className="relative flex items-center justify-center min-h-screen bg-blue-100"
       style={{
         backgroundImage: `url(${MyPageBackground})`,
         backgroundSize: "cover",
@@ -130,17 +130,17 @@ const MyPage: React.FC = () => {
           <img
             src={IconToHome}
             alt="To Home Icon"
-            className="w-14 cursor-pointer"
+            className="cursor-pointer w-14"
             draggable="false"
           />
         </Link>
       </div>
       <div className="flex space-x-6">
-        <div className="flex flex-col justify-end relative">
+        <div className="relative flex flex-col justify-end">
           <img
             src={PostBox}
             alt="PostBox"
-            className="w-96 mb-10"
+            className="mb-10 w-96"
             draggable="false"
           />
           <div className="absolute inset-0 flex items-center justify-center mt-44">
@@ -151,7 +151,7 @@ const MyPage: React.FC = () => {
         </div>
         <div
           style={{ width: "48rem", height: "36rem" }}
-          className="bg-lettersColor p-6 rounded-100px shadow-lg "
+          className="p-6 shadow-lg bg-lettersColor rounded-100px "
         >
           <div className="flex justify-center mb-4 space-x-[-15px]">
             <div
@@ -253,7 +253,7 @@ const MyPage: React.FC = () => {
               prescriptions.map((prescription, index) => (
                 <div
                   key={prescription.id}
-                  className="flex items-center p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
+                  className="flex items-center h-16 p-2 transition-colors duration-300 bg-dateColor rounded-3xl w-168 hover:bg-dateHoverColor"
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                   onClick={() => navigate(`/prescription/${prescription.id}`)} // useNavigate로 변경
