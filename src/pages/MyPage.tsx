@@ -16,9 +16,14 @@ import redButtonAll from "../assets/images/redButtonAll.svg";
 import AllLetter from "../assets/images/AllLetter.svg";
 import { useStore } from "../store/store";
 
+// Import the audio file
+import PostOfficeAudio from "../assets/audios/PostOffice.mp3";
 
 const MyPage: React.FC = () => {
   const navigate = useNavigate(); // useHistory 훅 사용
+
+  // State for managing audio playback
+  const [audio] = useState(new Audio(PostOfficeAudio));
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
@@ -32,7 +37,18 @@ const MyPage: React.FC = () => {
     // 페이지 초기 로드 시 redButtonAll을 선택된 상태로 설정
     setSelectedButton("All");
     fetchPrescriptions(null);
-  }, []);
+
+    // 자동으로 배경 음악을 재생
+    audio.play().catch((error) => {
+      console.error("Failed to play audio:", error);
+    });
+
+    return () => {
+      // Clean up audio when component unmounts
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, [audio]);
 
   useEffect(() => {
     const fetchUserData = async () => {
