@@ -6,6 +6,7 @@ import backgroundBaek from "../../assets/images/backgroundBaek.svg";
 import characterBaek from "../../assets/images/Baek.svg";
 import chatBubbleImage from "../../assets/images/chatbubble.png";
 import Button from "../../components/FirstPage/Button";
+import "../../index.css";
 
 const ChattingPageBaek: React.FC = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const ChattingPageBaek: React.FC = () => {
             <img
               src={characterBaek}
               alt="Baek"
-              className="w-72 ml-16 h-auto relative"
+              className="w-72 ml-16 h-auto relative bounce-animation" // 애니메이션 클래스 적용
             />
             <div className="absolute top-18 left-1/2 transform -translate-x-1/2 -translate-y-16">
               <img
