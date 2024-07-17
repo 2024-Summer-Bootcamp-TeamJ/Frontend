@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 
-const ChatInput: React.FC = () => {
+interface ChatInputProps {
+  onSend: (message: string) => void;
+}
+
+const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
   const [message, setMessage] = useState('');
 
   const handleSend = () => {
-    // 채팅 메시지 로직 추가
-    console.log('Message sent:', message);
-    setMessage('');
+    if (message.trim() !== '') {
+      onSend(message);
+      setMessage('');
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSend();
+    }
   };
 
   return (
@@ -16,6 +27,7 @@ const ChatInput: React.FC = () => {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        onKeyPress={handleKeyPress}
         placeholder="Type a message..."
         className="flex-grow p-2 bg-transparent outline-none rounded-l-full"
       />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import IconMouse from "../assets/images/IconMouse.svg";
 import IconLetter from "../assets/images/IconLetter.svg";
@@ -14,7 +14,7 @@ import fromOh from "../assets/images/fromOh.svg";
 import redButtonOh from "../assets/images/redButtonOh.svg";
 import redButtonAll from "../assets/images/redButtonAll.svg";
 import AllLetter from "../assets/images/AllLetter.svg";
-import { useStore } from "../../store";
+import { useStore } from "../store/store";
 
 
 const MyPage: React.FC = () => {
@@ -107,14 +107,6 @@ const MyPage: React.FC = () => {
     fetchPrescriptions(mentorId);
     setSelectedButton(buttonName);
   };
-
-  // const handleMouseEnter = (buttonName: string) => {
-  //   setHoveredButton(buttonName);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   setHoveredButton(null);
-  // };
 
   return (
     <div
