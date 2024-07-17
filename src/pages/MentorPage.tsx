@@ -94,6 +94,8 @@ const MentorPage: React.FC = () => {
       return;
     }
 
+    console.log("Payload:", { user_id: userId, mentor_id: mentorId });
+
     try {
       const response = await axios.post("http://localhost:8000/api/chatrooms", {
         user_id: userId,
@@ -118,11 +120,14 @@ const MentorPage: React.FC = () => {
         console.error("예상치 못한 응답 상태:", response.status);
         throw new Error("채팅방 생성 실패");
       }
-
-      // 채팅방 생성 후 choose 사운드 효과 재생
+    // 채팅방 생성 후 choose 사운드 효과 재생
       playChoose();
-    } catch (error) {
-      console.error("채팅방 생성 중 오류 발생:", error);
+    } catch (error: any) {
+      if (error.response && error.response.status === 404) {
+        console.error("User not found. Please ensure the user ID is correct.");
+      } else {
+        console.error("Error creating chatroom:", error);
+      }
     }
   };
 

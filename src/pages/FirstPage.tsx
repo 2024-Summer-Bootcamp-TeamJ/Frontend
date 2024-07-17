@@ -27,7 +27,7 @@ const FirstPage: React.FC = () => {
       <CharIntro2 />
 
       <LoginPage />
-      
+ 
     </div>
   );
 };
