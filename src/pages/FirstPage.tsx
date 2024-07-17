@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../index.css';
-import axios from 'axios';
-import Button from './../components/FirstPage/Button';
-import Input from './../components/FirstPage/Input';
-import StartButton from './../components/FirstPage/StartButton';
-import EveningSky from './../components/FirstPage/EveningSky';
-import WelcomePage from './../components/FirstPage/WelcomePage';
-import { useStore } from '../../store';  // Zustand store import 경로 확인 필요
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../index.css";
+import axios from "axios";
+import Button from "./../components/FirstPage/Button";
+import Input from "./../components/FirstPage/Input";
+import StartButton from "./../components/FirstPage/StartButton";
+import EveningSky from "./../components/FirstPage/EveningSky";
+import WelcomePage from "./../components/FirstPage/WelcomePage";
+import { useStore } from "../../store"; // Zustand store import 경로 확인 필요
 
 const FirstPage: React.FC = () => {
   const [nickname, setNicknameState] = useState<string>("");
@@ -37,7 +37,8 @@ const FirstPage: React.FC = () => {
         alert(message);
         setUserId(response.data.id);
         setNickname(response.data.nickname);
-        console.log("Stored user_id:", response.data.id);
+        console.log("방금생성된 userID:", response.data.id);
+        console.log("전역에 저장된 userID:", userId);
       }
     } catch (error: any) {
       let message = "An error occurred";
@@ -54,7 +55,10 @@ const FirstPage: React.FC = () => {
   };
 
   const handleStartButtonClick = () => {
-    console.log("Stored user_id:", userId);
+    const currentUserId = useStore.getState().userId; // 최신 userId 가져오기
+    console.log("Current user_id:", currentUserId);
+
+    console.log(" user_id:", userId);
     navigate("/mentor");
   };
 

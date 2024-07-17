@@ -69,7 +69,7 @@ const stateCreator: StateCreator<StoreState> = (set, get) => ({
   setNickname: (nickname) => set({ nickname }),
   setMemberId: (memberId) => set({ memberId }),
   setMembers: (members) => set({ members }),
-  setUserId: (userId) => set({ userId }),
+  setUserId: (userId: number) => set((state) => ({ ...state, userId: userId })),
   setMentors: (mentors) => set({ mentors }),
   setChatrooms: (chatrooms) => set({ chatrooms }),
 
