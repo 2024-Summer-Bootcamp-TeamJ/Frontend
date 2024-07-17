@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfileBackBaek from "../assets/images/ProfileBackBaek.svg";
@@ -20,6 +20,7 @@ import { useStore } from "../store/store";
 import useSound from "use-sound";
 import flipcard from "../assets/audios/flipcard.mp3";
 import choose from "../assets/audios/choose.mp3";
+import mouse from "../assets/audios/mouse.mp3";
 
 const mentorImages: { [key: number]: any } = {
   1: {
@@ -53,7 +54,10 @@ const MentorPage: React.FC = () => {
   const navigate = useNavigate();
   const [playFlipcard] = useSound(flipcard);
   const [playChoose] = useSound(choose);
-
+  const [playMouse] = useSound(mouse);
+  const handleIconClick = useCallback(() => {
+    playMouse();
+  }, [playMouse]);
   useEffect(() => {
     const fetchMentors = async () => {
       try {
@@ -177,7 +181,7 @@ const MentorPage: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="absolute bottom-4 right-4">
+      <div onClick={handleIconClick} className="absolute bottom-4 right-4">
         <Link to="/mypage">
           <img
             src={IconToMyPage}
