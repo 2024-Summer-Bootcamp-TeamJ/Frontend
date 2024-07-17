@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProfileBackBaek from "../assets/images/ProfileBackBaek.svg";
@@ -17,6 +17,10 @@ import CardShin from "../assets/images/CardShin.svg";
 import CardBaek from "../assets/images/CardBaek.svg";
 import "../index.css";
 import { useStore } from "../store/store";
+import useSound from "use-sound";
+import flipcard from "../assets/audios/flipcard.mp3";
+import choose from "../assets/audios/choose.mp3";
+import mouse from "../assets/audios/mouse.mp3";
 
 const mentorImages: { [key: number]: any } = {
   1: {
@@ -48,7 +52,12 @@ const MentorPage: React.FC = () => {
   const setMentors = useStore((state) => state.setMentors);
   const userId = useStore((state) => state.userId);
   const navigate = useNavigate();
-
+  const [playFlipcard] = useSound(flipcard);
+  const [playChoose] = useSound(choose);
+  const [playMouse] = useSound(mouse);
+  const handleIconClick = useCallback(() => {
+    playMouse();
+  }, [playMouse]);
   useEffect(() => {
     const fetchMentors = async () => {
       try {
@@ -69,6 +78,7 @@ const MentorPage: React.FC = () => {
   }, [setMentors]);
 
   const toggleMentorImage = (mentorId: number) => {
+    playFlipcard(); // flipcard 효과음 재생
     if (flippedMentorId === mentorId) {
       setFlippedMentorId(null);
     } else {
@@ -77,10 +87,10 @@ const MentorPage: React.FC = () => {
   };
 
   const createChatroom = async (mentorId: number) => {
-    console.log("Creating chatroom with mentorId:", mentorId);
+    console.log("멘토 ID로 채팅방 생성:", mentorId);
 
     if (!userId) {
-      console.error("User ID is not set");
+      console.error("사용자 ID가 설정되지 않았습니다.");
       return;
     }
 
@@ -90,10 +100,10 @@ const MentorPage: React.FC = () => {
         mentor_id: mentorId,
       });
 
-      console.log("Response from server:", response);
+      console.log("서버 응답:", response);
 
       if (response.status === 200 || response.status === 201) {
-        console.log("Chatroom created successfully");
+        console.log("채팅방 생성 성공");
         const chatroomId = response.data.id;
         const mentor = mentors.find((mentor) => mentor.id === mentorId);
         if (mentor) {
@@ -101,15 +111,18 @@ const MentorPage: React.FC = () => {
             state: { chatroomId },
           });
         } else {
-          console.error("Invalid mentor ID");
-          throw new Error("Chatroom creation failed");
+          console.error("유효하지 않은 멘토 ID입니다.");
+          throw new Error("채팅방 생성 실패");
         }
       } else {
-        console.error("Unexpected response status:", response.status);
-        throw new Error("Chatroom creation failed");
+        console.error("예상치 못한 응답 상태:", response.status);
+        throw new Error("채팅방 생성 실패");
       }
+
+      // 채팅방 생성 후 choose 사운드 효과 재생
+      playChoose();
     } catch (error) {
-      console.error("Error creating chatroom:", error);
+      console.error("채팅방 생성 중 오류 발생:", error);
     }
   };
 
@@ -168,7 +181,7 @@ const MentorPage: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="absolute bottom-4 right-4">
+      <div onClick={handleIconClick} className="absolute bottom-4 right-4">
         <Link to="/mypage">
           <img
             src={IconToMyPage}
