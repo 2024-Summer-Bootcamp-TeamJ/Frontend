@@ -28,7 +28,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyPress={handleKeyPress}
-        placeholder="메시지를 입력하세요..."
+        placeholder="어떤 고민이 있나요?"
         className="flex-grow p-2 bg-transparent outline-none rounded-l-full"
       />
       <button
