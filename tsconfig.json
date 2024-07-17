@@ -4,7 +4,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": true, // 추가
+    "esModuleInterop": true, 
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -14,8 +14,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx", // 추가
-    "types": ["node"], // 추가
+    "jsx": "react-jsx",
+    "types": ["node"], 
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"]

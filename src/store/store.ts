@@ -36,6 +36,7 @@ interface AppState {
   setUserId: (userId: number) => void;
   setMentors: (mentors: Mentor[]) => void;
   setChatrooms: (chatrooms: Chatroom[]) => void;
+  deleteChatroom: (chatroomId: number) => void;
 }
 
 interface StoreState extends AppState {
@@ -72,6 +73,12 @@ const stateCreator: StateCreator<StoreState> = (set, get) => ({
   setUserId: (userId) => set({ userId }),
   setMentors: (mentors) => set({ mentors }),
   setChatrooms: (chatrooms) => set({ chatrooms }),
+
+  deleteChatroom: (chatroomId) => {
+    set((state) => ({
+      chatrooms: state.chatrooms.filter((chatroom) => chatroom.id !== chatroomId),
+    }));
+  },
 
   resetState: () => {
     set({
