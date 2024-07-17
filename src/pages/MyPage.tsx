@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import IconMouse from "../assets/images/IconMouse.svg";
@@ -15,18 +15,15 @@ import redButtonOh from "../assets/images/redButtonOh.svg";
 import redButtonAll from "../assets/images/redButtonAll.svg";
 import AllLetter from "../assets/images/AllLetter.svg";
 import mouse from "../assets/audios/mouse.mp3";
+import ui_click from "../assets/audios/ui_click.mp3";
 import { useStore } from "../store/store";
 import useSound from "use-sound";
-
-// Import the audio file
 import PostOfficeAudio from "../assets/audios/PostOffice.mp3";
 
 const MyPage: React.FC = () => {
-  const navigate = useNavigate(); // useHistory 훅 사용
+  const navigate = useNavigate();
 
-  // State for managing audio playback
   const [audio] = useState(new Audio(PostOfficeAudio));
-
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [selectedButton, setSelectedButton] = useState<string | null>(null);
@@ -37,17 +34,14 @@ const MyPage: React.FC = () => {
   const [play, { stop }] = useSound(mouse);
 
   useEffect(() => {
-    // 페이지 초기 로드 시 redButtonAll을 선택된 상태로 설정
     setSelectedButton("All");
     fetchPrescriptions(null);
 
-    // 자동으로 배경 음악을 재생
     audio.play().catch((error) => {
       console.error("Failed to play audio:", error);
     });
 
     return () => {
-      // Clean up audio when component unmounts
       audio.pause();
       audio.currentTime = 0;
     };
@@ -77,7 +71,7 @@ const MyPage: React.FC = () => {
   }, [userId, setNickname]);
 
   useEffect(() => {
-    fetchPrescriptions(); // 페이지 로드 시 전체 처방전 리스트를 불러옴
+    fetchPrescriptions();
   }, [userId]);
 
   const fetchPrescriptions = async (mentorId: number | null = null) => {
@@ -116,18 +110,25 @@ const MyPage: React.FC = () => {
 
   const handleMouseEnter = (buttonName: string) => {
     setHoveredButton(buttonName);
-    play(); // 재생을 handleMouseEnter로 이동
+    play();
   };
 
   const handleMouseLeave = () => {
     setHoveredButton(null);
-    stop(); // 정지를 handleMouseLeave로 이동
+    stop();
   };
 
-  const handleClick = (buttonName: string, mentorId: number | null) => {
-    fetchPrescriptions(mentorId);
-    setSelectedButton(buttonName);
-  };
+  const handleClick = useCallback(
+    (buttonName: string, mentorId: number | null) => {
+      fetchPrescriptions(mentorId);
+      setSelectedButton(buttonName);
+    },
+    []
+  );
+
+  const handleIconClick = useCallback(() => {
+    play();
+  }, [play]);
 
   return (
     <div
@@ -138,7 +139,7 @@ const MyPage: React.FC = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="absolute top-4 left-4">
+      <div onClick={handleIconClick} className="absolute top-4 left-4">
         <Link to="/mentor" state={{ userId }}>
           <img
             src={IconToHome}
@@ -192,8 +193,6 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Oh")}
               onMouseLeave={handleMouseLeave}
-              onMouseEnter={() => play()}
-              onMouseLeave={() => stop()}
               onClick={() => handleClick("Oh", 2)}
               className="relative cursor-pointer"
             >
@@ -261,7 +260,7 @@ const MyPage: React.FC = () => {
 
           <div
             className="flex flex-col items-center space-y-4 overflow-y-auto scrollbar"
-            style={{ maxHeight: "24rem", overflowX: "hidden" }} // 이 높이 설정을 조정할 수 있습니다.
+            style={{ maxHeight: "24rem", overflowX: "hidden" }}
           >
             {(selectedMentor === null || selectedMentor !== null) &&
               prescriptions.length > 0 &&
@@ -271,7 +270,7 @@ const MyPage: React.FC = () => {
                   className="flex items-center p-2 bg-dateColor rounded-3xl w-168 h-16 hover:bg-dateHoverColor transition-colors duration-300"
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  onClick={() => navigate(`/prescription/${prescription.id}`)} // useNavigate로 변경
+                  onClick={() => navigate(`/prescription/${prescription.id}`)}
                 >
                   {hoveredIndex === index && (
                     <img
