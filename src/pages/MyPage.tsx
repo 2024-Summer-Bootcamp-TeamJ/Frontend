@@ -14,7 +14,9 @@ import fromOh from "../assets/images/fromOh.svg";
 import redButtonOh from "../assets/images/redButtonOh.svg";
 import redButtonAll from "../assets/images/redButtonAll.svg";
 import AllLetter from "../assets/images/AllLetter.svg";
+import mouse from "../assets/audios/mouse.mp3";
 import { useStore } from "../store/store";
+import useSound from "use-sound";
 
 // Import the audio file
 import PostOfficeAudio from "../assets/audios/PostOffice.mp3";
@@ -32,6 +34,7 @@ const MyPage: React.FC = () => {
   const [selectedMentor, setSelectedMentor] = useState<number | null>(null);
 
   const { nickname, userId, setNickname } = useStore();
+  const [play, { stop }] = useSound(mouse);
 
   useEffect(() => {
     // 페이지 초기 로드 시 redButtonAll을 선택된 상태로 설정
@@ -113,10 +116,12 @@ const MyPage: React.FC = () => {
 
   const handleMouseEnter = (buttonName: string) => {
     setHoveredButton(buttonName);
+    play(); // 재생을 handleMouseEnter로 이동
   };
 
   const handleMouseLeave = () => {
     setHoveredButton(null);
+    stop(); // 정지를 handleMouseLeave로 이동
   };
 
   const handleClick = (buttonName: string, mentorId: number | null) => {
@@ -187,6 +192,8 @@ const MyPage: React.FC = () => {
             <div
               onMouseEnter={() => handleMouseEnter("Oh")}
               onMouseLeave={handleMouseLeave}
+              onMouseEnter={() => play()}
+              onMouseLeave={() => stop()}
               onClick={() => handleClick("Oh", 2)}
               className="relative cursor-pointer"
             >
