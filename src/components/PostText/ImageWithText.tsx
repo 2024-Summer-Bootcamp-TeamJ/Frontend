@@ -58,20 +58,26 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
   };
 
   return (
-    <div className="absolute" style={{ zIndex: 1, width: "710px" }}>
-      <p
-        className="mb-16 text-3xl font-bold text-amber-700"
-        style={{ marginLeft: "15px", paddingLeft: "3px" }}
-      >
+    <div
+      className="absolute flex flex-col justify-between"
+      style={{
+        zIndex: 1,
+        width: "90%",
+        height: "60%",
+        padding: "10%",
+        boxSizing: "border-box",
+      }}
+    >
+      <p className="mb-4 text-xl font-bold text-amber-700">
         {nickname} 님
       </p>
-      <HighlightText text={summaryText} />
+      <div className="flex-grow">
+        <HighlightText text={summaryText} />
+      </div>
       <p
-        className="text-3xl font-bold mt-14 text-amber-700"
+        className="text-xl font-bold text-amber-700"
         style={{
           textAlign: "right",
-          marginRight: "30px",
-          paddingRight: "15px",
           paddingBottom: "10px",
         }}
       >
