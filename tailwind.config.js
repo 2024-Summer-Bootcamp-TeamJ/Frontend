@@ -38,7 +38,7 @@ module.exports = {
       fontFamily: {
         NoticiaText: ["NoticiaText"],
         MoonFlower: ["MoonFlower"],
-        syndinaroo: ["syndinaroo"]
+        syndinaroo: ["syndinaroo"],
       },
     },
   },
@@ -58,6 +58,22 @@ module.exports = {
           border: "3px solid #f1f1f1",
         },
         ".scrollbar::-webkit-scrollbar-thumb:hover": {
+          background: "#555",
+        },
+
+        ".scrollbar2::-webkit-scrollbar": {
+          width: "16px",
+        },
+        ".scrollbar2::-webkit-scrollbar-track": {
+          background: "#f1f1f1",
+          borderRadius: "8px",
+        },
+        ".scrollbar2::-webkit-scrollbar-thumb": {
+          backgroundColor: "#888",
+          borderRadius: "8px",
+          border: "3px solid #f1f1f1",
+        },
+        ".scrollbar2::-webkit-scrollbar-thumb:hover": {
           background: "#555",
         },
       });
