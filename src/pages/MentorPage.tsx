@@ -84,6 +84,8 @@ const MentorPage: React.FC = () => {
       return;
     }
 
+    console.log("Payload:", { user_id: userId, mentor_id: mentorId });
+
     try {
       const response = await axios.post("http://localhost:8000/api/chatrooms", {
         user_id: userId,
@@ -108,8 +110,12 @@ const MentorPage: React.FC = () => {
         console.error("Unexpected response status:", response.status);
         throw new Error("Chatroom creation failed");
       }
-    } catch (error) {
-      console.error("Error creating chatroom:", error);
+    } catch (error: any) {
+      if (error.response && error.response.status === 404) {
+        console.error("User not found. Please ensure the user ID is correct.");
+      } else {
+        console.error("Error creating chatroom:", error);
+      }
     }
   };
 

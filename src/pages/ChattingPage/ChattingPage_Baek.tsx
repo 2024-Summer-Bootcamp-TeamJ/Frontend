@@ -18,13 +18,16 @@ const ChattingPageBaek: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [latestServerMessage, setLatestServerMessage] = useState<string>('고민이 많아서 힘들었겠구나. 그렇다면 내가 하는 말을 잘 들어봐.');
   const wsRef = useRef<WebSocket | null>(null);
+  const [socketConnected, setSocketConnected] = useState(false);
 
-  useEffect(() => {
-    console.log('chatroomId:', chatroomId);
-    console.log('userId:', userId);
-
+  const connectWebSocket = () => {
     if (!chatroomId || !userId) {
       console.error('chatroomId or userId is not defined');
+      return;
+    }
+
+    if (wsRef.current && (wsRef.current.readyState === WebSocket.OPEN || wsRef.current.readyState === WebSocket.CONNECTING)) {
+      console.log('WebSocket is already connected or connecting');
       return;
     }
 
@@ -33,27 +36,35 @@ const ChattingPageBaek: React.FC = () => {
 
     ws.onopen = () => {
       console.log('Connected to the WebSocket');
+      setSocketConnected(true);
     };
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       const eventType = data.event;
-      console.log(eventType);
-      if (eventType === 'connect' || eventType === 'server_message') {
+      console.log('WebSocket message received:', data);
+      if (eventType === 'server_message') {
         setMessages((prevMessages) => [...prevMessages, data.message]);
-        if (eventType === 'server_message') {
-          setLatestServerMessage(data.message);
-        }
+        setLatestServerMessage(data.message);
       }
     };
 
-    ws.onclose = () => {
-      console.log('Disconnected from the WebSocket');
+    ws.onclose = (event) => {
+      console.log('Disconnected from the WebSocket', event);
+      setSocketConnected(false);
+      if (!event.wasClean) {
+        console.log('Connection died, reconnecting...');
+        setTimeout(connectWebSocket, 1000); // 1초 후에 재연결 시도
+      }
     };
 
     ws.onerror = (error) => {
       console.error('WebSocket error', error);
     };
+  };
+
+  useEffect(() => {
+    connectWebSocket();
 
     return () => {
       if (wsRef.current) {
@@ -63,9 +74,11 @@ const ChattingPageBaek: React.FC = () => {
   }, [chatroomId, userId]);
 
   const sendMessage = (message: string) => {
-    if (wsRef.current) {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(message);
       setMessages((prevMessages) => [...prevMessages, `Client: ${message}`]);
+    } else {
+      console.error('WebSocket is not open');
     }
   };
 
@@ -80,17 +93,9 @@ const ChattingPageBaek: React.FC = () => {
         wsRef.current.close();
       }
 
-      // console.log(`Deleting chatroom with id: ${chatroomId}`); // Chatroom ID 출력
-      // const response = await axios.delete(`http://localhost:8000/api/chatrooms/${chatroomId}`);
-      // console.log('Chatroom deleted successfully', response);
-      // deleteChatroom(chatroomId); // Zustand store에서 chatroom 삭제
       navigate("/prescription", { state: { chatroomId } });
     } catch (error) {
-      // if (axios.isAxiosError(error)) {
-      //   console.error('Error deleting chatroom:', error.response ? error.response.data : error.message);
-      // } else {
-      //   console.error('Unexpected error:', error);
-      // }
+      console.error('Error navigating to prescription page:', error);
     }
   };
 
@@ -105,13 +110,14 @@ const ChattingPageBaek: React.FC = () => {
       <div className="relative flex items-center justify-center w-full max-w-6xl px-2 py-4 bg-green-50 bg-opacity-90 rounded-3xl shadow-md">
         <div className="relative flex items-center space-x-40 px-0 py-8 overflow-visible">
           <div className="relative ml-16 mb-12">
-            <img src={characterBaek} alt="Baek" className="w-72 ml-16 h-auto relative" />
+            <img src={characterBaek} alt="Baek" className="w-72 ml-16 h-auto relative" draggable="false" />
             <div className="absolute top-18 left-1/2 transform -translate-x-1/2 -translate-y-16">
               <img
                 src={chatBubbleImage}
                 alt="Chat Bubble"
                 className="w-60 h-auto z-20 ml-8 -mt-4"
                 style={{ transform: 'scale(2.5)' }}
+                draggable="false"
               />
               <div
                 className="absolute bottom-4 -left-8 w-full h-full flex items-center justify-center"
