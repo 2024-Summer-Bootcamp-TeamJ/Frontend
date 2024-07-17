@@ -12,8 +12,8 @@ const Button: React.FC<ButtonProps> = ({ text, color, onClick, width, height }) 
   return (
     <button 
       onClick={onClick} 
-      className={`py-2 px-4 text-white ${color} rounded-md`} 
-      style={{ width, height }}
+      className={`py-2 px-4 text-white ${color} rounded-md h-14 w-20`} 
+      style={{ width, height}}
     >
       {text}
     </button>

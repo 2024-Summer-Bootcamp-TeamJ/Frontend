@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
-import "../index.css";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import Button from "./../components/FirstPage/Button";
-import Input from "./../components/FirstPage/Input";
-import StartButton from "./../components/FirstPage/StartButton";
-import { useStore } from "../../store";
+import React from 'react';
+import { useState } from 'react';
+import '../index.css';
+import { Link } from "react-router-dom";
+import axios from 'axios';
+import Button from './../components/FirstPage/Button';
+import Input from './../components/FirstPage/Input';
+import StartButton from './../components/FirstPage/StartButton';
+import EveningSky from './../components/FirstPage/EveningSky';
+import WelcomePage from '@components/FirstPage/WelcomePage';
+import CharIntro1 from '@components/FirstPage/CharIntro1';
+import CharIntro2 from '@components/FirstPage/CharIntro2';
+import LoginPage from '@components/FirstPage/LoginPage';
 
 const FirstPage: React.FC = () => {
   const [nickname, setNicknameState] = useState("");
@@ -14,9 +19,6 @@ const FirstPage: React.FC = () => {
   const userId = useStore((state) => state.userId);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("Updated user_id:", userId);
-  }, [userId]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNicknameState(event.target.value);
@@ -55,10 +57,9 @@ const FirstPage: React.FC = () => {
     }
   };
 
-  const handleStartButtonClick = () => {
-    console.log("Stored user_id:", userId);
-    navigate("/mentor");
-  };
+      <EveningSky />
+      
+      <WelcomePage />
 
   return (
     <div className="relative flex items-center justify-center overflow-hidden w-screen h-screen">
