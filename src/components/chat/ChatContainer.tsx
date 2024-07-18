@@ -3,9 +3,11 @@ import MentorChatBubble from "./MentorChatBubble";
 import MyChatBubble from "./MyChatBubble";
 import ChatInput from "./ChatInput";
 
+
 interface ChatContainerProps {
   mentorBgColor: string;
   myBgColor: string;
+
   scrollbarColor: string; // 스크롤바 색상을 위한 새로운 prop 추가
   messages: string[];
   onSendMessage: (message: string) => void;
@@ -25,6 +27,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
 }) => {
   const [messageList, setMessageList] = useState<string[]>(messages);
 
+
+const ChatContainer: React.FC<ChatContainerProps> = ({ mentorBgColor, myBgColor, messages, onSendMessage }) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToBottom = () => {
@@ -40,8 +44,13 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   return (
     <div className="relative w-full max-w-3xl mx-auto">
       <div className="relative bg-white bg-opacity-80 rounded-3xl p-8 w-[60vh] h-[80vh] flex flex-col justify-between">
+
         <div className="flex-grow overflow-y-scroll font-syndinaroo text-red-500 space-y-4">
           {messageList.map((message, index) => (
+
+       // <div className="flex-grow space-y-4 overflow-y-scroll text-red-500 font-syndinaroo">
+        //  {messages.map((message, index) => (
+
             <div key={index}>
               {message.startsWith("Client:") ? (
                 <MyChatBubble
