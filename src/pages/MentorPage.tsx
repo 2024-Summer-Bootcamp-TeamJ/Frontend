@@ -87,14 +87,16 @@ const MentorPage: React.FC = () => {
   };
 
   const createChatroom = async (mentorId: number) => {
-    console.log("멘토 ID로 채팅방 생성:", mentorId);
+    const currentUserId = useStore.getState().userId;
+
+    console.log("멘토 ID로 채팅방 생성, mentorId:", mentorId);
 
     if (!userId) {
       console.error("사용자 ID가 설정되지 않았습니다.");
       return;
     }
 
-    console.log("Payload:", { user_id: userId, mentor_id: mentorId });
+    console.log("Payload(왜 여기선..)userId:", userId, "멘토아이디:", mentorId);
 
     try {
       const response = await axios.post("http://localhost:8000/api/chatrooms", {
@@ -110,7 +112,7 @@ const MentorPage: React.FC = () => {
         const mentor = mentors.find((mentor) => mentor.id === mentorId);
         if (mentor) {
           navigate(`/chat/${mentorImages[mentor.id].name}`, {
-            state: { chatroomId },
+            state: { chatroomId, userId: currentUserId },
           });
         } else {
           console.error("유효하지 않은 멘토 ID입니다.");
@@ -120,11 +122,17 @@ const MentorPage: React.FC = () => {
         console.error("예상치 못한 응답 상태:", response.status);
         throw new Error("채팅방 생성 실패");
       }
-    // 채팅방 생성 후 choose 사운드 효과 재생
+      // 채팅방 생성 후 choose 사운드 효과 재생
       playChoose();
     } catch (error: any) {
       if (error.response && error.response.status === 404) {
         console.error("User not found. Please ensure the user ID is correct.");
+        console.error(
+          "(createChatroom)User 아이디는 ",
+          userId,
+          "멘토 아이디는 ",
+          mentorId
+        );
       } else {
         console.error("Error creating chatroom:", error);
       }
@@ -181,6 +189,7 @@ const MentorPage: React.FC = () => {
                 className="absolute inset-0 mt-136 mx-auto w-50"
                 draggable="false"
                 onClick={() => createChatroom(mentor.id)}
+                style={{ zIndex: 10 }} // 원하는 z-index 값으로 설정
               />
             )}
           </div>
