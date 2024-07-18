@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
 import axios from "axios";
@@ -7,7 +7,7 @@ import Input from "./../components/FirstPage/Input";
 import StartButton from "./../components/FirstPage/StartButton";
 import EveningSky from "./../components/FirstPage/EveningSky";
 import WelcomePage from "./../components/FirstPage/WelcomePage";
-import { useStore } from "../../store"; // Zustand store import 경로 확인 필요
+import { useStore } from "../store/store";
 
 const FirstPage: React.FC = () => {
   const [nickname, setNicknameState] = useState<string>("");
@@ -53,7 +53,9 @@ const FirstPage: React.FC = () => {
       console.error("Error:", error);
     }
   };
-
+  useEffect(() => {
+    console.log("전역에 저장된 userID:", userId);
+  }, [userId]);
   const handleStartButtonClick = () => {
     const currentUserId = useStore.getState().userId; // 최신 userId 가져오기
     console.log("Current user_id:", currentUserId);
