@@ -33,8 +33,14 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   };
 
   useEffect(() => {
+    setMessageList(messages); // messages prop이 변경될 때 messageList를 업데이트
     scrollToBottom();
-  }, [messageList]);
+  }, [messages]);
+
+  const handleSendMessage = (message: string) => {
+    setMessageList((prevMessages) => [...prevMessages, `Client: ${message}`]);
+    onSendMessage(message);
+  };
 
   return (
     <div className="relative w-full max-w-3xl mx-auto">
@@ -60,7 +66,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
           ))}
           <div ref={messagesEndRef} />
         </div>
-        <ChatInput onSend={onSendMessage} />
+        <ChatInput onSend={handleSendMessage} />
       </div>
     </div>
   );

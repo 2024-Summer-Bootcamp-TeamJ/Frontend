@@ -270,7 +270,7 @@ const MyPage: React.FC = () => {
                   className="flex items-center h-16 p-2 transition-colors duration-300 bg-dateColor rounded-3xl w-168 hover:bg-dateHoverColor"
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  onClick={() => navigate(`/prescription/${prescription.id}`)}
+                  onClick={() => navigate('/prescription', { state: { chatroomId: prescription.id, userId } })}
                 >
                   {hoveredIndex === index && (
                     <img

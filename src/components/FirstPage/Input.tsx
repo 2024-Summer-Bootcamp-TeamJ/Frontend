@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 
 interface InputProps {
     value: string;
+    className?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

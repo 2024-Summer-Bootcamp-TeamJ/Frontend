@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from 'axios';
@@ -16,7 +15,6 @@ const ChattingPageBaek: React.FC = () => {
   const chatroomId = location.state?.chatroomId;
   const userId = useStore(state => state.userId);
 
-  //const deleteChatroom = useStore((state) => state.deleteChatroom); // Zustand store의 deleteChatroom 액션 가져오기
   const [messages, setMessages] = useState<string[]>([]);
   const [latestServerMessage, setLatestServerMessage] = useState<string>('고민이 많아서 힘들었겠구나. 그렇다면 내가 하는 말을 잘 들어봐.');
   const wsRef = useRef<WebSocket | null>(null);
@@ -48,6 +46,10 @@ const ChattingPageBaek: React.FC = () => {
       if (eventType === 'server_message') {
         setMessages((prevMessages) => [...prevMessages, data.message]);
         setLatestServerMessage(data.message);
+        if (data.audio) {
+          const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
+          audio.play().catch(error => console.error('Error playing audio:', error));
+        }
       }
     };
 
@@ -86,7 +88,6 @@ const ChattingPageBaek: React.FC = () => {
 
   const endChatAndGoToPrescription = async () => {
     try {
-
       if (!chatroomId) {
         console.error('chatroomId is not defined');
         return;
@@ -96,7 +97,7 @@ const ChattingPageBaek: React.FC = () => {
         wsRef.current.close();
       }
 
-      navigate("/prescription", { state: { chatroomId } });
+      navigate("/prescription", { state: { chatroomId, userId } }); // userId를 포함하여 navigate
     } catch (error) {
       console.error('Error navigating to prescription page:', error);
     }
@@ -110,7 +111,7 @@ const ChattingPageBaek: React.FC = () => {
       <div className="absolute top-4 right-4">
         <Button
           text="대화 종료하기"
-          color="bg-green-700 pt-3 pb-3"
+          color="bg-green-700 w-32 pt-3 pb-3 font-bold"
           onClick={endChatAndGoToPrescription}
         />
       </div>
@@ -130,7 +131,6 @@ const ChattingPageBaek: React.FC = () => {
                 className="absolute bottom-4 -left-8 w-full h-full flex items-center justify-center"
                 style={{ width: "180%", height: "100%" }}
               >
-
                 <p className="text-center text-3xl text-dateTextColor font-syndinaroo" style={{ transform: 'scale(1)' }}>
                   {latestServerMessage}
                 </p>
@@ -138,9 +138,7 @@ const ChattingPageBaek: React.FC = () => {
             </div>
           </div>
           <div className="ml-0 overflow-visible">
-
             <ChatContainer mentorBgColor="bg-[#F0FDDE]" myBgColor="bg-[#DEFFB2]" scrollbarColor="#A0DA6A" messages={messages} onSendMessage={sendMessage} />
-
           </div>
         </div>
       </div>
