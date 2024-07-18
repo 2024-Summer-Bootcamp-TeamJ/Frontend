@@ -1,27 +1,20 @@
 import React, { useState, useEffect } from "react";
-import {  Link,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../index.css";
 import axios from "axios";
-import Button from "./../components/FirstPage/Button";
-import Input from "./../components/FirstPage/Input";
-import StartButton from "./../components/FirstPage/StartButton";
-import EveningSky from "./../components/FirstPage/EveningSky";
-import WelcomePage from "./../components/FirstPage/WelcomePage";
 import { useStore } from "../store/store";
-import CharIntro1 from '@components/FirstPage/CharIntro1';
-import CharIntro2 from '@components/FirstPage/CharIntro2';
-import LoginPage from '@components/FirstPage/LoginPage';
-import Swal from 'sweetalert2';
-
+import LoginPage from './../components/FirstPage/LoginPage';
 
 const FirstPage: React.FC = () => {
-  return (
-    <div className='wrapper' style={{ height: '5000px', display: 'flex', flexDirection: 'column'}}>
-      
-      <EveningSky />
+  const [nickname, setNicknameState] = useState<string>("");
+  const setNickname = useStore((state) => state.setNickname);
+  const setUserId = useStore((state) => state.setUserId);
+  const userId = useStore((state) => state.userId);
+  const navigate = useNavigate();
 
-      <WelcomePage />
-
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNicknameState(event.target.value);
+  };
 
   const handleButtonClick = async () => {
     try {
@@ -56,24 +49,38 @@ const FirstPage: React.FC = () => {
       console.error("Error:", error);
     }
   };
+
   useEffect(() => {
     console.log("전역에 저장된 userID:", userId);
   }, [userId]);
+
   const handleStartButtonClick = () => {
     const currentUserId = useStore.getState().userId; // 최신 userId 가져오기
     console.log("Current user_id:", currentUserId);
-
     console.log(" user_id:", userId);
     navigate("/mentor");
   };
 
-     // <CharIntro1 />
-
-     // <CharIntro2 />
-
-
+  return (
+    <div className="flex flex-col items-center justify-center h-screen overflow-hidden">
+      {/* <EveningSky />
+      <WelcomePage />
+      <div className="absolute bottom-48 flex gap-3 z-10">
+        <Input value={nickname} onChange={handleInputChange} />
+        <Button
+          text="확인"
+          color="bg-gray-500"
+          onClick={handleButtonClick}
+          width="80px"
+          height="56px"
+        />
+      </div>
+      <div className="absolute bottom-32 z-10">
+        <StartButton onClick={handleStartButtonClick} />
+      </div>
+      <CharIntro1 />
+      <CharIntro2 /> */}
       <LoginPage />
- 
     </div>
   );
 };

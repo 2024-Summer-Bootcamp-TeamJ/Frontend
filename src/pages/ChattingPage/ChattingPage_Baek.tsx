@@ -16,7 +16,7 @@ const ChattingPageBaek: React.FC = () => {
   const chatroomId = location.state?.chatroomId;
   const userId = useStore(state => state.userId);
 
-  const deleteChatroom = useStore((state) => state.deleteChatroom); // Zustand store의 deleteChatroom 액션 가져오기
+  //const deleteChatroom = useStore((state) => state.deleteChatroom); // Zustand store의 deleteChatroom 액션 가져오기
   const [messages, setMessages] = useState<string[]>([]);
   const [latestServerMessage, setLatestServerMessage] = useState<string>('고민이 많아서 힘들었겠구나. 그렇다면 내가 하는 말을 잘 들어봐.');
   const wsRef = useRef<WebSocket | null>(null);
