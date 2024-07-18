@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
     const userId = useStore((state) => state.userId);
     const navigate = useNavigate();
 
-    const inputRef =useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
       console.log("Updated user_id:", userId);
@@ -53,7 +53,6 @@ const LoginPage: React.FC = () => {
           );
           if (response.status === 201 || response.status === 200) {
             const message = Swal.fire({
-              text: '이 이름은 사용할 수 있습니다.',
               title: '이 닉네임으로 하시겠습니까?',
               icon: 'question',
               showCancelButton: true,
@@ -82,13 +81,13 @@ const LoginPage: React.FC = () => {
               }
             }).then((result) => {
                 if (result.isConfirmed) {
-                  const successfulMessage = Swal.fire({
-                    title: '닉네임이 생성됬어요!', 
+                  Swal.fire({
+                    title: '닉네임이 생성됐어요!', 
                     text: `${response.data.nickname}님 축하합니다!`, 
                     icon: 'success', 
-                    confirmButtonText: '확인', 
+                    confirmButtonText: '시작', 
                     customClass: {title: 'text-2xl font-extrabold', 
-                    confirmButton: 'w-24 h-12 text-lg font-bold bg-purple-600'},
+                    confirmButton: 'w-40 h-12 text-lg font-bold bg-green-500'},
                     showClass: {
                       popup: `
                         animate__animated
@@ -103,8 +102,9 @@ const LoginPage: React.FC = () => {
                         animate__faster
                       `
                     }
+                  }).then(() => {
+                    handleStartButtonClick(); // '시작하기' 버튼을 클릭했을 때 실행
                   });
-                  console.log(successfulMessage);
                 }
             });
             console.log(message);
@@ -113,8 +113,6 @@ const LoginPage: React.FC = () => {
             console.log("Stored user_id:", response.data.id);
           }
         } catch (error: any) {
-          // let message = "An error occurred"; 
-          // 닉네임을 길게 입력했을 경우 - error 500
           let errorMessage = Swal.fire({
             title: '이 닉네임은 생성할 수 없습니다.',
             text: '다시 입력해주세요!',
@@ -128,7 +126,6 @@ const LoginPage: React.FC = () => {
           })
           if (error.response) {
             if (error.response.status === 422) {
-              //message = "Unprocessable Entity";
               errorMessage = Swal.fire({
                 title: '요청 처리 실패!',
                 html: '요청을 처리할 수 없습니다.<br>입력한 내용을 다시 확인해 주세요.',
@@ -140,7 +137,6 @@ const LoginPage: React.FC = () => {
                 }
               })
             } else if (error.response.status === 404) {
-              //message = "Not Found";
               errorMessage = Swal.fire({
                 title: '해당 닉네임은 생성할 수 없습니다!',
                 html: '닉네임을 다시 확인해 주세요.',
@@ -153,12 +149,9 @@ const LoginPage: React.FC = () => {
               })
             }
           }
-          // alert(message);
           console.log(errorMessage);
-          // console.error("Error:", error);
         }
     };
-
 
     const playClickSound = () => {
       const sound = new Howl({ 
@@ -167,18 +160,14 @@ const LoginPage: React.FC = () => {
       sound.play();
     };
 
-
-
     const handleStartButtonClick = () => {
       playClickSound();
       console.log("Stored user_id:", userId);
       navigate("/mentor");
     };
-  
 
     function onScroll() {
         setPosition(window.scrollY);
-        // 스크롤 애니메이션 효과
         if (window.scrollY >= 4000) {
             setIsVisible(true);
         } else {
@@ -192,7 +181,6 @@ const LoginPage: React.FC = () => {
             window.removeEventListener("scroll", onScroll);
         };
     }, []);
-
 
     return (
       <div className="relative flex items-center justify-center overflow-hidden" style={{width: '100wh'}}>
@@ -217,25 +205,25 @@ const LoginPage: React.FC = () => {
             justifyContent: 'center' ,              
             width: '60%',
             height: '75%',
-            marginTop: '-240px', marginLeft: '43px',
+            marginTop: '-200px', marginLeft: '43px',
             zIndex: 1
           }}/>
 
-          
         <div className="absolute z-10 flex gap-3 mt-96">
-          <Input value={nickname} onChange={handleInputChange} ref={inputRef} />
+          <Input value={nickname} onChange={handleInputChange} ref={inputRef} className="w-64 h-12 px-4 py-2 rounded-md border-2 border-gray-300" />
           <Button
             text="확인"
             color="bg-gray-500"
             onClick={handleButtonClick}
             width="80px"
             height="56px"
+            className="w-32 h-16"
           />
         </div>
 
-        <div className="absolute z-10 transform -translate-y-2 mt-128">
-          <StartButton onClick={handleStartButtonClick} />
-        </div>
+        {/* <div className="absolute z-10 transform -translate-y-2 mt-128">
+          <StartButton onClick={handleStartButtonClick} style={{ width: '200px' }} />
+        </div> */}
       </div>
     );
 };
