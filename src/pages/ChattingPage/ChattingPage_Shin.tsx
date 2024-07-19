@@ -30,7 +30,7 @@ const ChattingPageShin: React.FC = () => {
       return;
     }
 
-    const ws = new WebSocket(`ws://localhost:8000/api/ws/chatrooms/${chatroomId}?user_id=${userId}`);
+    const ws = new WebSocket(`${import.meta.env.VITE_API_URL.replace(/^http/, 'ws')}/api/ws/chatrooms/${chatroomId}?user_id=${userId}`);
     wsRef.current = ws;
 
     ws.onopen = () => {

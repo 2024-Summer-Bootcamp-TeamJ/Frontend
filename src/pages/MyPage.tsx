@@ -52,7 +52,7 @@ const MyPage: React.FC = () => {
       if (userId !== null) {
         try {
           const response = await axios.get(
-            `http://localhost:8000/api/users/${userId}`
+            `${import.meta.env.VITE_API_URL}/api/users/${userId}`
           );
           setNickname(response.data.nickname);
           console.log(
@@ -77,7 +77,7 @@ const MyPage: React.FC = () => {
   const fetchPrescriptions = async (mentorId: number | null = null) => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/prescriptions",
+        `${import.meta.env.VITE_API_URL}/api/prescriptions`,
         {
           params: {
             user_id: userId,
