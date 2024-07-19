@@ -55,19 +55,19 @@ const Mobile_PrescriptionPage: React.FC = () => {
       <img
         src={mailBack}
         alt="mail back"
-        className="absolute w-[55vw] h-[120vh] z-0 mb-28"
+        className="absolute w-[90vw] h-auto max-h-[120vh] z-0 mb-28"
         draggable="false"
       />
       <div
-        className={`absolute w-[50vw] h-[78vh] ml-1 ${animate ? "slide-up-animation" : "top-[22%] z-1"}`}
+        className={`absolute w-[85vw] h-[78vh] flex items-center justify-center ml-1 ${animate ? "slide-up-animation" : "top-[22%] z-1"}`}
         style={{ transition: "top 2s ease-in-out" }}
       >
-        {/* <img
+        <img
           src={mobile_prescriptionimg}
           alt="엽서이미지"
-          className="w-full h-full"
           draggable="false"
-        /> */}
+          style={{ width: "80%", height: "auto" }} // 원하는 크기로 조절
+        />
         {prescription && (
           <div className="absolute inset-0 z-3 flex items-center justify-center">
             <ImageWithText prescriptionId={Number(chatroomId)} />
@@ -77,7 +77,7 @@ const Mobile_PrescriptionPage: React.FC = () => {
       <img
         src={mailFront}
         alt="mail front"
-        className="absolute w-[63vw] h-[85vh] z-2 top-56 mt-1"
+        className="absolute w-[90vw] h-auto max-h-[85vh] z-2 top-56 mt-1"
         draggable="false"
       />
       <div className="absolute bottom-4 right-4">

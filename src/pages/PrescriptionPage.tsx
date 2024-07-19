@@ -16,12 +16,12 @@ const PrescriptionPage: React.FC = () => {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
-    console.log("Prescription ID:", chatroomId);  // Prescription ID가 제대로 전달되는지 확인
+    console.log("Prescription ID:", chatroomId); // Prescription ID가 제대로 전달되는지 확인
     if (!chatroomId || !userId) {
       console.error("No chatroom ID or user ID provided");
       return;
     }
-    
+
     const fetchPrescription = async () => {
       try {
         const response = await axios.get(
@@ -59,8 +59,8 @@ const PrescriptionPage: React.FC = () => {
         draggable="false"
       />
       <div
-        className={`absolute w-[50vw] h-[78vh] ml-1 ${animate ? 'slide-up-animation' : 'top-[22%] z-1'}`}
-        style={{ transition: 'top 2s ease-in-out' }}
+        className={`absolute w-[50vw] h-[78vh] ml-1 ${animate ? "slide-up-animation" : "top-[22%] z-1"}`}
+        style={{ transition: "top 2s ease-in-out" }}
       >
         <img
           src={prescriptionimg}
