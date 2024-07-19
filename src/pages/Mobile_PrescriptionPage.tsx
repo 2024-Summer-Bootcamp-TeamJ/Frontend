@@ -77,8 +77,9 @@ const Mobile_PrescriptionPage: React.FC = () => {
       <img
         src={mailFront}
         alt="mail front"
-        className="absolute w-[90vw] h-auto max-h-[85vh] z-2 top-56 mt-1"
+        className="absolute w-[100vw] h-auto max-h-[85vh] z-2 top-56 mt-1"
         draggable="false"
+        style={{ top: "368px" }}
       />
       <div className="absolute bottom-4 right-4">
         <Link to="/mobile_mypage">
