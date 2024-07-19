@@ -6,6 +6,7 @@ interface ButtonProps {
   onClick?: () => void;
   width?: string; 
   height?: string; 
+  className?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({ text, color, onClick, width, height }) => {

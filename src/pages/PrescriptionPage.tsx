@@ -16,7 +16,10 @@ const PrescriptionPage: React.FC = () => {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
-    console.log("Prescription ID:", chatroomId); // Prescription ID가 제대로 전달되는지 확인
+
+    console.log("Prescription ID:", chatroomId);
+    console.log("User ID:", userId);
+
     if (!chatroomId || !userId) {
       console.error("No chatroom ID or user ID provided");
       return;
@@ -37,12 +40,11 @@ const PrescriptionPage: React.FC = () => {
   }, [chatroomId, userId]);
 
   useEffect(() => {
-    // 애니메이션을 트리거하는 타이머 설정
     const timer = setTimeout(() => {
       setAnimate(true);
-    }, 500); // 0.5초 후에 애니메이션 시작
+    }, 500);
 
-    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
+    return () => clearTimeout(timer);
   }, []);
 
   return (
