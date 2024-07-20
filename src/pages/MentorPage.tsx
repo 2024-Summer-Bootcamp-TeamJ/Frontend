@@ -55,9 +55,11 @@ const MentorPage: React.FC = () => {
   const [playFlipcard] = useSound(flipcard);
   const [playChoose] = useSound(choose);
   const [playMouse] = useSound(mouse);
+
   const handleIconClick = useCallback(() => {
     playMouse();
   }, [playMouse]);
+
   useEffect(() => {
     const fetchMentors = async () => {
       try {
