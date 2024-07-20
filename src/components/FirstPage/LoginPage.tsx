@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from "react-router-dom";
 import backgroundGreen from "../../assets/images/backgroundGreen.svg";
+import groupLogo from "../../assets/images/groupLogo.svg";
+import clickEffect from "../../assets/audios/click_effect.mp3";
 import '../../index.css';
-import { useState, useRef } from 'react';
 import 'animate.css'; // yarn add animate.css 실행
-import { Link, useNavigate } from "react-router-dom";
 import Button from './Button';
 import Input from './Input';
-import StartButton from './StartButton';
 import axios from 'axios';
 import { useStore } from '../../store/store';
 import Swal from 'sweetalert2';
@@ -14,7 +14,6 @@ import { Howl } from 'howler';
 
 const LoginPage: React.FC = () => {
 
-    
     const [position, setPosition] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
     const [nickname, setNicknameState] = useState("");
@@ -30,11 +29,9 @@ const LoginPage: React.FC = () => {
       console.log("Updated user_id:", userId);
     }, [userId]);
 
-
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNicknameState(event.target.value);
     }
-
 
     const handleButtonClick = async() => {
         if (inputRef.current && nickname.trim() === '') {
@@ -155,7 +152,7 @@ const LoginPage: React.FC = () => {
 
     const playClickSound = () => {
       const sound = new Howl({ 
-        src: ['src/assets/audios/click_effect.mp3']
+        src: [clickEffect]
       });
       sound.play();
     };
@@ -185,7 +182,7 @@ const LoginPage: React.FC = () => {
     return (
       <div className="relative flex items-center justify-center overflow-hidden" style={{width: '100wh'}}>
         <img
-          src="src/assets/images/backgroundGreen.svg"
+          src={backgroundGreen}
           alt="background"
           style={{
             position: 'relative',
@@ -197,7 +194,7 @@ const LoginPage: React.FC = () => {
           }}/>
 
         <img
-          src="src/assets/images/groupLogo.svg"
+          src={groupLogo}
           alt="logo"
           className={`animate__animated ${isVisible ? 'animate__bounceInDown' : ''}`}
           style={{
