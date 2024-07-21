@@ -149,25 +149,23 @@ const MyPage: React.FC = () => {
           />
         </Link>
       </div>
-      <div className="flex space-x-6">
-        <div className="relative flex flex-col justify-end">
+      <div className="flex flex-col md:flex-row md:space-x-6">
+        {/* 이 부분이 모바일에서 숨겨짐 */}
+        <div className="relative flex flex-col justify-end hidden md:flex">
           <img
             src={PostBox}
             alt="PostBox"
-            className="mb-10 w-96"
+            className="mb-10 w-80 md:w-96"
             draggable="false"
           />
-          <div className="absolute inset-0 flex items-center justify-center mt-44">
-            <span className="text-4xl text-postboxNameColor font-MoonFlower">
+          <div className="absolute inset-0 flex items-center justify-center mt-24 md:mt-44">
+            <span className="text-3xl md:text-4xl text-postboxNameColor font-MoonFlower">
               {nickname}'s
             </span>
           </div>
         </div>
-        <div
-          style={{ width: "48rem", height: "36rem" }}
-          className="p-6 shadow-lg bg-lettersColor rounded-100px "
-        >
-          <div className="flex justify-center mb-4 space-x-[-15px]">
+        <div className="w-full md:w-48rem max-w-70rem h-36rem p-4 md:p-6 shadow-lg bg-lettersColor rounded-4xl md:rounded-100px">
+          <div className="flex justify-center mb-4 space-x-2 md:space-x-[-15px]">
             <div
               onMouseEnter={() => handleMouseEnter("All")}
               onMouseLeave={handleMouseLeave}
@@ -177,7 +175,7 @@ const MyPage: React.FC = () => {
               <img
                 src={redButtonAll}
                 alt="RedButtonAll"
-                className="w-20"
+                className="w-14 md:w-20"
                 draggable="false"
               />
               {(hoveredButton === "All" ||
@@ -185,7 +183,7 @@ const MyPage: React.FC = () => {
                 <img
                   src={AllLetter}
                   alt="From All"
-                  className="absolute top-[-15px] left-0 w-24 transition-transform transform scale-125"
+                  className="absolute top-[-15px] left-0 w-20 md:w-24 transition-transform transform scale-125"
                   draggable="false"
                 />
               )}
@@ -199,7 +197,7 @@ const MyPage: React.FC = () => {
               <img
                 src={redButtonOh}
                 alt="RedButtonOh"
-                className="w-20"
+                className="w-14 md:w-20"
                 draggable="false"
               />
               {(hoveredButton === "Oh" ||
@@ -207,7 +205,7 @@ const MyPage: React.FC = () => {
                 <img
                   src={fromOh}
                   alt="From Oh"
-                  className="absolute top-[-15px] left-0 w-24 transition-transform transform scale-125"
+                  className="absolute top-[-15px] left-0 w-20 md:w-24 transition-transform transform scale-125"
                   draggable="false"
                 />
               )}
@@ -221,7 +219,7 @@ const MyPage: React.FC = () => {
               <img
                 src={redButtonBaek}
                 alt="RedButtonBaek"
-                className="w-20"
+                className="w-14 md:w-20"
                 draggable="false"
               />
               {(hoveredButton === "Baek" ||
@@ -229,7 +227,7 @@ const MyPage: React.FC = () => {
                 <img
                   src={fromBaek}
                   alt="From Baek"
-                  className="absolute top-[-15px] left-0 w-24 transition-transform transform scale-125"
+                  className="absolute top-[-15px] left-0 w-20 md:w-24 transition-transform transform scale-125"
                   draggable="false"
                 />
               )}
@@ -243,7 +241,7 @@ const MyPage: React.FC = () => {
               <img
                 src={redButtonShin}
                 alt="RedButtonShin"
-                className="w-20"
+                className="w-14 md:w-20"
                 draggable="false"
               />
               {(hoveredButton === "Shin" ||
@@ -251,7 +249,7 @@ const MyPage: React.FC = () => {
                 <img
                   src={fromShin}
                   alt="From Shin"
-                  className="absolute top-[-15px] left-0 w-24 transition-transform transform scale-125"
+                  className="absolute top-[-15px] left-0 w-20 md:w-24 transition-transform transform scale-125"
                   draggable="false"
                 />
               )}
@@ -267,26 +265,30 @@ const MyPage: React.FC = () => {
               prescriptions.map((prescription, index) => (
                 <div
                   key={prescription.id}
-                  className="flex items-center h-16 p-2 transition-colors duration-300 bg-dateColor rounded-3xl w-168 hover:bg-dateHoverColor"
+                  className="flex items-center h-12 md:h-16 p-2 transition-colors duration-300 bg-dateColor rounded-xl md:rounded-3xl w-full max-w-lg md:max-w-none md:w-168 hover:bg-dateHoverColor"
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  onClick={() => navigate('/prescription', { state: { chatroomId: prescription.id, userId } })}
+                  onClick={() =>
+                    navigate("/prescription", {
+                      state: { chatroomId: prescription.id, userId },
+                    })
+                  }
                 >
                   {hoveredIndex === index && (
                     <img
                       src={IconMouse}
                       alt="Mouse Icon"
-                      className="w-16"
+                      className="w-12 md:w-16"
                       draggable="false"
                     />
                   )}
                   <img
                     src={IconLetter}
                     alt="Letter Icon"
-                    className="w-16 transform translate-y-1"
+                    className="w-12 md:w-16 transform translate-y-1"
                     draggable="false"
                   />
-                  <span className="text-dateTextColor font-['NoticiaText'] text-2xl">
+                  <span className="text-dateTextColor font-['NoticiaText'] text-lg md:text-2xl">
                     {new Date(prescription.created_at).toLocaleDateString()}
                   </span>
                 </div>
