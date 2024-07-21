@@ -62,22 +62,9 @@ const FirstPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen overflow-hidden">
+    <div className="flex flex-col items-center justify-center h-screen overflow-hidden iphone:h-[852px] iphone:overflow-hidden">
       {/* <EveningSky />
       <WelcomePage />
-      <div className="absolute bottom-48 flex gap-3 z-10">
-        <Input value={nickname} onChange={handleInputChange} />
-        <Button
-          text="확인"
-          color="bg-gray-500"
-          onClick={handleButtonClick}
-          width="80px"
-          height="56px"
-        />
-      </div>
-      <div className="absolute bottom-32 z-10">
-        <StartButton onClick={handleStartButtonClick} />
-      </div>
       <CharIntro1 />
       <CharIntro2 /> */}
       <LoginPage />

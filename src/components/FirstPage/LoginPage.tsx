@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import backgroundGreen from "../../assets/images/backgroundGreen.svg";
+import leaf from "../../assets/images/leaf.svg";
 import '../../index.css';
 import { useState, useRef } from 'react';
 import 'animate.css'; // yarn add animate.css 실행
@@ -35,6 +36,13 @@ const LoginPage: React.FC = () => {
         setNicknameState(event.target.value);
     }
 
+    function getSwalWidth() { // 알림창 너비 변경 함수 
+      if (window.innerWidth <= 450) { 
+        return 350;
+      }
+      return 500;
+    }
+
 
     const handleButtonClick = async() => {
         if (inputRef.current && nickname.trim() === '') {
@@ -58,7 +66,7 @@ const LoginPage: React.FC = () => {
               showCancelButton: true,
               confirmButtonText: '확인',
               cancelButtonText: '취소',
-              width: 500,
+              width: getSwalWidth(),
               customClass: {
                 title: 'text-2xl font-extrabold', 
                 confirmButton: 'bg-blue-500 text-white py-2 px-4 rounded-md w-24 h-12 mr-5 text-lg font-bold',
@@ -82,12 +90,18 @@ const LoginPage: React.FC = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                   Swal.fire({
-                    title: '닉네임이 생성됐어요!', 
-                    text: `${response.data.nickname}님 축하합니다!`, 
-                    icon: 'success', 
-                    confirmButtonText: '시작', 
+                    // title: '가입 완료!', 
+                    // text: `${response.data.nickname}님 축하합니다!`, 
+                    // icon: 'success',
+                    // imageUrl: 'src/assets/images/leaf.svg',
+                    html: `
+                      <div style="background-image: url('${leaf}');" class="relative w-[260px] h-[260px] left-[20%] iphone:w-[200px] iphone:h-[200px] iphone:left-[15%] bg-cover bg-center flex items-center justify-center">
+                        <p class="absolute text-3xl font-extrabold text-black px-4 py-2 rounded top-[43%] left-[22%] iphone:text-[25px] iphone:left-[17%] iphone:top-[41%]">가입 완료!</p>
+                      </div>`,
+                    width: getSwalWidth(), 
+                    confirmButtonText: '시작하기', 
                     customClass: {title: 'text-2xl font-extrabold', 
-                    confirmButton: 'w-40 h-12 text-lg font-bold bg-green-500'},
+                    confirmButton: 'w-64 h-12 text-lg font-bold bg-green-500 iphone:w-[250px] iphone:bg-green-600 iphone:h-[55px] iphone:rounded-xl iphone:text-xl'},
                     showClass: {
                       popup: `
                         animate__animated
@@ -183,41 +197,29 @@ const LoginPage: React.FC = () => {
     }, []);
 
     return (
-      <div className="relative flex items-center justify-center overflow-hidden" style={{width: '100wh'}}>
+      <div className="relative flex items-center justify-center w-screen overflow-hidden">
         <img
           src="src/assets/images/backgroundGreen.svg"
           alt="background"
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '1000px',
-            objectFit: 'cover',         
-            zIndex: -1,
-            backgroundSize: 'cover'
-          }}/>
+          className="relative w-full h-[1000px] object-cover -z-10 iphone:w-[393px] iphone:h-[852px]"
+        />
 
         <img
           src="src/assets/images/groupLogo.svg"
           alt="logo"
-          className={`animate__animated ${isVisible ? 'animate__bounceInDown' : ''}`}
-          style={{
-            position: 'absolute',
-            justifyContent: 'center' ,              
-            width: '60%',
-            height: '75%',
-            marginTop: '-200px', marginLeft: '43px',
-            zIndex: 1
-          }}/>
+          className={`animate__animated ${isVisible ? 'animate__bounceInDown' : ''} 
+            absolute w-[60%] h-[75%] -mt-[240px] ml-[43px] z-10 iphone:w-[350px] iphone:h-[60%] iphone:top-[25%] iphone:right-[5%] iphone:-mt-[200px]`}
+        />
 
-        <div className="absolute z-10 flex gap-3 mt-96">
-          <Input value={nickname} onChange={handleInputChange} ref={inputRef} className="w-64 h-12 px-4 py-2 rounded-md border-2 border-gray-300" />
+        <div className="absolute z-10 flex gap-3 mt-96 iphone:bg-white iphone:rounded-4xl iphone:w-[330px] iphone:h-[170px] iphone:flex-col iphone:justify-center iphone:items-center iphone:mt-20 iphone:gap-2 iphone:top-[40%]">
+          <Input value={nickname} onChange={handleInputChange} ref={inputRef}/> 
           <Button
             text="확인"
             color="bg-gray-500"
             onClick={handleButtonClick}
-            width="80px"
-            height="56px"
-            className="w-32 h-16"
+            // width="80px"
+            // height="56px"
+            // className="w-32 h-16"
           />
         </div>
 

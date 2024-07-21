@@ -123,7 +123,7 @@ body,
   height: 100%;
 }
 
-.flip-card .flip-card-back {
+.flip-card .flip-card-back-rotation {
   transform: rotateY(180deg); /* 뒷면도 180도 회전 */
 }
 

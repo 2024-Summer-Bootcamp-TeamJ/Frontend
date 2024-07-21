@@ -33,54 +33,24 @@ const CharIntro2: React.FC = () => {
 
     return (
         <div 
+            className="relative w-screen h-[1000px] -z-10 bg-cover iphone:h-[852px]"
             style={{ 
-                backgroundImage: `url(${backgroundForest})`,
-                width: '100%',
-                height: '1000px',
-                zIndex: -1,
-                backgroundSize: 'cover',
-                objectFit: 'cover',
-                position: 'relative'
+                backgroundImage: `url(${backgroundForest})`
             }}>
             
             <img
                 src="src/assets/images/yellowDog.svg"
-                className={`animate__animated ${isVisible ? 'animate__slideInRight' : ''}`}
-                style={{
-                    zIndex: 1,
-                    position: 'absolute',
-                    // transform: 'translate(-50%, -50%)',
-                    top: '50%',
-                    right: '20%',
-                    width: '300px',
-                    height: '400px',
-                    opacity: isVisible ? 1 : 0
-                }} />
+                className={`animate__animated ${isVisible ? 'animate__slideInRight' : ''} absolute z-10 top-[50%] right-[20%] w-[300px] h-[400px] ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+            />
             
             
             <img 
                 src="src/assets/images/RectIntro.svg" 
-                style={{
-                    position: 'absolute',
-                    zIndex: 0,
-                    width: '600px',
-                    height: '600px',
-                    top: '8%',
-                    left: '16%',
-                }}/>
+                className="absolute z-0 w-[600px] h-[600px] top-[8%] left-[16%]"
+            />
             
             
-            <div 
-                className='jua-regular'
-                style={{
-                    position: 'absolute', 
-                    top:'17%', 
-                    left: '18%', 
-                    zIndex: 1,
-                    textAlign: 'center',
-                    lineHeight: '1.7',
-                    fontSize: '30px'
-                }}>
+            <div className='jua-regular absolute top-[17%] left-[18%] z-10 text-center leading-[1.7] text-[30px]'>
                 <p style={{ opacity: (position - 2400) / 600 }}>여러분의 고민을 들어줄</p>
                 <br />
                 <p style={{ opacity: (position - 2550) / 600 }}>3명의 멘토들이 기다리고 있어요!</p>

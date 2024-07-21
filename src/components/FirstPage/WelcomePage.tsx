@@ -30,30 +30,15 @@ const WelcomePage: React.FC = () => {
 
     return (
         <div 
+            className="relative w-screen h-[1000px] -z-10 bg-cover iphone:h-[852px]"
             style={{ 
-                backgroundImage: `url(${welcomeBackground})`,
-                width: '100%',
-                height: '1000px',
-                zIndex: -1,
-                backgroundSize: 'cover',
-                objectFit: 'cover',
-                position: 'relative'
+                backgroundImage: `url(${welcomeBackground})`
             }}>
             
             
                 <div>
-                    <div 
-                        className={`animate__animated ${isVisible ? 'animate__flash' : ''}`}
-                        style={{
-                            zIndex: 1, 
-                            transform: 'translate(-50%, -50%)',
-                            top: '50%',
-                            left: '50%',
-                            position: 'absolute',
-                            background: 'rgba(255, 255, 255, 0.5)',
-                            textAlign: 'center'
-                        }}>
-                        <h1 style={{fontSize: '70px', width: '1000px', height: '100px', margin:0}}>고민의 숲에 오신 것을 환영합니다!</h1>
+                    <div className={`animate__animated ${isVisible ? 'animate__flash' : ''} absolute z-10 bg-white bg-opacity-50 text-center top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2`}>
+                        <h1 className="text-[70px] w-[1000px] h-[100px] m-0">고민의 숲에 오신 것을 환영합니다!</h1>
                     </div>
                 </div>
             
