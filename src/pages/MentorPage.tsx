@@ -60,13 +60,15 @@ const MentorPage: React.FC = () => {
   const [playFlipcard] = useSound(flipcard);
   const [playChoose] = useSound(choose);
   const [playMouse] = useSound(mouse);
+
   const handleIconClick = useCallback(() => {
     playMouse();
   }, [playMouse]);
+
   useEffect(() => {
     const fetchMentors = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/mentors");
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/mentors`);
         const mentorsData = response.data
           .filter((mentor: any) => mentor.id >= 1 && mentor.id <= 3)
           .map((mentor: any) => ({
@@ -104,7 +106,7 @@ const MentorPage: React.FC = () => {
     console.log("Payload(왜 여기선..)userId:", userId, "멘토아이디:", mentorId);
 
     try {
-      const response = await axios.post("http://localhost:8000/api/chatrooms", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/chatrooms`, {
         user_id: userId,
         mentor_id: mentorId,
       });

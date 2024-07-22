@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from "react-router-dom";
 import backgroundGreen from "../../assets/images/backgroundGreen.svg";
 import leaf from "../../assets/images/leaf.svg";
+import groupLogo from "../../assets/images/groupLogo.svg";
+import clickEffect from "../../assets/audios/click_effect.mp3";
 import '../../index.css';
-import { useState, useRef } from 'react';
 import 'animate.css'; // yarn add animate.css 실행
-import { Link, useNavigate } from "react-router-dom";
 import Button from './Button';
 import Input from './Input';
-import StartButton from './StartButton';
 import axios from 'axios';
 import { useStore } from '../../store/store';
 import Swal from 'sweetalert2';
@@ -15,7 +15,6 @@ import { Howl } from 'howler';
 
 const LoginPage: React.FC = () => {
 
-    
     const [position, setPosition] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
     const [nickname, setNicknameState] = useState("");
@@ -31,10 +30,10 @@ const LoginPage: React.FC = () => {
       console.log("Updated user_id:", userId);
     }, [userId]);
 
-
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNicknameState(event.target.value);
     }
+
 
     function getSwalWidth() { // 알림창 너비 변경 함수 
       if (window.innerWidth <= 450) { 
@@ -44,6 +43,8 @@ const LoginPage: React.FC = () => {
     }
 
 
+
+
     const handleButtonClick = async() => {
         if (inputRef.current && nickname.trim() === '') {
           inputRef.current.focus();
@@ -51,7 +52,7 @@ const LoginPage: React.FC = () => {
         try {
           const payload = { nickname: nickname };
           const response = await axios.post(
-            "http://localhost:8000/api/users",
+            `${import.meta.env.VITE_API_URL}/api/users`,
             payload,
             {
               headers: {
@@ -169,7 +170,7 @@ const LoginPage: React.FC = () => {
 
     const playClickSound = () => {
       const sound = new Howl({ 
-        src: ['src/assets/audios/click_effect.mp3']
+        src: [clickEffect]
       });
       sound.play();
     };
@@ -199,13 +200,13 @@ const LoginPage: React.FC = () => {
     return (
       <div className="relative flex items-center justify-center w-screen overflow-hidden">
         <img
-          src="src/assets/images/backgroundGreen.svg"
+          src={backgroundGreen}
           alt="background"
           className="relative w-full h-[1000px] object-cover -z-10 iphone:w-[393px] iphone:h-[852px]"
         />
 
         <img
-          src="src/assets/images/groupLogo.svg"
+          src={groupLogo}
           alt="logo"
           className={`animate__animated ${isVisible ? 'animate__bounceInDown' : ''} 
             absolute w-[60%] h-[75%] -mt-[240px] ml-[43px] z-10 iphone:w-[350px] iphone:h-[60%] iphone:top-[25%] iphone:right-[5%] iphone:-mt-[200px]`}

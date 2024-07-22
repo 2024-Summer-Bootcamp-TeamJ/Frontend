@@ -23,7 +23,18 @@ module.exports = {
         160: "40rem", // w-160
         168: "42rem", // w-168
         176: "44rem", // w-176
+        "48rem": "48rem",
       },
+      maxWidth: {
+        "70rem": "70rem",
+      },
+      height: {
+        "36rem": "36rem",
+      },
+      spacing: {
+        15: "3.75rem", // 3.75rem (60px) 추가
+      },
+
       colors: {
         lettersColor: "#EEF0E2",
         dateColor: "#FCFEF0",

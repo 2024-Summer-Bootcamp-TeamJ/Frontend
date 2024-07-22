@@ -31,29 +31,77 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
     scrollToBottom();
   }, [messageList]);
   return (
-    <div className="relative w-full max-w-3xl mx-auto">
-      <div className="relative bg-white bg-opacity-80 rounded-3xl p-8 w-[60vh] h-[80vh] flex flex-col justify-between">
-        <div className="flex-grow space-y-4 overflow-y-scroll text-red-500 font-syndinaroo">
-          {messageList.map((message, index) => (
-            <div key={index}>
-              {message.startsWith("Client:") ? (
-                <MyChatBubble
-                  chatMessage={message.replace("Client: ", "")}
-                  bgColor={myBgColor}
-                />
-              ) : (
-                <MentorChatBubble
-                  chatMessage={message}
-                  bgColor={mentorBgColor}
-                />
-              )}
+
+    <div>
+      <div>
+        {/* 데스크탑 버전 끝 */}
+        <div className="hidden md:block relative w-full max-w-3xl mx-auto">
+          <div className="relative bg-white bg-opacity-80 rounded-3xl p-8 w-[60vh] h-[80vh] flex flex-col justify-between">
+            <div
+              className="flex-grow overflow-y-scroll font-syndinaroo text-red-500 space-y-4"
+              style={
+                { "--scrollbar-color": scrollbarColor } as CustomCSSProperties
+              }
+            >
+              {messageList.map((message, index) => (
+                <div key={index}>
+                  {message.startsWith("Client:") ? (
+                    <MyChatBubble
+                      chatMessage={message.replace("Client: ", "")}
+                      bgColor={myBgColor}
+                    />
+                  ) : (
+                    <MentorChatBubble
+                      chatMessage={message}
+                      bgColor={mentorBgColor}
+                    />
+                  )}
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
+
             </div>
-          ))}
-          <div ref={messagesEndRef} />
+            <ChatInput onSend={handleSendMessage} />
+          </div>
         </div>
-        <ChatInput onSend={onSendMessage} />
+        {/* 데스크탑 버전 끝 */}
+
+        {/* 모바일버전 시작 */}
+        <div className="block md:hidden relative items-center overflow-visible w-full max-w-md h-[70vh] p-2">
+          <div className="relative flex flex-col w-full h-full bg-white bg-opacity-80 rounded-3xl p-2 shadow-lg">
+            <div
+              className="flex-grow overflow-y-scroll font-syndinaroo text-red-500 space-y-4"
+              style={
+                { "--scrollbar-color": scrollbarColor } as CustomCSSProperties
+              }
+            >
+              {messageList.map((message, index) => (
+                <div key={index}>
+                  {message.startsWith("Client:") ? (
+                    <MyChatBubble
+                      chatMessage={message.replace("Client: ", "")}
+                      bgColor={myBgColor}
+                    />
+                  ) : (
+                    <MentorChatBubble
+                      chatMessage={message}
+                      bgColor={mentorBgColor}
+                    />
+                  )}
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+            <ChatInput onSend={handleSendMessage} />
+          </div>
+        </div>
+
       </div>
+      {/* 모바일버전 끝 */}
     </div>
   );
 };
+
+
 export default ChatContainer;
+
