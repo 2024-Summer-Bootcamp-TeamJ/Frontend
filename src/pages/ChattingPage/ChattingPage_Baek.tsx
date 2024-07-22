@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
 import ChatContainer from "../../components/chat/ChatContainer";
 import backgroundBaek from "../../assets/images/backgroundBaek.svg";
 import characterBaek from "../../assets/images/Baek.svg";
@@ -127,7 +126,7 @@ const ChattingPageBaek: React.FC = () => {
           />
         </div>
         {/* 데스크탑 버전 시작 */}{" "}
-        <div className="hidden md:block relative flex items-center justify-center w-full max-w-6xl px-2 py-4 bg-green-50 bg-opacity-90 rounded-3xl shadow-md">
+        <div className="hidden md:block relative items-center justify-center w-full max-w-6xl px-2 py-4 bg-green-50 bg-opacity-90 rounded-3xl shadow-md">
           <div className="relative flex items-center space-x-40 px-0 py-8 overflow-visible">
             <div className=" relative ml-16 mb-12">
               <img

@@ -77,7 +77,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
         {/* 데스크탑 버전 끝 */}
 
         {/* 모바일버전 시작 */}
-        <div className="block md:hidden relative flex items-center overflow-visible w-full max-w-md h-[70vh] p-2">
+        <div className="block md:hidden relative items-center overflow-visible w-full max-w-md h-[70vh] p-2">
           <div className="relative flex flex-col w-full h-full bg-white bg-opacity-80 rounded-3xl p-2 shadow-lg">
             <div
               className="flex-grow overflow-y-scroll font-syndinaroo text-red-500 space-y-4"
