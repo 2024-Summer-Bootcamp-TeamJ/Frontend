@@ -131,8 +131,9 @@ const ChattingPageShin: React.FC = () => {
               <img
                 src={characterShin}
                 alt="Shin"
-                className="w-80 ml-8 h-auto relative"
+                className="w-72 ml-16 h-auto relative bounce-animation"
                 draggable="false"
+                style={{ transform: "scale(2.5)" }}
               />
               <div className="absolute top-18 left-1/2 transform -translate-x-1/2 -translate-y-16">
                 <img
