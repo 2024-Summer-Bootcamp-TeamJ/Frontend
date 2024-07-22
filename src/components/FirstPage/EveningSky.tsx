@@ -36,47 +36,26 @@ const EveningSky: React.FC = () => {
 
     return (
         <div 
+            className="relative w-screen h-[1000px] -z-10 bg-cover iphone:h-[852px]"
             style={{ 
                 backgroundImage: `url(${eveningSky})`,
-                width: '100%',
-                height: '1000px',
-                zIndex: -1,
-                backgroundSize: 'cover',
-                objectFit: 'cover',
-                position: 'relative',
                 backgroundPositionX: position / -7
             }}>
             
-            <div style={{position: 'absolute', zIndex: 2}}>
+            <div className="absolute z-20">
                 <audio ref={audioRef} src="src/assets/music/backgroundMusic.mp3" loop/>
             </div>
 
 
             <img
                 src="src/assets/images/welcomeLogo.svg"
-                className="animate__animated animate__backInDown"
-                style={{
-                    zIndex: 1,
-                    position: 'absolute',
-                    // transform: 'translate(-50%, -50%)',
-                    top: '17%',
-                    left: '19%',
-                    width: '900px',
-                    height: 'auto'
-                }} />
+                className="animate__animated animate__backInDown absolute z-10 top-[17%] left-[20%] w-[900px] h-auto"
+            />
             
             <img
                 src="src/assets/images/scrollMessage.svg"
-                className="blinking-image"
-                style={{
-                    zIndex: 1,
-                    position: 'absolute',
-                    transform: 'translate(-50%, -50%)',
-                    top: '65%',
-                    left: '49%',
-                    width: '500px',
-                    height: 'auto'
-                }} />
+                className="blinking-image absolute z-10 top-[65%] left-[49%] w-[500px] h-auto transform -translate-x-1/2 -translate-y-1/2"
+            />
             
         </div>
     );

@@ -21,6 +21,9 @@ import useSound from "use-sound";
 import flipcard from "../assets/audios/flipcard.mp3";
 import choose from "../assets/audios/choose.mp3";
 import mouse from "../assets/audios/mouse.mp3";
+import leftArrow from "../assets/images/leftArrow.svg";
+import rightArrow from "../assets/images/rightArrow.svg"; 
+import { useSwipeable } from "react-swipeable";
 
 const mentorImages: { [key: number]: any } = {
   1: {
@@ -47,6 +50,8 @@ const mentorImages: { [key: number]: any } = {
 };
 
 const MentorPage: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 450);
+  const [currentMentorIndex, setCurrentMentorIndex] = useState<number>(0);
   const [flippedMentorId, setFlippedMentorId] = useState<number | null>(null);
   const mentors = useStore((state) => state.mentors);
   const setMentors = useStore((state) => state.setMentors);
@@ -140,46 +145,83 @@ const MentorPage: React.FC = () => {
       }
     }
   };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 450);
+    };
+  
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handlePrevClick = () => {
+	  playChoose(); // 클릭 소리
+    setCurrentMentorIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : mentors.length - 1));
+  };
+
+  const handleNextClick = () => {
+	  playChoose();
+    setCurrentMentorIndex((prevIndex) => (prevIndex < mentors.length - 1 ? prevIndex + 1 : 0));
+  };
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => {
+      if (window.innerWidth <= 450) { // 모바일 화면 크기 기준
+        handleNextClick();
+      }
+    },
+    onSwipedRight: () => {
+      if (window.innerWidth <= 450) {
+        handlePrevClick();
+      }
+    },
+    preventScrollOnSwipe: true,
+    trackTouch: true,
+    trackMouse: true
+  });
+
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
+      className="flex flex-col items-center justify-center min-h-screen bg-center bg-cover iphone:w-screen iphone:h-[852px] iphone:overflow-hidden"
       style={{ backgroundImage: `url(${backgroundGreen})` }}
     >
-      <div className="flex flex-row justify-center items-center gap-4">
-        {mentors.map((mentor) => (
+      <div
+        {...(isMobile ? swipeHandlers : {})} 
+        className="flex flex-row items-center justify-center gap-4">
+        <img
+          src={leftArrow}
+          alt="arrowleft"
+          className="absolute z-10 hidden cursor-pointer left-4 iphone:block"
+          onClick={handlePrevClick}
+        />
+        {mentors.map((mentor, index) => (
           <div
             key={mentor.id}
             className={`relative flex items-center p-4 cursor-pointer flip-card ${
               flippedMentorId === mentor.id ? "flip" : ""
-            }`}
+            } ${index === currentMentorIndex ? "iphone:block" : "iphone:hidden"}`}
             onClick={() => toggleMentorImage(mentor.id)}
           >
-            <div className="front-card-container">
+            <div className="front-card-container iphone:w-[280px] iphone:left-[73px] iphone:h-full">
               <img
                 src={mentor.frontCardImage}
                 alt={mentor.name}
-                className={`w-100 flip-card-front ${flippedMentorId === mentor.id ? "hidden" : ""}`}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                }}
+                className={`absolute top-0 left-0 w-full h-full flip-card-front ${flippedMentorId === mentor.id ? "hidden" : ""}`}
                 draggable="false"
               />
               <img
                 src={mentor.frontCharImage}
                 alt={mentor.name}
-                className={`front-char-image ${flippedMentorId === mentor.id ? "hidden" : ""}`}
+                className={`front-char-image ${flippedMentorId === mentor.id ? "hidden" : ""} iphone:h-[280px] iphone:top-[45%]`}
                 draggable="false"
               />
             </div>
+            
             <img
               src={mentor.backImage}
               alt={`${mentor.name} 뒷면`}
-              className={`w-100 flip-card-back ${
+              className={`absolute top-0 left-0 w-full h-full iphone:w-[290px] iphone:left-[77px] iphone:h-full flip-card-back-rotation ${
                 flippedMentorId === mentor.id ? "" : "hidden"
               }`}
               draggable="false"
@@ -188,16 +230,23 @@ const MentorPage: React.FC = () => {
               <img
                 src={mentor.choosingButtonImage}
                 alt={`선택하기 버튼 ${mentor.name}`}
-                className="absolute inset-0 mt-136 mx-auto w-50"
+                className="absolute inset-0 mx-auto mt-136 w-50 iphone:w-40 iphone:mt-[490px] iphone:mx-[142px]"
                 draggable="false"
                 onClick={() => createChatroom(mentor.id)}
                 style={{ zIndex: 10 }} // 원하는 z-index 값으로 설정
               />
             )}
+            
           </div>
         ))}
+        <img
+          src={rightArrow}
+          alt="arrowright"
+          className="absolute z-10 hidden cursor-pointer right-3 iphone:block"
+          onClick={handleNextClick}
+        />  
       </div>
-      <div onClick={handleIconClick} className="absolute bottom-4 right-4">
+      <div onClick={handleIconClick} className="absolute bottom-4 right-4 iphone:top-5 iphone:right-5">
         <Link to="/mypage">
           <img
             src={IconToMyPage}

@@ -51,6 +51,13 @@ module.exports = {
         MoonFlower: ["MoonFlower"],
         syndinaroo: ["syndinaroo"],
       },
+      screens: {
+        'iphone' : { 'max' : '450px' },
+        // => @media (max-width: 450px) {...}, 450px 이하
+        'laptop' : '450px',
+        // => @media (min-width: 450px) {...}, 450px 이상
+
+      },
     },
   },
   plugins: [
