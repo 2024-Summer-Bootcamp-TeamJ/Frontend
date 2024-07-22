@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, CSSProperties } from "react";
 import MentorChatBubble from "./MentorChatBubble";
 import MyChatBubble from "./MyChatBubble";
 import ChatInput from "./ChatInput";
+
 interface ChatContainerProps {
   mentorBgColor: string;
   myBgColor: string;
@@ -9,10 +10,12 @@ interface ChatContainerProps {
   messages: string[];
   onSendMessage: (message: string) => void;
 }
+
 // CSSProperties 타입 확장
 interface CustomCSSProperties extends CSSProperties {
   "--scrollbar-color"?: string;
 }
+
 const ChatContainer: React.FC<ChatContainerProps> = ({
   mentorBgColor,
   myBgColor,
@@ -22,16 +25,24 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
 }) => {
   const [messageList, setMessageList] = useState<string[]>(messages);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
-  useEffect(() => {
-    scrollToBottom();
-  }, [messageList]);
-  return (
 
+  useEffect(() => {
+    setMessageList(messages); // messages prop이 변경될 때 messageList를 업데이트
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSendMessage = (message: string) => {
+    setMessageList((prevMessages) => [...prevMessages, `Client: ${message}`]);
+    onSendMessage(message);
+  };
+
+  return (
     <div>
       <div>
         {/* 데스크탑 버전 끝 */}
@@ -59,7 +70,6 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
                 </div>
               ))}
               <div ref={messagesEndRef} />
-
             </div>
             <ChatInput onSend={handleSendMessage} />
           </div>
@@ -95,13 +105,10 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
             <ChatInput onSend={handleSendMessage} />
           </div>
         </div>
-
       </div>
       {/* 모바일버전 끝 */}
     </div>
   );
 };
 
-
 export default ChatContainer;
-
