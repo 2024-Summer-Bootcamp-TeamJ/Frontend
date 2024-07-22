@@ -163,6 +163,7 @@ const ChattingPageOh: React.FC = () => {
                 scrollbarColor="#FDA5FE"
                 messages={messages}
                 onSendMessage={sendMessage}
+                mentorType="oh" // mentorType을 oh로 설정
               />
             </div>
           </div>
@@ -178,6 +179,7 @@ const ChattingPageOh: React.FC = () => {
                 scrollbarColor="#FDA5FE"
                 messages={messages}
                 onSendMessage={sendMessage}
+                mentorType="oh" // mentorType을 oh로 설정
               />
             </div>
           </div>

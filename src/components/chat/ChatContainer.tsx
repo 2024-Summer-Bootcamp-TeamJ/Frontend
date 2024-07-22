@@ -11,6 +11,7 @@ interface ChatContainerProps {
   scrollbarColor: string; // 스크롤바 색상을 위한 새로운 prop 추가
   messages: string[];
   onSendMessage: (message: string) => void;
+  mentorType: "baek" | "shin" | "oh"; // mentorType prop 추가
 }
 
 // CSSProperties 타입 확장
@@ -24,6 +25,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   scrollbarColor,
   messages,
   onSendMessage,
+  mentorType,
 }) => {
   const [messageList, setMessageList] = useState<string[]>(messages);
   const [play] = useSound(button_pressed); // useSound 훅을 사용하여 효과음 로드
@@ -69,6 +71,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
                     <MentorChatBubble
                       chatMessage={message}
                       bgColor={mentorBgColor}
+                      mentorType={mentorType} // mentorType prop 전달
                     />
                   )}
                 </div>
@@ -100,6 +103,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
                     <MentorChatBubble
                       chatMessage={message}
                       bgColor={mentorBgColor}
+                      mentorType={mentorType} // mentorType prop 전달
                     />
                   )}
                 </div>

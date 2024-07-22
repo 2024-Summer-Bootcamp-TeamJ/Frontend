@@ -125,7 +125,7 @@ const ChattingPageBaek: React.FC = () => {
             onClick={endChatAndGoToPrescription}
           />
         </div>
-        {/* 데스크탑 버전 시작 */}{" "}
+        {/* 데스크탑 버전 시작 */}
         <div className="hidden md:block relative items-center justify-center w-full max-w-6xl px-2 py-4 bg-green-50 bg-opacity-90 rounded-3xl shadow-md">
           <div className="relative flex items-center space-x-40 px-0 py-8 overflow-visible">
             <div className=" relative ml-16 mb-12">
@@ -163,6 +163,7 @@ const ChattingPageBaek: React.FC = () => {
                 scrollbarColor="#A0DA6A"
                 messages={messages}
                 onSendMessage={sendMessage}
+                mentorType="baek" // baek 이미지 사용
               />
             </div>
           </div>
@@ -178,6 +179,7 @@ const ChattingPageBaek: React.FC = () => {
                 scrollbarColor="#A0DA6A"
                 messages={messages}
                 onSendMessage={sendMessage}
+                mentorType="baek" // baek 이미지 사용
               />
             </div>
           </div>

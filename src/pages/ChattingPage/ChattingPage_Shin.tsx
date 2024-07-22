@@ -164,6 +164,7 @@ const ChattingPageShin: React.FC = () => {
                 scrollbarColor="#FDA5FE"
                 messages={messages}
                 onSendMessage={sendMessage}
+                mentorType="shin" // mentorType을 shin으로 설정
               />
             </div>
           </div>
@@ -179,6 +180,7 @@ const ChattingPageShin: React.FC = () => {
                 scrollbarColor="#FDA5FE"
                 messages={messages}
                 onSendMessage={sendMessage}
+                mentorType="shin" // mentorType을 shin으로 설정
               />
             </div>
           </div>
