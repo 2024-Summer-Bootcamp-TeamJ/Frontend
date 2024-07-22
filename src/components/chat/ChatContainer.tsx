@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState, CSSProperties } from "react";
 import MentorChatBubble from "./MentorChatBubble";
 import MyChatBubble from "./MyChatBubble";
 import ChatInput from "./ChatInput";
+import useSound from "use-sound";
+import button_pressed from "../../assets/audios/button_pressed.mp3"; // 효과음 파일 import
 
 interface ChatContainerProps {
   mentorBgColor: string;
@@ -24,6 +26,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   onSendMessage,
 }) => {
   const [messageList, setMessageList] = useState<string[]>(messages);
+  const [play] = useSound(button_pressed); // useSound 훅을 사용하여 효과음 로드
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToBottom = () => {
@@ -38,6 +41,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   }, [messages]);
 
   const handleSendMessage = (message: string) => {
+    play(); // 메시지를 보내기 전에 효과음 재생
     setMessageList((prevMessages) => [...prevMessages, `Client: ${message}`]);
     onSendMessage(message);
   };

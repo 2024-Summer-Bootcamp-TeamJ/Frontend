@@ -4,6 +4,7 @@ import ChatContainer from "../../components/chat/ChatContainer";
 import backgroundShin from "../../assets/images/backgroundShin.svg";
 import characterShin from "../../assets/images/shin.svg";
 import chatBubbleImage from "../../assets/images/chatbubble.png";
+import button from "../../assets/audios/button.mp3";
 import Button from "../../components/FirstPage/Button";
 import { useStore } from "../../store/store"; // Zustand store import
 
