@@ -155,12 +155,12 @@ const MentorPage: React.FC = () => {
   }, []);
 
   const handlePrevClick = () => {
-	  playChoose(); // 클릭 소리
+	  // playChoose(); // 클릭 소리
     setCurrentMentorIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : mentors.length - 1));
   };
 
   const handleNextClick = () => {
-	  playChoose();
+	  // playChoose();
     setCurrentMentorIndex((prevIndex) => (prevIndex < mentors.length - 1 ? prevIndex + 1 : 0));
   };
 
@@ -183,7 +183,7 @@ const MentorPage: React.FC = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen bg-center bg-cover iphone:w-screen iphone:h-[852px] iphone:overflow-hidden"
+      className="flex flex-col items-center justify-center min-h-screen bg-center bg-cover iphone:w-screen iphone:h-screen iphone:overflow-hidden"
       style={{ backgroundImage: `url(${backgroundGreen})` }}
     >
       <div

@@ -4,7 +4,10 @@ import backgroundGreen from "../../assets/images/backgroundGreen.svg";
 import leaf from "../../assets/images/leaf.svg";
 import groupLogo from "../../assets/images/groupLogo.svg";
 import clickEffect from "../../assets/audios/click_effect.mp3";
+import backgroundMusic1 from "../../assets/audios/bakcgroundMusic2.mp3"
+import backgroundMusic2 from "../../assets/audios/mainMusic.mp3";
 import '../../index.css';
+import './LoginPage.css';
 import 'animate.css'; // yarn add animate.css 실행
 import Button from './Button';
 import Input from './Input';
@@ -15,6 +18,7 @@ import { Howl } from 'howler';
 
 const LoginPage: React.FC = () => {
 
+    const audioRef = useRef<HTMLAudioElement>(null);
     const [position, setPosition] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
     const [nickname, setNicknameState] = useState("");
@@ -41,9 +45,23 @@ const LoginPage: React.FC = () => {
       }
       return 500;
     }
+    
+    
+    useEffect(() => {
+      const sound = new Howl({
+        src: [backgroundMusic1],
+        loop: true,
+        volume: 0.5,
+        onloaderror: (id, err) => console.error("Error loading sound:", err)
+      });
+      sound.play();
 
-
-
+      return () => {
+        sound.unload();
+      };
+    }, []);
+  
+    
 
     const handleButtonClick = async() => {
         if (inputRef.current && nickname.trim() === '') {
@@ -91,10 +109,6 @@ const LoginPage: React.FC = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                   Swal.fire({
-                    // title: '가입 완료!', 
-                    // text: `${response.data.nickname}님 축하합니다!`, 
-                    // icon: 'success',
-                    // imageUrl: 'src/assets/images/leaf.svg',
                     html: `
                       <div style="background-image: url('${leaf}');" class="relative w-[260px] h-[260px] left-[20%] iphone:w-[200px] iphone:h-[200px] iphone:left-[15%] bg-cover bg-center flex items-center justify-center">
                         <p class="absolute text-3xl font-extrabold text-black px-4 py-2 rounded top-[43%] left-[22%] iphone:text-[25px] iphone:left-[17%] iphone:top-[41%]">가입 완료!</p>
@@ -103,6 +117,9 @@ const LoginPage: React.FC = () => {
                     confirmButtonText: '시작하기', 
                     customClass: {title: 'text-2xl font-extrabold', 
                     confirmButton: 'w-64 h-12 text-lg font-bold bg-green-500 iphone:w-[250px] iphone:bg-green-600 iphone:h-[55px] iphone:rounded-xl iphone:text-xl'},
+                    preConfirm: () => {
+                      playClickSound();
+                    },
                     showClass: {
                       popup: `
                         animate__animated
@@ -129,11 +146,11 @@ const LoginPage: React.FC = () => {
           }
         } catch (error: any) {
           let errorMessage = Swal.fire({
-            title: '이 닉네임은 생성할 수 없습니다.',
+            title: '닉네임을 생성할 수 없습니다.',
             text: '다시 입력해주세요!',
             icon: 'error',
             confirmButtonText: '확인',
-            width: 500,
+            width: getSwalWidth(),
             customClass: {
               title: 'text-2xl font-extrabold',
               confirmButton: 'bg-purple-600 text-white py-2 px-4 rounded-md w-24 h-12 mr-5 text-lg font-bold'
@@ -197,23 +214,31 @@ const LoginPage: React.FC = () => {
         };
     }, []);
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+        handleButtonClick();
+      }
+    };
+
     return (
-      <div className="relative flex items-center justify-center w-screen overflow-hidden">
+      <div className="relative flex items-center justify-center w-screen overflow-hidden iphone:w-screen iphone:h-full">
+       
+        
         <img
           src={backgroundGreen}
           alt="background"
-          className="relative w-full h-[1000px] object-cover -z-10 iphone:w-[393px] iphone:h-[852px]"
+          className="relative w-full h-[1000px] object-cover -z-10 iphone:w-screen iphone:h-full iphone:overflow-hidden"
         />
 
         <img
           src={groupLogo}
           alt="logo"
-          className={`animate__animated ${isVisible ? 'animate__bounceInDown' : ''} 
-            absolute w-[60%] h-[75%] -mt-[240px] ml-[43px] z-10 iphone:w-[350px] iphone:h-[60%] iphone:top-[25%] iphone:right-[5%] iphone:-mt-[200px]`}
+          className={`animate__animated animate__bounceInDown 
+            absolute w-[60%] h-[75%] -mt-[240px] ml-[43px] z-10 iphone:w-[360px] iphone:h-[70%] iphone:top-[20%] iphone:-mt-[200px] iphone:justify-center iphone:flex-col iphone:items-center iphone:ml-0`}
         />
 
         <div className="absolute z-10 flex gap-3 mt-96 iphone:bg-white iphone:rounded-4xl iphone:w-[330px] iphone:h-[170px] iphone:flex-col iphone:justify-center iphone:items-center iphone:mt-20 iphone:gap-2 iphone:top-[40%]">
-          <Input value={nickname} onChange={handleInputChange} ref={inputRef}/> 
+          <Input value={nickname} onChange={handleInputChange} ref={inputRef} onKeyDown={handleKeyDown}/> 
           <Button
             text="확인"
             color="bg-gray-500"

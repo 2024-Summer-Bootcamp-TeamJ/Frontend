@@ -4,9 +4,10 @@ interface InputProps {
     value: string;
     className?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps> (({ value, onChange }, ref) => {
+const Input = forwardRef<HTMLInputElement, InputProps> (({ value, onChange, onKeyDown }, ref) => {
     return (
         
         <input 
@@ -17,6 +18,7 @@ const Input = forwardRef<HTMLInputElement, InputProps> (({ value, onChange }, re
             value={value}
             onChange={onChange}
             ref={ref}
+            onKeyDown={onKeyDown}
         />
             
     );
