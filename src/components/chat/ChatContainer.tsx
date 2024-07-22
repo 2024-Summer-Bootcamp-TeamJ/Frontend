@@ -3,7 +3,7 @@ import MentorChatBubble from "./MentorChatBubble";
 import MyChatBubble from "./MyChatBubble";
 import ChatInput from "./ChatInput";
 import useSound from "use-sound";
-import button_pressed from "../../assets/audios/button_pressed.mp3"; // 효과음 파일 import
+import button_pressed from "../../assets/audios/button_pressed.mp3";
 
 interface ChatContainerProps {
   mentorBgColor: string;
