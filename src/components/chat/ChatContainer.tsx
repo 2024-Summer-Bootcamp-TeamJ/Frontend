@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState, CSSProperties } from "react";
 import MentorChatBubble from "./MentorChatBubble";
 import MyChatBubble from "./MyChatBubble";
 import ChatInput from "./ChatInput";
+import useSound from "use-sound";
+import button_pressed from "../../assets/audios/button_pressed.mp3";
 
 interface ChatContainerProps {
   mentorBgColor: string;
@@ -9,6 +11,7 @@ interface ChatContainerProps {
   scrollbarColor: string; // 스크롤바 색상을 위한 새로운 prop 추가
   messages: string[];
   onSendMessage: (message: string) => void;
+  mentorType: "baek" | "shin" | "oh"; // mentorType prop 추가
 }
 
 // CSSProperties 타입 확장
@@ -22,8 +25,10 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   scrollbarColor,
   messages,
   onSendMessage,
+  mentorType,
 }) => {
   const [messageList, setMessageList] = useState<string[]>(messages);
+  const [play] = useSound(button_pressed); // useSound 훅을 사용하여 효과음 로드
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToBottom = () => {
@@ -38,6 +43,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   }, [messages]);
 
   const handleSendMessage = (message: string) => {
+    play(); // 메시지를 보내기 전에 효과음 재생
     setMessageList((prevMessages) => [...prevMessages, `Client: ${message}`]);
     onSendMessage(message);
   };
@@ -49,13 +55,15 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
         <div className="hidden md:block relative w-full max-w-3xl mx-auto">
           <div className="relative bg-white bg-opacity-80 rounded-3xl p-8 w-[60vh] h-[80vh] flex flex-col justify-between">
             <div
-              className="flex-grow overflow-y-scroll font-syndinaroo text-red-500 space-y-4"
+              className="flex-grow overflow-y-scroll font-syndinaroo text-red-500"
               style={
                 { "--scrollbar-color": scrollbarColor } as CustomCSSProperties
               }
             >
               {messageList.map((message, index) => (
-                <div key={index}>
+                <div key={index} className="mb-4">
+                  {" "}
+                  {/* 간격을 위한 클래스 추가 */}
                   {message.startsWith("Client:") ? (
                     <MyChatBubble
                       chatMessage={message.replace("Client: ", "")}
@@ -65,6 +73,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
                     <MentorChatBubble
                       chatMessage={message}
                       bgColor={mentorBgColor}
+                      mentorType={mentorType} // mentorType prop 전달
                     />
                   )}
                 </div>
@@ -80,13 +89,15 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
         <div className="block md:hidden relative items-center overflow-visible w-full max-w-md h-[70vh] p-2">
           <div className="relative flex flex-col w-full h-full bg-white bg-opacity-80 rounded-3xl p-2 shadow-lg">
             <div
-              className="flex-grow overflow-y-scroll font-syndinaroo text-red-500 space-y-4"
+              className="flex-grow overflow-y-scroll font-syndinaroo text-red-500"
               style={
                 { "--scrollbar-color": scrollbarColor } as CustomCSSProperties
               }
             >
               {messageList.map((message, index) => (
-                <div key={index}>
+                <div key={index} className="mb-4">
+                  {" "}
+                  {/* 간격을 위한 클래스 추가 */}
                   {message.startsWith("Client:") ? (
                     <MyChatBubble
                       chatMessage={message.replace("Client: ", "")}
@@ -96,6 +107,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
                     <MentorChatBubble
                       chatMessage={message}
                       bgColor={mentorBgColor}
+                      mentorType={mentorType} // mentorType prop 전달
                     />
                   )}
                 </div>

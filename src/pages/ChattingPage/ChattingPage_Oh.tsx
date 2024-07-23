@@ -131,7 +131,8 @@ const ChattingPageOh: React.FC = () => {
               <img
                 src={characterOh}
                 alt="Oh"
-                className="w-80 ml-8 h-auto relative"
+                className="w-72 ml-16 h-auto relative bounce-animation"
+                style={{ transform: "scale(2.5)" }}
                 draggable="false"
               />
               <div className="absolute top-18 left-1/2 transform -translate-x-1/2 -translate-y-16">
@@ -162,6 +163,7 @@ const ChattingPageOh: React.FC = () => {
                 scrollbarColor="#FDA5FE"
                 messages={messages}
                 onSendMessage={sendMessage}
+                mentorType="oh" // mentorType을 oh로 설정
               />
             </div>
           </div>
@@ -177,6 +179,7 @@ const ChattingPageOh: React.FC = () => {
                 scrollbarColor="#FDA5FE"
                 messages={messages}
                 onSendMessage={sendMessage}
+                mentorType="oh" // mentorType을 oh로 설정
               />
             </div>
           </div>
