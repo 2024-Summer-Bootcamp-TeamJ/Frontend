@@ -62,7 +62,7 @@ const FirstPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen overflow-hidden iphone:h-[852px] iphone:overflow-hidden">
+    <div className="flex flex-col items-center justify-center h-screen overflow-hidden iphone:h-screen iphone:overflow-hidden">
       {/* <EveningSky />
       <WelcomePage />
       <CharIntro1 />
