@@ -105,7 +105,9 @@ const ChattingPageOh: React.FC = () => {
         wsRef.current.close();
       }
 
-      navigate("/prescription", { state: { chatroomId, userId } }); // userId를 포함하여 navigate
+      navigate("/prescription", {
+        state: { chatroomId: chatroomId - 1, userId },
+      }); // Subtract 1 from chatroomId
     } catch (error) {
       console.error("Error navigating to prescription page:", error);
     }
