@@ -106,7 +106,7 @@ const ChattingPageOh: React.FC = () => {
       }
 
       navigate("/prescription", {
-        state: { chatroomId: chatroomId - 1, userId },
+        state: { chatroomId: chatroomId, userId },
       }); // Subtract 1 from chatroomId
     } catch (error) {
       console.error("Error navigating to prescription page:", error);

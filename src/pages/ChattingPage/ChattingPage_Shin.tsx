@@ -107,7 +107,7 @@ const ChattingPageShin: React.FC = () => {
       }
 
       navigate("/prescription", {
-        state: { chatroomId: chatroomId - 1, userId },
+        state: { chatroomId: chatroomId, userId },
       }); // userId를 포함하여 navigate
     } catch (error) {
       console.error("Error navigating to prescription page:", error);
