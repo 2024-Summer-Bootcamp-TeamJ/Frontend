@@ -41,4 +41,4 @@ jobs:
         run: aws s3 sync dist/ s3://forest-of-thoughts --delete
 
       - name: Invalidate CloudFront cache
-        run: aws cloudfront create-invalidation --distribution-id E3N99Q --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id E3N9MS2PO2N39Q --paths "/*"
