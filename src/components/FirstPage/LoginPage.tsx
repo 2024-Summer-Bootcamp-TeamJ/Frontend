@@ -4,7 +4,7 @@ import backgroundGreen from "../../assets/images/backgroundGreen.svg";
 import leaf from "../../assets/images/leaf.svg";
 import groupLogo from "../../assets/images/groupLogo.svg";
 import clickEffect from "../../assets/audios/click_effect.mp3";
-import backgroundMusic1 from "../../assets/audios/bakcgroundMusic2.mp3"
+import backgroundMusic1 from "../../assets/audios/bakcgroundMusic2.mp3";
 import backgroundMusic2 from "../../assets/audios/mainMusic.mp3";
 import '../../index.css';
 import './LoginPage.css';
@@ -110,7 +110,8 @@ const LoginPage: React.FC = () => {
                 if (result.isConfirmed) {
                   Swal.fire({
                     html: `
-                      <div style="background-image: url('${leaf}');" class="relative w-[260px] h-[260px] left-[20%] iphone:w-[200px] iphone:h-[200px] iphone:left-[15%] bg-cover bg-center flex items-center justify-center">
+                      <div class="relative w-[260px] h-[260px] left-[20%] iphone:w-[200px] iphone:h-[200px] iphone:left-[15%] bg-cover bg-center flex items-center justify-center">
+                        <img src="${leaf}" alt="leaf" class="absolute w-full h-full object-cover">
                         <p class="absolute text-3xl font-extrabold text-black px-4 py-2 rounded top-[43%] left-[22%] iphone:text-[25px] iphone:left-[17%] iphone:top-[41%]">가입 완료!</p>
                       </div>`,
                     width: getSwalWidth(), 

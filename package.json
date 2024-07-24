@@ -4,14 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode development",
-    "build:nginx": "vite build --mode nginx",
-    "build:ec2": "vite build --mode ec2",
-    "test": "vite --mode test",
-    "build": "tsc -b && vite build --mode production",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
+  "dev": "vite --mode development",
+  "build:nginx": "vite build --mode nginx",
+  "build:ec2": "vite build --mode ec2",
+  "test": "vite --mode test",
+  "build": "tsc -b && vite build --mode production",
+  "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+  "preview": "vite preview"
+},
   "dependencies": {
     "@react-spring/web": "^9.7.3",
     "animate.css": "^4.1.1",
