@@ -18,22 +18,27 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Remove package-lock.json if exists
+        run: |
+          if [ -f package-lock.json ]; then
+            rm package-lock.json
+          fi
+
       - name: Install dependencies
         run: yarn install
 
       - name: Build project
         run: yarn build
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
       - name: Deploy to S3
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          aws s3 sync build/ s3://forest-of-thoughts --delete
+        run: aws s3 sync build/ s3://forest-of-thoughts --delete
 
       - name: Invalidate CloudFront cache
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          aws cloudfront create-invalidation --distribution-id E3N9MS2PO2N39Q --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id E3N99Q --paths "/*"
