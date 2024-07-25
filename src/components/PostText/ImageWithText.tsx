@@ -16,7 +16,7 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
     const fetchMentorId = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/prescriptions/${prescriptionId}?user_id=${userId}`
+          `${import.meta.env.VITE_API_URL}/prescriptions/${prescriptionId}?user_id=${userId}`
         );
         setMentorId(response.data.mentor_id);
         console.log("멘토아이디는", response.data.mentor_id);
@@ -28,7 +28,7 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
     const fetchPrescription = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/prescriptions/${prescriptionId}?user_id=${userId}`
+          `${import.meta.env.VITE_API_URL}/prescriptions/${prescriptionId}?user_id=${userId}`
         );
 
         setSummaryText(response.data.content);

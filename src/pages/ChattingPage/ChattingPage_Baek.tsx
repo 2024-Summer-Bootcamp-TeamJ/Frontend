@@ -24,9 +24,6 @@ const ChattingPageBaek: React.FC = () => {
   const splitIntoSentences = (text: string) => {
     return text.match(/[^\.!\?]+[\.!\?]+/g)?.map(sentence => sentence.trim()) || [];
   };
-  
-
-
 
   const connectWebSocket = () => {
     if (!chatroomId || !userId) {
@@ -44,7 +41,7 @@ const ChattingPageBaek: React.FC = () => {
     }
 
     const ws = new WebSocket(
-      `${import.meta.env.VITE_API_URL.replace(/^http/, "ws")}/api/ws/chatrooms/${chatroomId}?user_id=${userId}`
+      `${import.meta.env.VITE_API_URL.replace(/^http/, "ws")}/ws/chatrooms/${chatroomId}?user_id=${userId}`
     );
     wsRef.current = ws;
 
@@ -87,7 +84,6 @@ const ChattingPageBaek: React.FC = () => {
         }
       }
     };
-    
 
     ws.onclose = (event) => {
       console.log("Disconnected from the WebSocket", event);
@@ -132,6 +128,9 @@ const ChattingPageBaek: React.FC = () => {
       if (wsRef.current) {
         wsRef.current.close();
       }
+
+      // 3초 동안 대기
+      await new Promise((resolve) => setTimeout(resolve, 3000));
 
       navigate("/prescription", {
         state: { chatroomId: chatroomId, userId },
