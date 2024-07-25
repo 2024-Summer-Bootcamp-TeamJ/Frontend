@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import ProfileBackBaek from "../assets/images/ProfileBackBaek.svg";
 import ProfileBackOh from "../assets/images/ProfileBackOh.svg";
 import ProfileBackShin from "../assets/images/ProfileBackShin.svg";
@@ -22,7 +22,7 @@ import flipcard from "../assets/audios/flipcard.mp3";
 import choose from "../assets/audios/choose.mp3";
 import mouse from "../assets/audios/mouse.mp3";
 import leftArrow from "../assets/images/leftArrow.svg";
-import rightArrow from "../assets/images/rightArrow.svg"; 
+import rightArrow from "../assets/images/rightArrow.svg";
 import { useSwipeable } from "react-swipeable";
 
 const mentorImages: { [key: number]: any } = {
@@ -68,16 +68,28 @@ const MentorPage: React.FC = () => {
   useEffect(() => {
     const fetchMentors = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/mentors`);
+        console.log("Fetching mentors...");
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/mentors`);
+        console.log("Server response:", response.data);
         const mentorsData = response.data
           .filter((mentor: any) => mentor.id >= 1 && mentor.id <= 3)
           .map((mentor: any) => ({
             ...mentor,
             ...mentorImages[mentor.id],
           }));
+        console.log("Filtered mentors data:", mentorsData);
         setMentors(mentorsData);
       } catch (error) {
-        console.error("Error fetching mentors:", error);
+        if (axios.isAxiosError(error)) {
+          console.error("Error fetching mentors:", error.message);
+          if (error.response) {
+            console.error("Error response data:", error.response.data);
+            console.error("Error response status:", error.response.status);
+            console.error("Error response headers:", error.response.headers);
+          }
+        } else {
+          console.error("Unknown error:", error);
+        }
       }
     };
 
@@ -85,7 +97,7 @@ const MentorPage: React.FC = () => {
   }, [setMentors]);
 
   const toggleMentorImage = (mentorId: number) => {
-    playFlipcard(); // flipcard 효과음 재생
+    playFlipcard();
     if (flippedMentorId === mentorId) {
       setFlippedMentorId(null);
     } else {
@@ -103,10 +115,10 @@ const MentorPage: React.FC = () => {
       return;
     }
 
-    console.log("Payload(왜 여기선..)userId:", userId, "멘토아이디:", mentorId);
+    console.log("Payload(왜 여기선..)userId:", userId, "멘토 아이디:", mentorId);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/chatrooms`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/chatrooms`, {
         user_id: userId,
         mentor_id: mentorId,
       });
@@ -129,44 +141,41 @@ const MentorPage: React.FC = () => {
         console.error("예상치 못한 응답 상태:", response.status);
         throw new Error("채팅방 생성 실패");
       }
-      // 채팅방 생성 후 choose 사운드 효과 재생
       playChoose();
-    } catch (error: any) {
-      if (error.response && error.response.status === 404) {
-        console.error("User not found. Please ensure the user ID is correct.");
-        console.error(
-          "(createChatroom)User 아이디는 ",
-          userId,
-          "멘토 아이디는 ",
-          mentorId
-        );
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Error creating chatroom:", error.message);
+        if (error.response) {
+          console.error("Error response data:", error.response.data);
+          console.error("Error response status:", error.response.status);
+          console.error("Error response headers:", error.response.headers);
+        }
       } else {
-        console.error("Error creating chatroom:", error);
+        console.error("Unknown error:", error);
       }
     }
   };
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 450);
     };
-  
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handlePrevClick = () => {
-	  // playChoose(); // 클릭 소리
     setCurrentMentorIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : mentors.length - 1));
   };
 
   const handleNextClick = () => {
-	  // playChoose();
     setCurrentMentorIndex((prevIndex) => (prevIndex < mentors.length - 1 ? prevIndex + 1 : 0));
   };
 
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => {
-      if (window.innerWidth <= 450) { // 모바일 화면 크기 기준
+      if (window.innerWidth <= 450) {
         handleNextClick();
       }
     },
@@ -179,7 +188,6 @@ const MentorPage: React.FC = () => {
     trackTouch: true,
     trackMouse: true
   });
-
 
   return (
     <div
@@ -233,10 +241,9 @@ const MentorPage: React.FC = () => {
                 className="absolute inset-0 mx-auto mt-136 w-50 iphone:w-40 iphone:mt-[490px] iphone:mx-[142px]"
                 draggable="false"
                 onClick={() => createChatroom(mentor.id)}
-                style={{ zIndex: 10 }} // 원하는 z-index 값으로 설정
+                style={{ zIndex: 10 }}
               />
             )}
-            
           </div>
         ))}
         <img

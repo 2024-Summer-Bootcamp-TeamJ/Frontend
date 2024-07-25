@@ -37,7 +37,7 @@ const ChattingPageShin: React.FC = () => {
     }
 
     const ws = new WebSocket(
-      `${import.meta.env.VITE_API_URL.replace(/^http/, "ws")}/api/ws/chatrooms/${chatroomId}?user_id=${userId}`
+      `${import.meta.env.VITE_API_URL.replace(/^http/, "ws")}/ws/chatrooms/${chatroomId}?user_id=${userId}`
     );
     wsRef.current = ws;
 

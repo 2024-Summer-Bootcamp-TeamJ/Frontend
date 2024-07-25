@@ -70,7 +70,7 @@ const LoginPage: React.FC = () => {
         try {
           const payload = { nickname: nickname };
           const response = await axios.post(
-            `${import.meta.env.VITE_API_URL}/api/users`,
+            `${import.meta.env.VITE_API_URL}/users`,
             payload,
             {
               headers: {
