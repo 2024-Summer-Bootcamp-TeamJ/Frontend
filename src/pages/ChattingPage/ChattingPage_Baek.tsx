@@ -21,6 +21,13 @@ const ChattingPageBaek: React.FC = () => {
   const wsRef = useRef<WebSocket | null>(null);
   const [socketConnected, setSocketConnected] = useState(false);
 
+  const splitIntoSentences = (text: string) => {
+    return text.match(/[^\.!\?]+[\.!\?]+/g)?.map(sentence => sentence.trim()) || [];
+  };
+  
+
+
+
   const connectWebSocket = () => {
     if (!chatroomId || !userId) {
       console.error("chatroomId or userId is not defined");
@@ -50,9 +57,28 @@ const ChattingPageBaek: React.FC = () => {
       const data = JSON.parse(event.data);
       const eventType = data.event;
       console.log("WebSocket message received:", data);
+
       if (eventType === "server_message") {
         setMessages((prevMessages) => [...prevMessages, data.message]);
-        setLatestServerMessage(data.message);
+
+        const messages = data.message.split(/(?<=[.!?])\s*/); // !, ? 또는 . 뒤에 공백으로 문장 분리
+        let index = 0;
+
+        // 문장 표시 함수
+        const displayNextMessage = () => {
+          if (index < messages.length) {
+            setLatestServerMessage(messages[index]);
+
+            index++;
+            // 다음 문장을 1초 후에 표시
+            setTimeout(displayNextMessage, 2000);
+          }
+        };
+
+        // 문장 표시 시작
+        displayNextMessage();
+    
+        
         if (data.audio) {
           const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
           audio
@@ -61,6 +87,7 @@ const ChattingPageBaek: React.FC = () => {
         }
       }
     };
+    
 
     ws.onclose = (event) => {
       console.log("Disconnected from the WebSocket", event);
@@ -117,7 +144,7 @@ const ChattingPageBaek: React.FC = () => {
   return (
     <div>
       <div
-        className="relative min-h-screen bg-cover bg-center flex items-center justify-center"
+        className="relative flex items-center justify-center min-h-screen bg-center bg-cover"
         style={{ backgroundImage: `url(${backgroundBaek})` }}
       >
         <div className="absolute top-4 right-4">
@@ -128,29 +155,29 @@ const ChattingPageBaek: React.FC = () => {
           />
         </div>
         {/* 데스크탑 버전 시작 */}
-        <div className="hidden md:block relative items-center justify-center w-full max-w-6xl px-2 py-4 bg-green-50 bg-opacity-90 rounded-3xl shadow-md">
-          <div className="relative flex items-center space-x-40 px-0 py-8 overflow-visible">
-            <div className=" relative ml-16 mb-12">
+        <div className="relative items-center justify-center hidden w-full max-w-6xl px-2 py-4 shadow-md md:block bg-green-50 bg-opacity-90 rounded-3xl">
+          <div className="relative flex items-center px-0 py-8 space-x-40 overflow-visible">
+            <div className="relative mb-12 ml-16 ">
               <img
                 src={characterBaek}
                 alt="Baek"
-                className="w-72 ml-16 h-auto relative bounce-animation"
+                className="relative h-auto ml-16 w-72 bounce-animation"
                 draggable="false"
               />
-              <div className="absolute top-18 left-1/2 transform -translate-x-1/2 -translate-y-16">
+              <div className="absolute transform -translate-x-1/2 -translate-y-16 top-18 left-1/2">
                 <img
                   src={chatBubbleImage}
                   alt="Chat Bubble"
-                  className="w-60 h-auto z-20 ml-8 -mt-4"
+                  className="z-20 h-auto ml-8 -mt-4 w-60"
                   style={{ transform: "scale(2.5)" }}
                   draggable="false"
                 />
                 <div
-                  className="absolute bottom-4 -left-8 w-full h-full flex items-center justify-center"
+                  className="absolute flex items-center justify-center w-full h-full bottom-4 -left-8"
                   style={{ width: "180%", height: "100%" }}
                 >
                   <p
-                    className="text-center text-3xl text-dateTextColor font-syndinaroo"
+                    className="text-3xl text-center text-dateTextColor font-syndinaroo"
                     style={{ transform: "scale(1)" }}
                   >
                     {latestServerMessage}
@@ -172,9 +199,9 @@ const ChattingPageBaek: React.FC = () => {
         </div>
         {/* 데스크탑 버전 끝 */}
         {/* 모바일버전 시작 */}
-        <div className="md:hidden relative flex items-center justify-center  py-4 bg-green-50 bg-opacity-90 rounded-3xl shadow-md">
-          <div className="relative flex items-center overflow-visible w-full max-w-md">
-            <div className="overflow-visible w-full mx-4">
+        <div className="relative flex items-center justify-center py-4 shadow-md md:hidden bg-green-50 bg-opacity-90 rounded-3xl">
+          <div className="relative flex items-center w-full max-w-md overflow-visible">
+            <div className="w-full mx-4 overflow-visible">
               <ChatContainer
                 mentorBgColor="bg-[#F0FDDE]"
                 myBgColor="bg-[#DEFFB2]"
