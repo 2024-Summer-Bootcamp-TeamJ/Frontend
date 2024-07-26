@@ -83,6 +83,10 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
     }
   }, [messages]);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageList]);
+
   const handleSendMessage = (message: string) => {
     play(); // 메시지를 보내기 전에 효과음 재생
     setMessageList((prevMessages) => [...prevMessages, `Client: ${message}`]);
