@@ -39,7 +39,7 @@ const MentorChatBubble: React.FC<MentorChatBubbleProps> = ({
       {/* 데스크탑 버전 끝 */}
 
       {/* 모바일 버전 시작 */}
-      <div className="block md:hidden flex flex-col w-full mb-5 pl-3 box-border relative">
+      <div className="block md:hidden flex flex-col w-full mb-16 pl-3 box-border relative">
         <img
           src={getImageSrc(mentorType)} // mentorType에 따라 이미지 선택
           alt="Mentor"
