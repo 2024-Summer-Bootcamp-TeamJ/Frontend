@@ -23,10 +23,18 @@ interface Chatroom {
   mentorId: number;
 }
 
+interface Prescription {
+  id: number;
+  userId: number;
+  mentorId: number;
+  content: string;
+}
+
 interface AppState {
   members: Member[];
   mentors: Mentor[];
   chatrooms: Chatroom[];
+  prescriptions: Prescription[];
   nickname: string;
   memberId: number | null;
   userId: number | null;
@@ -36,6 +44,7 @@ interface AppState {
   setUserId: (userId: number) => void;
   setMentors: (mentors: Mentor[]) => void;
   setChatrooms: (chatrooms: Chatroom[]) => void;
+  setPrescriptions: (prescriptions: Prescription[]) => void;
 }
 
 interface StoreState extends AppState {
@@ -62,6 +71,7 @@ const stateCreator: StateCreator<StoreState> = (set, get) => ({
   members: [],
   mentors: [],
   chatrooms: [],
+  prescriptions: [],
   memberId: null,
   userId: null,
 
@@ -72,6 +82,7 @@ const stateCreator: StateCreator<StoreState> = (set, get) => ({
   setUserId: (userId: number) => set((state) => ({ ...state, userId: userId })),
   setMentors: (mentors) => set({ mentors }),
   setChatrooms: (chatrooms) => set({ chatrooms }),
+  setPrescriptions: (prescriptions) => set({ prescriptions }),
 
   resetState: () => {
     set({
@@ -80,6 +91,7 @@ const stateCreator: StateCreator<StoreState> = (set, get) => ({
       members: [],
       mentors: [],
       chatrooms: [],
+      prescriptions: [],
       userId: null,
     });
   },
