@@ -70,8 +70,7 @@ const ChattingPageShin: React.FC = () => {
 
         // 문장 표시 시작
         displayNextMessage();
-    
-        
+
         if (data.audio) {
           const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
           audio
@@ -180,8 +179,8 @@ const ChattingPageShin: React.FC = () => {
             </div>
             <div className="ml-0 overflow-visible">
               <ChatContainer
-                mentorBgColor="bg-[#FFF9DD]"
-                myBgColor="bg-[#FDF2BB]"
+                mentorBgColor="bg-[#CCEBFF]"
+                myBgColor="bg-[#A3D4FD]"
                 scrollbarColor="#FDA5FE"
                 messages={messages}
                 onSendMessage={sendMessage}
@@ -196,8 +195,8 @@ const ChattingPageShin: React.FC = () => {
           <div className="relative flex items-center w-full max-w-md overflow-visible">
             <div className="w-full mx-4 overflow-visible">
               <ChatContainer
-                mentorBgColor="bg-[#FFF9DD]"
-                myBgColor="bg-[#FDF2BB]"
+                mentorBgColor="bg-[#CCEBFF]"
+                myBgColor="bg-[#A3D4FD]"
                 scrollbarColor="#FDA5FE"
                 messages={messages}
                 onSendMessage={sendMessage}
