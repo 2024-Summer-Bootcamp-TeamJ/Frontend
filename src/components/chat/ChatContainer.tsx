@@ -20,9 +20,10 @@ interface CustomCSSProperties extends CSSProperties {
 }
 
 const splitIntoSentences = (text: string) => {
-  return text.match(/[^\.!\?]+[\.!\?]+/g)?.map(sentence => sentence.trim()) || [];
+  return (
+    text.match(/[^\.!\?]+[\.!\?]+/g)?.map((sentence) => sentence.trim()) || []
+  );
 };
-
 
 const ChatContainer: React.FC<ChatContainerProps> = ({
   mentorBgColor,
@@ -36,7 +37,6 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   const [play] = useSound(button_pressed); // useSound 훅을 사용하여 효과음 로드
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const previousMessagesRef = useRef<string[]>([]);
-
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -55,8 +55,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
     );
     if (newMessages.length > 0) {
       let index = 0;
-      const sentences = newMessages.flatMap(msg => splitIntoSentences(msg));
-  
+      const sentences = newMessages.flatMap((msg) => splitIntoSentences(msg));
+
       const interval = setInterval(() => {
         if (index < sentences.length) {
           const sentence = sentences[index];
@@ -65,7 +65,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
               if (!prevMessages.includes(sentence)) {
                 return [...prevMessages, sentence];
               }
-              return prevMessages
+              return prevMessages;
             });
             scrollToBottom();
             index++;
@@ -74,12 +74,14 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
           clearInterval(interval);
         }
       }, 1500);
-  
-      previousMessagesRef.current = [...previousMessagesRef.current, ...newMessages];
+
+      previousMessagesRef.current = [
+        ...previousMessagesRef.current,
+        ...newMessages,
+      ];
       return () => clearInterval(interval);
     }
   }, [messages]);
-
 
   const handleSendMessage = (message: string) => {
     play(); // 메시지를 보내기 전에 효과음 재생
@@ -102,7 +104,6 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
               {messageList.map((message, index) => (
                 <div key={index} className="mb-4">
                   {" "}
-                  {/* 간격을 위한 클래스 추가 */}
                   {message.startsWith("Client:") ? (
                     <MyChatBubble
                       chatMessage={message.replace("Client: ", "")}
