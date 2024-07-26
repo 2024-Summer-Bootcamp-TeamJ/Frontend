@@ -23,9 +23,9 @@ const MyChatBubble: React.FC<MyChatBubbleProps> = ({
         {/* 데스크탑 버전 끝 */}
 
         {/* 모바일 버전 시작 */}
-        <div className="block md:hidden flex flex-col w-full mb-5 pr-7 box-border md:mb-1.5 md:pr-5">
+        <div className="block md:hidden flex flex-col w-full mb-5 pr-3 box-border ">
           <div
-            className={`flex p-3 flex-col ml-auto max-w-full rounded-t-xl rounded-bl-xl ${bgColor} text-dateTextColor break-words overflow-wrap text-[0.9rem] border border-gray-200`}
+            className={`flex p-3 flex-col ml-auto max-w-[10rem] rounded-t-xl rounded-bl-xl ${bgColor} text-dateTextColor break-words overflow-wrap text-[0.9rem] border border-gray-200`}
           >
             {chatMessage}
           </div>

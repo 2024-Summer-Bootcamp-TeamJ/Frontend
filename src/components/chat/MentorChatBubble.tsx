@@ -39,14 +39,14 @@ const MentorChatBubble: React.FC<MentorChatBubbleProps> = ({
       {/* 데스크탑 버전 끝 */}
 
       {/* 모바일 버전 시작 */}
-      <div className="block md:hidden flex-col w-full mb-5 pl-7 box-border relative">
+      <div className="block md:hidden flex flex-col w-full mb-5 pl-3 box-border relative">
         <img
           src={getImageSrc(mentorType)} // mentorType에 따라 이미지 선택
           alt="Mentor"
           className="w-16 absolute top-0 left-1 transform -translate-y-2/3 z-10"
         />
         <div
-          className={`flex flex-1 p-3 flex-col mr-auto max-w-[16rem] rounded-t-xl rounded-br-xl ${bgColor} text-dateTextColor break-words overflow-wrap text-[0.9rem] md:text-[1rem] border border-gray-200 relative z-20`}
+          className={`flex flex-1 p-3 flex-col mr-auto max-w-[10rem] rounded-t-xl rounded-br-xl ${bgColor} text-dateTextColor break-words overflow-wrap text-[0.9rem] border border-gray-200 relative z-20`}
         >
           {chatMessage}
         </div>
