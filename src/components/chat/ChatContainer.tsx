@@ -4,6 +4,7 @@ import MyChatBubble from "./MyChatBubble";
 import ChatInput from "./ChatInput";
 import useSound from "use-sound";
 import button_pressed from "../../assets/audios/button_pressed.mp3";
+import "../../index.css";
 
 interface ChatContainerProps {
   mentorBgColor: string;
@@ -39,6 +40,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   const previousMessagesRef = useRef<string[]>([]);
 
   const scrollToBottom = () => {
+    console.log("scrollToBottom called");
+
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
@@ -84,6 +87,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   }, [messages]);
 
   useEffect(() => {
+    console.log("메세지 리스트 : useEffect triggered");
     scrollToBottom();
   }, [messageList]);
 
@@ -100,7 +104,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
         <div className="relative hidden w-full max-w-3xl mx-auto md:block">
           <div className="relative bg-white bg-opacity-80 rounded-3xl p-8 w-[60vh] h-[80vh] flex flex-col justify-between">
             <div
-              className="flex-grow overflow-y-scroll text-red-500 font-syndinaroo"
+              className="flex-grow overflow-y-scroll scrollbar2 text-red-500 font-syndinaroo"
               style={
                 { "--scrollbar-color": scrollbarColor } as CustomCSSProperties
               }
@@ -133,7 +137,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
         <div className="block md:hidden relative items-center overflow-visible w-full max-w-md h-[70vh] p-2">
           <div className="relative flex flex-col w-full h-full p-2 bg-white shadow-lg bg-opacity-80 rounded-3xl">
             <div
-              className="flex-grow overflow-y-scroll text-red-500 font-syndinaroo"
+              className="flex-grow overflow-y-scroll scrollbar2 text-red-500 font-syndinaroo"
               style={
                 { "--scrollbar-color": scrollbarColor } as CustomCSSProperties
               }
