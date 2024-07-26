@@ -121,13 +121,29 @@ const ChattingPageShin: React.FC = () => {
         return;
       }
 
+      // 대화 종료 요청을 서버에 보냄
       if (wsRef.current) {
+        wsRef.current.send(JSON.stringify({ event: "end_chat" }));
         wsRef.current.close();
       }
 
-      navigate("/prescription", {
-        state: { chatroomId: chatroomId, userId },
-      }); // userId를 포함하여 navigate
+      // 3초 동안 대기
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // 처방전 정보를 새로 받아옴
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/prescriptions?user_id=${userId}`
+      );
+      const prescriptions = await response.json();
+
+      if (prescriptions.length > 0) {
+        const latestPrescription = prescriptions[prescriptions.length - 1];
+        navigate("/prescription", {
+          state: { chatroomId: latestPrescription.id, userId },
+        });
+      } else {
+        console.error("No prescriptions found for the user");
+      }
     } catch (error) {
       console.error("Error navigating to prescription page:", error);
     }

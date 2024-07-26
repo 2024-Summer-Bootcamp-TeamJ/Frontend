@@ -27,9 +27,13 @@ const PrescriptionPage: React.FC = () => {
 
     const fetchPrescription = async () => {
       try {
+        console.log(
+          `Fetching prescription with chatroomId: ${chatroomId} and userId: ${userId}`
+        );
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/prescriptions/${chatroomId}?user_id=${userId}`
         );
+        console.log("Prescription fetched successfully:", response.data);
         setPrescription(response.data);
       } catch (error) {
         console.error("Error fetching prescription:", error);

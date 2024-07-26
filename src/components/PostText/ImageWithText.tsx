@@ -59,13 +59,16 @@ const ImageWithText: React.FC<ImageWithTextProps> = ({ prescriptionId }) => {
 
   return (
     <div
-      className="absolute flex flex-col justify-between"
+      className="flex flex-col justify-between"
       style={{
         zIndex: 1,
         width: "90%",
         height: "60%",
         padding: "10%",
         boxSizing: "border-box",
+        overflow: "hidden",
+        textAlign: "justify",
+        lineHeight: "1.5",
       }}
     >
       <p className="mb-4 text-xl font-bold text-amber-700">
