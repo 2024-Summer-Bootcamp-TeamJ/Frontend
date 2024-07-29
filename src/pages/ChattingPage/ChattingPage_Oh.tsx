@@ -69,8 +69,7 @@ const ChattingPageOh: React.FC = () => {
 
         // 문장 표시 시작
         displayNextMessage();
-    
-        
+
         if (data.audio) {
           const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
           audio
@@ -157,35 +156,38 @@ const ChattingPageOh: React.FC = () => {
         <div className="absolute top-4 right-4">
           <Button
             text="대화 종료하기"
-            color="bg-pink-500 w-32 pt-3 pb-3 font-bold"
+            color="bg-green-700 pt-3 pb-3 font-bold"
             onClick={endChatAndGoToPrescription}
           />
         </div>
         {/* 데스크탑 버전 시작 */}
-        <div className="relative items-center justify-center hidden w-full max-w-6xl px-2 py-4 bg-gray-100 shadow-md md:block bg-opacity-90 rounded-3xl">
+        <div className="relative items-center justify-center hidden w-[75vw] max-w-[75vw] h-[94vh] max-h-[94vh] px-[5vw] py-[3vw] bg-gray-100 shadow-md md:block bg-opacity-90 rounded-3xl">
           <div className="relative flex items-center px-0 py-8 space-x-40 overflow-visible">
             <div className="relative mb-12 ml-16">
               <img
                 src={characterOh}
                 alt="Oh"
-                className="relative h-auto ml-16 w-72 bounce-animation"
-                style={{ transform: "scale(2.5)" }}
+                className="relative w-[20vw] h-auto ml-8 bounce-animation"
                 draggable="false"
               />
-              <div className="absolute transform -translate-x-1/2 -translate-y-16 top-18 left-1/2">
+              <div className="absolute transform -translate-x-[70%] -translate-y-16 top-18 left-1/2">
                 <img
                   src={chatBubbleImage}
                   alt="Chat Bubble"
-                  className="z-20 h-auto ml-4 -mt-4 w-60"
-                  style={{ transform: "scale(2.5)" }}
+                  className="z-20 h-auto ml-8 -mt-4"
+                  style={{
+                    transform: "scale(3.2)",
+                    width: "200%",
+                    height: "auto",
+                  }}
                   draggable="false"
                 />
                 <div
-                  className="absolute flex items-center justify-center w-full h-full bottom-4 -left-12"
-                  style={{ width: "180%", height: "100%" }}
+                  className="absolute flex items-center justify-center w-full h-full bottom-4 -left-12 2xl:-left-20"
+                  style={{ width: "220%", height: "100%" }}
                 >
                   <p
-                    className="text-3xl text-center text-dateTextColor font-syndinaroo"
+                    className="text-3xl 2xl:text-4xl text-center text-dateTextColor font-syndinaroo"
                     style={{ transform: "scale(1)" }}
                   >
                     {latestServerMessage}
@@ -193,7 +195,7 @@ const ChattingPageOh: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="ml-0 overflow-visible">
+            <div className="ml-0 overflow-visible mt-[-20px]">
               <ChatContainer
                 mentorBgColor="bg-[#FFF9DD]"
                 myBgColor="bg-[#FDF2BB]"
