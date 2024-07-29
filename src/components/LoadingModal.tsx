@@ -44,11 +44,13 @@ const LoadingModal: React.FC = () => {
           backgroundImage: `url(${mudImage})`, // 모달의 배경 이미지 추가
           backgroundSize: "cover", // 배경 이미지 크기 조정
           backgroundPosition: "center", // 배경 이미지 위치 조정
-          backgroundColor: "rgba(255, 255, 255, 0.8)", // 배경 투명도 높임
+          backgroundColor: "rgba(255, 255, 255, 0.6)", // 배경 투명도 높임
+          border: "2px solid #371b07", // 테두리 추가
+          borderRadius: "15px", // 모서리를 둥글게 설정
         }}
       >
         {/* 이미지 위치를 조정한 부분 */}
-        <div className="absolute bottom-8 mb-16 bounce-animation">
+        <div className="absolute bottom-8 mb-16 bounce-animation-alt">
           <img src={loadingImage} alt="Loading" className="w-20 h-20 md:w-52 md:h-48" />
         </div>
         <div className="relative mt-20 md:mt-32">
@@ -58,7 +60,7 @@ const LoadingModal: React.FC = () => {
           >
             <p
               className="text-center font-syndinaroo whitespace-nowrap"
-              style={{ transform: "scale(1)", fontSize: "2rem", color: "#ff0000" }} // 글씨 색상 변경 (예: 빨간색)
+              style={{ transform: "scale(1)", fontSize: "2rem", color: "#371b07" }} // 진한 갈색으로 색상 변경
             >
               {displayText}
             </p>
