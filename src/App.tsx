@@ -8,6 +8,7 @@ import Mobile_MyPage from "./pages/Mobile_MyPage";
 import PrescriptionPage from "./pages/PrescriptionPage";
 import Mobile_PrescriptionPage from "./pages/Mobile_PrescriptionPage";
 import FirstPage from "./pages/FirstPage";
+import NotFoundPage from "./pages/NotFoundPage"; 
 
 import "./index.css";
 
@@ -26,14 +27,9 @@ function App() {
         <Route path="/prescription" element={<PrescriptionPage />} />
         <Route path="/first" element={<FirstPage />} />
         <Route path="/mobile_mypage" element={<Mobile_MyPage />} />
-        <Route
-          path="/mobile_prescription"
-          element={<Mobile_PrescriptionPage />}
-        />
-        <Route
-          path="/prescription/:prescription_id"
-          element={<PrescriptionPage />}
-        />
+        <Route path="/mobile_prescription" element={<Mobile_PrescriptionPage />} />
+        <Route path="/prescription/:prescription_id" element={<PrescriptionPage />} />
+        <Route path="*" element={<NotFoundPage />} /> {/* 모든 경로에 대해 404 페이지 설정 */}
       </Routes>
     </Router>
   );

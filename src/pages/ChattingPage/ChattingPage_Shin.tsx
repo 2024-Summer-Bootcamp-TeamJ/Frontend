@@ -4,9 +4,11 @@ import ChatContainer from "../../components/chat/ChatContainer";
 import backgroundShin from "../../assets/images/backgroundShin.svg";
 import characterShin from "../../assets/images/shin.svg";
 import chatBubbleImage from "../../assets/images/chatbubble.png";
-import button from "../../assets/audios/button.mp3";
 import Button from "../../components/FirstPage/Button";
 import { useStore } from "../../store/store"; // Zustand store import
+import LoadingModal from "../../components/LoadingModal"; // LoadingModal import
+import "../../index.css";
+import _ from 'lodash';
 
 // CSSProperties 타입 확장
 interface CustomCSSProperties extends React.CSSProperties {
@@ -33,6 +35,12 @@ const ChattingPageShin: React.FC = () => {
   const wsRef = useRef<WebSocket | null>(null);
   const [socketConnected, setSocketConnected] = useState(false);
   const [isLoading_chat, setIsLoading_chat] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
+
+  const splitIntoSentences = (text: string) => {
+    return text.match(/[^\.!\?]+[\.!\?]+/g)?.map(sentence => sentence.trim()) || [];
+  };
 
   const connectWebSocket = () => {
     if (!chatroomId || !userId) {
@@ -84,7 +92,8 @@ const ChattingPageShin: React.FC = () => {
 
         // 문장 표시 시작
         displayNextMessage();
-
+    
+        
         if (data.audio) {
           const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
           audio
@@ -129,6 +138,7 @@ const ChattingPageShin: React.FC = () => {
   };
 
   const endChatAndGoToPrescription = async () => {
+    console.log('Throttled endChatAndGoToPrescription called');
     try {
       if (!chatroomId) {
         console.error("chatroomId is not defined");
@@ -141,8 +151,11 @@ const ChattingPageShin: React.FC = () => {
         wsRef.current.close();
       }
 
+      // 로딩 상태 설정
+      setIsLoading(true);
+
       // 3초 동안 대기
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await new Promise((resolve) => setTimeout(resolve, 5000));
 
       // 처방전 정보를 새로 받아옴
       const response = await fetch(
@@ -160,6 +173,9 @@ const ChattingPageShin: React.FC = () => {
       }
     } catch (error) {
       console.error("Error navigating to prescription page:", error);
+    } finally {
+      // 로딩 상태 해제
+      setIsLoading(false);
     }
   };
 
@@ -172,38 +188,35 @@ const ChattingPageShin: React.FC = () => {
         <div className="absolute top-4 right-4">
           <Button
             text="대화 종료하기"
-            color="bg-blue-500 pt-3 pb-3 font-bold"
-            onClick={endChatAndGoToPrescription}
+            color="bg-blue-500 w-32 pt-3 pb-3 font-bold"
+            onClick={_.throttle(endChatAndGoToPrescription, 3000)}
           />
         </div>
         {/* 데스크탑 버전 시작 */}
-        <div className="relative items-center justify-center hidden w-[75vw] max-w-[75vw] h-[94vh] max-h-[94vh] px-[5vw] py-[3vw] bg-gray-100 shadow-md md:block bg-opacity-90 rounded-3xl">
+        <div className="relative items-center justify-center hidden w-full max-w-6xl px-2 py-4 bg-gray-100 shadow-md md:block bg-opacity-90 rounded-3xl">
           <div className="relative flex items-center px-0 py-8 space-x-40 overflow-visible">
             <div className="relative mb-12 ml-16">
               <img
                 src={characterShin}
                 alt="Shin"
-                className="relative w-[20vw] h-auto ml-8 bounce-animation"
+                className="relative h-auto ml-16 w-72 bounce-animation"
                 draggable="false"
+                style={{ transform: "scale(2.5)" }}
               />
-              <div className="absolute transform -translate-x-[70%] -translate-y-16 top-18 left-1/2">
+              <div className="absolute transform -translate-x-1/2 -translate-y-16 top-18 left-1/2">
                 <img
                   src={chatBubbleImage}
                   alt="Chat Bubble"
-                  className="z-20 h-auto ml-8 -mt-4"
-                  style={{
-                    transform: "scale(3.2)",
-                    width: "200%",
-                    height: "auto",
-                  }}
+                  className="z-20 h-auto ml-4 -mt-4 w-60"
+                  style={{ transform: "scale(2.5)" }}
                   draggable="false"
                 />
                 <div
-                  className="absolute flex items-center justify-center w-full h-full bottom-4 -left-12 2xl:-left-20"
-                  style={{ width: "220%", height: "100%" }}
+                  className="absolute flex items-center justify-center w-full h-full bottom-4 -left-12"
+                  style={{ width: "180%", height: "100%" }}
                 >
                   <p
-                    className="text-3xl 2xl:text-4xl text-center text-dateTextColor font-syndinaroo"
+                    className="text-3xl text-center text-dateTextColor font-syndinaroo"
                     style={{ transform: "scale(1)" }}
                   >
                     {isLoading_chat ? (
@@ -218,11 +231,12 @@ const ChattingPageShin: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="ml-0 overflow-visible mt-[-20px]">
+            <div className="ml-0 overflow-visible">
               <ChatContainer
                 mentorBgColor="bg-[#CCEBFF]"
                 myBgColor="bg-[#A3D4FD]"
                 scrollbarColor="#087EEE"
+
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="shin" // mentorType을 shin으로 설정
@@ -240,6 +254,7 @@ const ChattingPageShin: React.FC = () => {
                 mentorBgColor="bg-[#CCEBFF]"
                 myBgColor="bg-[#A3D4FD]"
                 scrollbarColor="#087EEE"
+
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="shin" // mentorType을 shin으로 설정
@@ -250,6 +265,7 @@ const ChattingPageShin: React.FC = () => {
         </div>
         {/* 모바일버전 끝 */}
       </div>
+      {isLoading && <LoadingModal />} {/* 로딩 모달 조건부 렌더링 */}
     </div>
   );
 };
