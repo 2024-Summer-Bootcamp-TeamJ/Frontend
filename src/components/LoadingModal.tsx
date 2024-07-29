@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import loadingImage from '../assets/images/loading.png';
-import chatBubbleImage from '../assets/images/chatbubble.png';
 import mudImage from '../assets/images/mud.jpg'; // 이미지 경로를 import
 
 const LoadingModal: React.FC = () => {

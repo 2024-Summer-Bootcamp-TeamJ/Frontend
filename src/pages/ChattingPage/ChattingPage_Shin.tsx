@@ -136,7 +136,7 @@ const ChattingPageShin: React.FC = () => {
       setIsLoading(true);
 
       // 3초 동안 대기
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await new Promise((resolve) => setTimeout(resolve, 5000));
 
       // 처방전 정보를 새로 받아옴
       const response = await fetch(

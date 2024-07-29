@@ -222,37 +222,26 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-      <div className="relative flex items-center justify-center w-screen overflow-hidden iphone:w-screen iphone:h-full">
-       
-        
+      <div className="relative flex items-center justify-center w-screen h-screen overflow-hidden">
         <img
           src={backgroundGreen}
           alt="background"
-          className="relative w-full h-[1000px] object-cover -z-10 iphone:w-screen iphone:h-full iphone:overflow-hidden"
+          className="absolute w-full h-full object-cover -z-10"
         />
-
         <img
           src={groupLogo}
           alt="logo"
           className={`animate__animated animate__bounceInDown 
             absolute w-[60%] h-[75%] -mt-[240px] ml-[43px] z-10 iphone:w-[360px] iphone:h-[70%] iphone:top-[20%] iphone:-mt-[200px] iphone:justify-center iphone:flex-col iphone:items-center iphone:ml-0`}
         />
-
         <div className="absolute z-10 flex gap-3 mt-96 iphone:bg-white iphone:rounded-4xl iphone:w-[330px] iphone:h-[170px] iphone:flex-col iphone:justify-center iphone:items-center iphone:mt-20 iphone:gap-2 iphone:top-[40%]">
           <Input value={nickname} onChange={handleInputChange} ref={inputRef} onKeyDown={handleKeyDown}/> 
           <Button
             text="확인"
             color="bg-gray-500"
             onClick={handleButtonClick}
-            // width="80px"
-            // height="56px"
-            // className="w-32 h-16"
           />
         </div>
-
-        {/* <div className="absolute z-10 transform -translate-y-2 mt-128">
-          <StartButton onClick={handleStartButtonClick} style={{ width: '200px' }} />
-        </div> */}
       </div>
     );
 };
