@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import backgroundGreen from "../../assets/images/backgroundGreen.svg";
 import leaf from "../../assets/images/leaf.svg";
@@ -15,9 +15,12 @@ import axios from 'axios';
 import { useStore } from '../../store/store';
 import Swal from 'sweetalert2';
 import { Howl } from 'howler';   
+import _ from 'lodash';
+
 
 const LoginPage: React.FC = () => {
 
+    const [inputValue, setInputValue] = useState("");
     const audioRef = useRef<HTMLAudioElement>(null);
     const [position, setPosition] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
@@ -34,8 +37,18 @@ const LoginPage: React.FC = () => {
       console.log("Updated user_id:", userId);
     }, [userId]);
 
+    const debounceHandleInputChange = useCallback(
+      _.debounce((value) => {
+        console.log("Debounced setNicknameState called with value:", value);
+        setNicknameState(value);
+      }, 500),
+      []
+    );
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNicknameState(event.target.value);
+      const { value } = event.target;
+      setInputValue(value);  
+      debounceHandleInputChange(value);
     }
 
 
@@ -63,14 +76,17 @@ const LoginPage: React.FC = () => {
   
     
 
-    const handleButtonClick = async() => {
-        if (inputRef.current && nickname.trim() === '') {
+    const handleButtonClick = useCallback(_.throttle(async() => {
+        
+	      console.log("Throttled handleButtonClick called");  // Throttle 적용 확인 로그
+        
+        if (inputRef.current && inputValue.trim() === '') {
           inputRef.current.focus();
         }
         try {
           const payload = { nickname: nickname };
           const response = await axios.post(
-            `${import.meta.env.VITE_API_URL}/users`,
+            `${import.meta.env.VITE_API_URL}/api/users`,
             payload,
             {
               headers: {
@@ -184,7 +200,7 @@ const LoginPage: React.FC = () => {
           }
           console.log(errorMessage);
         }
-    };
+    }, 3000), [nickname]);
 
     const playClickSound = () => {
       const sound = new Howl({ 
@@ -239,7 +255,7 @@ const LoginPage: React.FC = () => {
         />
 
         <div className="absolute z-10 flex gap-3 mt-96 iphone:bg-white iphone:rounded-4xl iphone:w-[330px] iphone:h-[170px] iphone:flex-col iphone:justify-center iphone:items-center iphone:mt-20 iphone:gap-2 iphone:top-[40%]">
-          <Input value={nickname} onChange={handleInputChange} ref={inputRef} onKeyDown={handleKeyDown}/> 
+          <Input value={inputValue} onChange={handleInputChange} ref={inputRef} onKeyDown={handleKeyDown}/> 
           <Button
             text="확인"
             color="bg-gray-500"
