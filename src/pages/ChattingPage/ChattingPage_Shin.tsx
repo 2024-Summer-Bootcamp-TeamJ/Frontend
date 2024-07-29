@@ -152,35 +152,35 @@ const ChattingPageShin: React.FC = () => {
               <img
                 src={characterShin}
                 alt="Shin"
-                className="relative w-[20vw] h-auto ml-16 bounce-animation"
+                className="relative w-[20vw] h-auto ml-8 bounce-animation"
                 draggable="false"
-                // style={{ transform: "scale(2.5)" }}
               />
-              <div className="absolute transform -translate-x-1/2 -translate-y-16 top-18 left-1/2">
+              <div className="absolute transform -translate-x-[70%] -translate-y-16 top-18 left-1/2">
                 <img
                   src={chatBubbleImage}
                   alt="Chat Bubble"
-                  className="z-20 h-auto ml-4 -mt-4 w-80"
-                  style={{ transform: "scale(2.5)" }}
+                  className="z-20 h-auto ml-8 -mt-4"
+                  style={{
+                    transform: "scale(3.2)",
+                    width: "200%",
+                    height: "auto",
+                  }}
                   draggable="false"
                 />
                 <div
-                  className="absolute flex items-center justify-center w-full h-full bottom-4 -left-12"
-                  style={{ width: "180%", height: "100%" }}
+                  className="absolute flex items-center justify-center w-full h-full bottom-4 -left-12 2xl:-left-20"
+                  style={{ width: "220%", height: "100%" }}
                 >
                   <p
-                    className="text-center text-dateTextColor font-syndinaroo"
-                    style={{
-                      fontSize: "clamp(1rem, 2vw + 1rem, 2rem)", // 최소값, 적응값, 최대값을 설정
-                      transform: "scale(1)",
-                    }}
+                    className="text-3xl 2xl:text-4xl text-center text-dateTextColor font-syndinaroo"
+                    style={{ transform: "scale(1)" }}
                   >
                     {latestServerMessage}
                   </p>
                 </div>
               </div>
             </div>
-            <div className="ml-0 overflow-visible">
+            <div className="ml-0 overflow-visible mt-[-20px]">
               <ChatContainer
                 mentorBgColor="bg-[#CCEBFF]"
                 myBgColor="bg-[#A3D4FD]"

@@ -52,11 +52,11 @@ module.exports = {
         syndinaroo: ["syndinaroo"],
       },
       screens: {
-        'iphone' : { 'max' : '450px' },
+        iphone: { max: "450px" },
         // => @media (max-width: 450px) {...}, 450px 이하
-        'laptop' : '450px',
+        laptop: "450px",
         // => @media (min-width: 450px) {...}, 450px 이상
-
+        "2xl": "1920px", // 1920px 이상인 화면 크기 추가
       },
     },
   },
