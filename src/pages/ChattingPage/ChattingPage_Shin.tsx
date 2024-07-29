@@ -32,7 +32,7 @@ const ChattingPageShin: React.FC = () => {
   );
   const wsRef = useRef<WebSocket | null>(null);
   const [socketConnected, setSocketConnected] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading_chat, setIsLoading_chat] = useState(false);
 
   const connectWebSocket = () => {
     if (!chatroomId || !userId) {
@@ -66,7 +66,7 @@ const ChattingPageShin: React.FC = () => {
 
       if (eventType === "server_message") {
         setMessages((prevMessages) => [...prevMessages, data.message]);
-        setIsLoading(false); // 로딩 상태 해제
+        setIsLoading_chat(false); // 로딩 상태 해제
 
         const messages = data.message.split(/(?<=[.!?])\s*/); // !, ? 또는 . 뒤에 공백으로 문장 분리
         let index = 0;
@@ -122,7 +122,7 @@ const ChattingPageShin: React.FC = () => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(message);
       setMessages((prevMessages) => [...prevMessages, `Client: ${message}`]);
-      setIsLoading(true); // 로딩 상태 설정
+      setIsLoading_chat(true); // 로딩 상태 설정
     } else {
       console.error("WebSocket is not open");
     }
@@ -206,7 +206,7 @@ const ChattingPageShin: React.FC = () => {
                     className="text-3xl 2xl:text-4xl text-center text-dateTextColor font-syndinaroo"
                     style={{ transform: "scale(1)" }}
                   >
-                    {isLoading ? (
+                    {isLoading_chat ? (
                       <div
                         className="dots-fade"
                         style={style} // 수정된 부분
@@ -226,7 +226,7 @@ const ChattingPageShin: React.FC = () => {
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="shin" // mentorType을 shin으로 설정
-                setIsLoading={setIsLoading} // 로딩 상태 설정 함수 전달
+                setIsLoading_chat={setIsLoading_chat} // 로딩 상태 설정 함수 전달
               />
             </div>
           </div>
@@ -243,7 +243,7 @@ const ChattingPageShin: React.FC = () => {
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="shin" // mentorType을 shin으로 설정
-                setIsLoading={setIsLoading} // 로딩 상태 설정 함수 전달
+                setIsLoading_chat={setIsLoading_chat} // 로딩 상태 설정 함수 전달
               />
             </div>
           </div>
