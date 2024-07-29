@@ -69,8 +69,8 @@ const ChattingPageBaek: React.FC = () => {
             setLatestServerMessage(messages[index]);
 
             index++;
-            // 다음 문장을 1초 후에 표시
-            setTimeout(displayNextMessage, 2000);
+            // 다음 문장을 3초 후에 표시
+            setTimeout(displayNextMessage, 3000);
           }
         };
 
