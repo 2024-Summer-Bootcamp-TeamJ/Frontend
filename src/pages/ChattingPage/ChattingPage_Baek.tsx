@@ -6,6 +6,7 @@ import characterBaek from "../../assets/images/Baek.svg";
 import chatBubbleImage from "../../assets/images/chatbubble.png";
 import Button from "../../components/FirstPage/Button";
 import { useStore } from "../../store/store"; // Zustand store import
+import LoadingModal from "../../components/LoadingModal"; // LoadingModal import
 import "../../index.css";
 import _ from 'lodash';
 
@@ -21,6 +22,7 @@ const ChattingPageBaek: React.FC = () => {
   );
   const wsRef = useRef<WebSocket | null>(null);
   const [socketConnected, setSocketConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
   const splitIntoSentences = (text: string) => {
     return text.match(/[^\.!\?]+[\.!\?]+/g)?.map(sentence => sentence.trim()) || [];
@@ -133,8 +135,11 @@ const ChattingPageBaek: React.FC = () => {
         wsRef.current.close();
       }
 
+      // 로딩 상태 설정
+      setIsLoading(true);
+
       // 3초 동안 대기
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await new Promise((resolve) => setTimeout(resolve, 5000));
 
       // 처방전 정보를 새로 받아옴
       const response = await fetch(
@@ -152,6 +157,9 @@ const ChattingPageBaek: React.FC = () => {
       }
     } catch (error) {
       console.error("Error navigating to prescription page:", error);
+    } finally {
+      // 로딩 상태 해제
+      setIsLoading(false);
     }
   };
 
@@ -229,6 +237,7 @@ const ChattingPageBaek: React.FC = () => {
         </div>
         {/* 모바일버전 끝 */}
       </div>
+      {isLoading && <LoadingModal />} {/* 로딩 모달 조건부 렌더링 */}
     </div>
   );
 };

@@ -178,3 +178,16 @@ body,
   animation: bounce 2s infinite;
   animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.bounce-animation {
+  animation: bounce 1s infinite ease-in-out;
+}
