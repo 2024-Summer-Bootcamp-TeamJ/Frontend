@@ -4,7 +4,6 @@ import MyChatBubble from "./MyChatBubble";
 import ChatInput from "./ChatInput";
 import useSound from "use-sound";
 import button_pressed from "../../assets/audios/button_pressed.mp3";
-import "../../index.css";
 
 interface ChatContainerProps {
   mentorBgColor: string;
@@ -54,6 +53,10 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+  
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageList]);
 
   const scrollToBottom2 = () => {
     if (webMessagesEndRef.current) {
