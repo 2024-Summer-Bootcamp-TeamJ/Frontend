@@ -44,6 +44,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   const [messageList, setMessageList] = useState<string[]>(messages);
   const [play] = useSound(button_pressed); // useSound 훅을 사용하여 효과음 로드
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const webMessagesEndRef = useRef<HTMLDivElement | null>(null); // 웹 버전 ref -> scrolltoBottom2 적용
   const previousMessagesRef = useRef<string[]>([]);
 
 
@@ -55,6 +56,21 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   
   useEffect(() => {
     scrollToBottom();
+  }, [messageList]);
+
+  const scrollToBottom2 = () => {
+    if (webMessagesEndRef.current) {
+      webMessagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  
+  
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageList]);
+
+  useEffect(() => {
+    scrollToBottom2();
   }, [messageList]);
 
   // useEffect(() => {
@@ -82,7 +98,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
           const sentence = sentences[index];
           if (sentence && !messageList.includes(sentence)) {
             setMessageList((prevMessages) => [...prevMessages, sentence]);
-            scrollToBottom();
+            scrollToBottom2();
           }
           index++;
         } else {
@@ -94,7 +110,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
       return () => clearInterval(interval);
     } else {
       setMessageList(messages);
-      scrollToBottom();
+      scrollToBottom2();
     }
   }, [messages]);
   
@@ -113,7 +129,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
         <div className="relative hidden w-full max-w-3xl mx-auto md:block">
           <div className="relative bg-white bg-opacity-80 rounded-3xl p-8 w-[60vh] h-[80vh] flex flex-col justify-between">
             <div
-              className="flex-grow overflow-y-scroll text-red-500 font-syndinaroo"
+              className="flex-grow overflow-y-scroll text-red-500 scrollbar2 font-syndinaroo"
               style={
                 { "--scrollbar-color": scrollbarColor } as CustomCSSProperties
               }
@@ -136,7 +152,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
                   )}
                 </div>
               ))}
-              <div ref={messagesEndRef} />
+              <div ref={webMessagesEndRef} />
             </div>
             <ChatInput onSend={handleSendMessage} />
           </div>
@@ -147,7 +163,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
         <div className="block md:hidden relative items-center overflow-visible w-full max-w-md h-[70vh] p-2">
           <div className="relative flex flex-col w-full h-full p-2 bg-white shadow-lg bg-opacity-80 rounded-3xl">
             <div
-              className="flex-grow overflow-y-scroll text-red-500 font-syndinaroo"
+              className="flex-grow overflow-y-scroll text-red-500 scrollbar2 font-syndinaroo"
               style={
                 { "--scrollbar-color": scrollbarColor } as CustomCSSProperties
               }
