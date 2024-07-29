@@ -6,7 +6,7 @@ import characterOh from "../../assets/images/oh.svg";
 import chatBubbleImage from "../../assets/images/chatbubble.png";
 import Button from "../../components/FirstPage/Button";
 import { useStore } from "../../store/store"; // Zustand store import
-// CSSProperties 타입 확장
+// CSSProperties 타입 확장입니다
 interface CustomCSSProperties extends React.CSSProperties {
   "--bg"?: string;
   "--primary"?: string;
