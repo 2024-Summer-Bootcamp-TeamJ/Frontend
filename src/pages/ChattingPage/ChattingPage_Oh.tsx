@@ -7,6 +7,8 @@ import chatBubbleImage from "../../assets/images/chatbubble.png";
 import Button from "../../components/FirstPage/Button";
 import { useStore } from "../../store/store"; // Zustand store import
 import LoadingModal from "../../components/LoadingModal"; // LoadingModal import
+import "../../index.css";
+import _ from 'lodash';
 
 const ChattingPageOh: React.FC = () => {
   const navigate = useNavigate();
@@ -120,6 +122,7 @@ const ChattingPageOh: React.FC = () => {
   };
 
   const endChatAndGoToPrescription = async () => {
+    console.log('Throttled endChatAndGoToPrescription called');
     try {
       if (!chatroomId) {
         console.error("chatroomId is not defined");
@@ -170,7 +173,7 @@ const ChattingPageOh: React.FC = () => {
           <Button
             text="대화 종료하기"
             color="bg-pink-500 w-32 pt-3 pb-3 font-bold"
-            onClick={endChatAndGoToPrescription}
+            onClick={_.throttle(endChatAndGoToPrescription, 3000)}
           />
         </div>
         {/* 데스크탑 버전 시작 */}
