@@ -141,26 +141,26 @@ const ChattingPageShin: React.FC = () => {
         <div className="absolute top-4 right-4">
           <Button
             text="대화 종료하기"
-            color="bg-pink-500 w-32 pt-3 pb-3 font-bold"
+            color="bg-pink-500 pt-3 pb-3 font-bold"
             onClick={endChatAndGoToPrescription}
           />
         </div>
         {/* 데스크탑 버전 시작 */}
-        <div className="relative items-center justify-center hidden w-full max-w-6xl px-2 py-4 bg-gray-100 shadow-md md:block bg-opacity-90 rounded-3xl">
+        <div className="relative items-center justify-center hidden w-[75vw] max-w-[75vw] h-[94vh] max-h-[94vh] px-[5vw] py-[3vw] bg-gray-100 shadow-md md:block bg-opacity-90 rounded-3xl">
           <div className="relative flex items-center px-0 py-8 space-x-40 overflow-visible">
             <div className="relative mb-12 ml-16">
               <img
                 src={characterShin}
                 alt="Shin"
-                className="relative h-auto ml-16 w-72 bounce-animation"
+                className="relative w-[20vw] h-auto ml-16 bounce-animation"
                 draggable="false"
-                style={{ transform: "scale(2.5)" }}
+                // style={{ transform: "scale(2.5)" }}
               />
               <div className="absolute transform -translate-x-1/2 -translate-y-16 top-18 left-1/2">
                 <img
                   src={chatBubbleImage}
                   alt="Chat Bubble"
-                  className="z-20 h-auto ml-4 -mt-4 w-60"
+                  className="z-20 h-auto ml-4 -mt-4 w-80"
                   style={{ transform: "scale(2.5)" }}
                   draggable="false"
                 />
@@ -169,8 +169,11 @@ const ChattingPageShin: React.FC = () => {
                   style={{ width: "180%", height: "100%" }}
                 >
                   <p
-                    className="text-3xl text-center text-dateTextColor font-syndinaroo"
-                    style={{ transform: "scale(1)" }}
+                    className="text-center text-dateTextColor font-syndinaroo"
+                    style={{
+                      fontSize: "clamp(1rem, 2vw + 1rem, 2rem)", // 최소값, 적응값, 최대값을 설정
+                      transform: "scale(1)",
+                    }}
                   >
                     {latestServerMessage}
                   </p>
