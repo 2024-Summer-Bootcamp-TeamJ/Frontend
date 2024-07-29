@@ -22,7 +22,9 @@ const ChattingPageBaek: React.FC = () => {
   const [socketConnected, setSocketConnected] = useState(false);
 
   const splitIntoSentences = (text: string) => {
-    return text.match(/[^\.!\?]+[\.!\?]+/g)?.map(sentence => sentence.trim()) || [];
+    return (
+      text.match(/[^\.!\?]+[\.!\?]+/g)?.map((sentence) => sentence.trim()) || []
+    );
   };
 
   const connectWebSocket = () => {
@@ -74,8 +76,7 @@ const ChattingPageBaek: React.FC = () => {
 
         // 문장 표시 시작
         displayNextMessage();
-    
-        
+
         if (data.audio) {
           const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
           audio
