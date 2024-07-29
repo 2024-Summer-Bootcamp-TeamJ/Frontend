@@ -212,7 +212,7 @@ const ChattingPageBaek: React.FC = () => {
                   className="absolute flex items-center justify-center w-full h-full bottom-4 -left-8"
                   style={{ width: "180%", height: "100%" }}
                 >
-                  <p
+                  <div
                     className="text-3xl text-center text-dateTextColor font-syndinaroo"
                     style={{ transform: "scale(1)" }}
                   >
@@ -224,7 +224,7 @@ const ChattingPageBaek: React.FC = () => {
                     ) : (
                       latestServerMessage
                     )}{" "}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
