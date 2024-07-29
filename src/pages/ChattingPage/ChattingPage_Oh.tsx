@@ -6,8 +6,17 @@ import characterOh from "../../assets/images/oh.svg";
 import chatBubbleImage from "../../assets/images/chatbubble.png";
 import Button from "../../components/FirstPage/Button";
 import { useStore } from "../../store/store"; // Zustand store import
-
+// CSSProperties 타입 확장
+interface CustomCSSProperties extends React.CSSProperties {
+  "--bg"?: string;
+  "--primary"?: string;
+}
 const ChattingPageOh: React.FC = () => {
+  const style: CustomCSSProperties = {
+    backgroundColor: "var(--bg)",
+    // "--bg": "#DADA8A",
+    "--primary": "#FFA800",
+  };
   const navigate = useNavigate();
   const location = useLocation();
   const chatroomId = location.state?.chatroomId;
@@ -19,6 +28,7 @@ const ChattingPageOh: React.FC = () => {
   );
   const wsRef = useRef<WebSocket | null>(null);
   const [socketConnected, setSocketConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const connectWebSocket = () => {
     if (!chatroomId || !userId) {
@@ -52,6 +62,7 @@ const ChattingPageOh: React.FC = () => {
 
       if (eventType === "server_message") {
         setMessages((prevMessages) => [...prevMessages, data.message]);
+        setIsLoading(false); // 로딩 상태 해제
 
         const messages = data.message.split(/(?<=[.!?])\s*/); // !, ? 또는 . 뒤에 공백으로 문장 분리
         let index = 0;
@@ -107,6 +118,7 @@ const ChattingPageOh: React.FC = () => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(message);
       setMessages((prevMessages) => [...prevMessages, `Client: ${message}`]);
+      setIsLoading(true); // 로딩 상태 설정
     } else {
       console.error("WebSocket is not open");
     }
@@ -190,7 +202,14 @@ const ChattingPageOh: React.FC = () => {
                     className="text-3xl 2xl:text-4xl text-center text-dateTextColor font-syndinaroo"
                     style={{ transform: "scale(1)" }}
                   >
-                    {latestServerMessage}
+                    {isLoading ? (
+                      <div
+                        className="dots-fade"
+                        style={style} // 수정된 부분
+                      ></div>
+                    ) : (
+                      latestServerMessage
+                    )}{" "}
                   </p>
                 </div>
               </div>
@@ -203,6 +222,7 @@ const ChattingPageOh: React.FC = () => {
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="oh" // mentorType을 oh로 설정
+                setIsLoading={setIsLoading} // 로딩 상태 설정 함수 전달
               />
             </div>
           </div>

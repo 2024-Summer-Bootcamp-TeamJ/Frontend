@@ -172,7 +172,7 @@ const ChattingPageShin: React.FC = () => {
         <div className="absolute top-4 right-4">
           <Button
             text="대화 종료하기"
-            color="bg-pink-500 pt-3 pb-3 font-bold"
+            color="bg-blue-500 pt-3 pb-3 font-bold"
             onClick={endChatAndGoToPrescription}
           />
         </div>
@@ -222,7 +222,7 @@ const ChattingPageShin: React.FC = () => {
               <ChatContainer
                 mentorBgColor="bg-[#CCEBFF]"
                 myBgColor="bg-[#A3D4FD]"
-                scrollbarColor="#FDA5FE"
+                scrollbarColor="#087EEE"
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="shin" // mentorType을 shin으로 설정
@@ -239,7 +239,7 @@ const ChattingPageShin: React.FC = () => {
               <ChatContainer
                 mentorBgColor="bg-[#CCEBFF]"
                 myBgColor="bg-[#A3D4FD]"
-                scrollbarColor="#FDA5FE"
+                scrollbarColor="#087EEE"
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="shin" // mentorType을 shin으로 설정

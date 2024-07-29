@@ -7,8 +7,17 @@ import chatBubbleImage from "../../assets/images/chatbubble.png";
 import Button from "../../components/FirstPage/Button";
 import { useStore } from "../../store/store"; // Zustand store import
 import "../../index.css";
-
+// CSSProperties 타입 확장
+interface CustomCSSProperties extends React.CSSProperties {
+  "--bg"?: string;
+  "--primary"?: string;
+}
 const ChattingPageBaek: React.FC = () => {
+  const style: CustomCSSProperties = {
+    backgroundColor: "var(--bg)",
+    // "--bg": "#DADA8A",
+    "--primary": "#FFA800",
+  };
   const navigate = useNavigate();
   const location = useLocation();
   const chatroomId = location.state?.chatroomId;
@@ -20,6 +29,7 @@ const ChattingPageBaek: React.FC = () => {
   );
   const wsRef = useRef<WebSocket | null>(null);
   const [socketConnected, setSocketConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const splitIntoSentences = (text: string) => {
     return (
@@ -59,6 +69,7 @@ const ChattingPageBaek: React.FC = () => {
 
       if (eventType === "server_message") {
         setMessages((prevMessages) => [...prevMessages, data.message]);
+        setIsLoading(false); // 로딩 상태 해제
 
         const messages = data.message.split(/(?<=[.!?])\s*/); // !, ? 또는 . 뒤에 공백으로 문장 분리
         let index = 0;
@@ -114,6 +125,7 @@ const ChattingPageBaek: React.FC = () => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(message);
       setMessages((prevMessages) => [...prevMessages, `Client: ${message}`]);
+      setIsLoading(true); // 로딩 상태 설정
     } else {
       console.error("WebSocket is not open");
     }
@@ -197,7 +209,14 @@ const ChattingPageBaek: React.FC = () => {
                     className="text-3xl 2xl:text-4xl text-center text-dateTextColor font-syndinaroo"
                     style={{ transform: "scale(1)" }}
                   >
-                    {latestServerMessage}
+                    {isLoading ? (
+                      <div
+                        className="dots-fade"
+                        style={style} // 수정된 부분
+                      ></div>
+                    ) : (
+                      latestServerMessage
+                    )}{" "}
                   </p>
                 </div>
               </div>
@@ -210,6 +229,7 @@ const ChattingPageBaek: React.FC = () => {
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="baek" // mentorType을 baek으로 설정
+                setIsLoading={setIsLoading} // 로딩 상태 설정 함수 전달
               />
             </div>
           </div>
@@ -226,6 +246,7 @@ const ChattingPageBaek: React.FC = () => {
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="baek" // mentorType을 baek으로 설정
+                setIsLoading={setIsLoading} // 로딩 상태 설정 함수 전달
               />
             </div>
           </div>
