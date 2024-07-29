@@ -8,7 +8,19 @@ import button from "../../assets/audios/button.mp3";
 import Button from "../../components/FirstPage/Button";
 import { useStore } from "../../store/store"; // Zustand store import
 
+// CSSProperties 타입 확장
+interface CustomCSSProperties extends React.CSSProperties {
+  "--bg"?: string;
+  "--primary"?: string;
+}
+
 const ChattingPageShin: React.FC = () => {
+  const style: CustomCSSProperties = {
+    backgroundColor: "var(--bg)",
+    // "--bg": "#DADA8A",
+    "--primary": "#FFA800",
+  };
+
   const navigate = useNavigate();
   const location = useLocation();
   const chatroomId = location.state?.chatroomId;
@@ -20,6 +32,7 @@ const ChattingPageShin: React.FC = () => {
   );
   const wsRef = useRef<WebSocket | null>(null);
   const [socketConnected, setSocketConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const connectWebSocket = () => {
     if (!chatroomId || !userId) {
@@ -53,6 +66,7 @@ const ChattingPageShin: React.FC = () => {
 
       if (eventType === "server_message") {
         setMessages((prevMessages) => [...prevMessages, data.message]);
+        setIsLoading(false); // 로딩 상태 해제
 
         const messages = data.message.split(/(?<=[.!?])\s*/); // !, ? 또는 . 뒤에 공백으로 문장 분리
         let index = 0;
@@ -108,6 +122,7 @@ const ChattingPageShin: React.FC = () => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(message);
       setMessages((prevMessages) => [...prevMessages, `Client: ${message}`]);
+      setIsLoading(true); // 로딩 상태 설정
     } else {
       console.error("WebSocket is not open");
     }
@@ -191,7 +206,14 @@ const ChattingPageShin: React.FC = () => {
                     className="text-3xl 2xl:text-4xl text-center text-dateTextColor font-syndinaroo"
                     style={{ transform: "scale(1)" }}
                   >
-                    {latestServerMessage}
+                    {isLoading ? (
+                      <div
+                        className="dots-fade"
+                        style={style} // 수정된 부분
+                      ></div>
+                    ) : (
+                      latestServerMessage
+                    )}
                   </p>
                 </div>
               </div>
@@ -204,6 +226,7 @@ const ChattingPageShin: React.FC = () => {
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="shin" // mentorType을 shin으로 설정
+                setIsLoading={setIsLoading} // 로딩 상태 설정 함수 전달
               />
             </div>
           </div>
@@ -220,6 +243,7 @@ const ChattingPageShin: React.FC = () => {
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="shin" // mentorType을 shin으로 설정
+                setIsLoading={setIsLoading} // 로딩 상태 설정 함수 전달
               />
             </div>
           </div>
