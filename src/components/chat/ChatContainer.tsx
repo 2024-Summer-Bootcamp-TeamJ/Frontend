@@ -12,6 +12,7 @@ interface ChatContainerProps {
   messages: string[];
   onSendMessage: (message: string) => void;
   mentorType: "baek" | "shin" | "oh"; // mentorType prop 추가
+  setIsLoading_chat: (isLoading_chat: boolean) => void; // 로딩 상태 설정 함수 prop 추가
 }
 
 // CSSProperties 타입 확장
@@ -40,6 +41,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   messages,
   onSendMessage,
   mentorType,
+  setIsLoading_chat, // 로딩 상태 설정 함수 prop 추가
 }) => {
   const [messageList, setMessageList] = useState<string[]>(messages);
   const [play] = useSound(button_pressed); // useSound 훅을 사용하여 효과음 로드
@@ -72,11 +74,6 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   useEffect(() => {
     scrollToBottom2();
   }, [messageList]);
-
-  // useEffect(() => {
-  //   setMessageList(messages); // messages prop이 변경될 때 messageList를 업데이트
-  //   scrollToBottom();
-  // }, [messages]);
 
   useEffect(() => {
     const newMessages = messages.filter(
@@ -120,6 +117,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
     play(); // 메시지를 보내기 전에 효과음 재생
     setMessageList((prevMessages) => [...prevMessages, `Client: ${message}`]);
     onSendMessage(message);
+    setIsLoading_chat(true); // 로딩 상태 설정
   };
 
   return (

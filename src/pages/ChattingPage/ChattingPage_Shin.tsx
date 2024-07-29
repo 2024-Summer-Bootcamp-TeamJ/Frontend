@@ -10,7 +10,19 @@ import LoadingModal from "../../components/LoadingModal"; // LoadingModal import
 import "../../index.css";
 import _ from 'lodash';
 
+// CSSProperties 타입 확장
+interface CustomCSSProperties extends React.CSSProperties {
+  "--bg"?: string;
+  "--primary"?: string;
+}
+
 const ChattingPageShin: React.FC = () => {
+  const style: CustomCSSProperties = {
+    backgroundColor: "var(--bg)",
+    // "--bg": "#DADA8A",
+    "--primary": "#FFA800",
+  };
+
   const navigate = useNavigate();
   const location = useLocation();
   const chatroomId = location.state?.chatroomId;
@@ -22,6 +34,8 @@ const ChattingPageShin: React.FC = () => {
   );
   const wsRef = useRef<WebSocket | null>(null);
   const [socketConnected, setSocketConnected] = useState(false);
+  const [isLoading_chat, setIsLoading_chat] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
   const splitIntoSentences = (text: string) => {
@@ -60,6 +74,7 @@ const ChattingPageShin: React.FC = () => {
 
       if (eventType === "server_message") {
         setMessages((prevMessages) => [...prevMessages, data.message]);
+        setIsLoading_chat(false); // 로딩 상태 해제
 
         const messages = data.message.split(/(?<=[.!?])\s*/); // !, ? 또는 . 뒤에 공백으로 문장 분리
         let index = 0;
@@ -70,8 +85,8 @@ const ChattingPageShin: React.FC = () => {
             setLatestServerMessage(messages[index]);
 
             index++;
-            // 다음 문장을 1초 후에 표시
-            setTimeout(displayNextMessage, 2000);
+            // 다음 문장을 3초 후에 표시
+            setTimeout(displayNextMessage, 3000);
           }
         };
 
@@ -116,6 +131,7 @@ const ChattingPageShin: React.FC = () => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(message);
       setMessages((prevMessages) => [...prevMessages, `Client: ${message}`]);
+      setIsLoading_chat(true); // 로딩 상태 설정
     } else {
       console.error("WebSocket is not open");
     }
@@ -172,7 +188,7 @@ const ChattingPageShin: React.FC = () => {
         <div className="absolute top-4 right-4">
           <Button
             text="대화 종료하기"
-            color="bg-pink-500 w-32 pt-3 pb-3 font-bold"
+            color="bg-blue-500 w-32 pt-3 pb-3 font-bold"
             onClick={_.throttle(endChatAndGoToPrescription, 3000)}
           />
         </div>
@@ -203,19 +219,28 @@ const ChattingPageShin: React.FC = () => {
                     className="text-3xl text-center text-dateTextColor font-syndinaroo"
                     style={{ transform: "scale(1)" }}
                   >
-                    {latestServerMessage}
+                    {isLoading_chat ? (
+                      <div
+                        className="dots-fade"
+                        style={style} // 수정된 부분
+                      ></div>
+                    ) : (
+                      latestServerMessage
+                    )}
                   </p>
                 </div>
               </div>
             </div>
             <div className="ml-0 overflow-visible">
               <ChatContainer
-                mentorBgColor="bg-[#FFF9DD]"
-                myBgColor="bg-[#FDF2BB]"
-                scrollbarColor="#FDA5FE"
+                mentorBgColor="bg-[#CCEBFF]"
+                myBgColor="bg-[#A3D4FD]"
+                scrollbarColor="#087EEE"
+
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="shin" // mentorType을 shin으로 설정
+                setIsLoading_chat={setIsLoading_chat} // 로딩 상태 설정 함수 전달
               />
             </div>
           </div>
@@ -226,12 +251,14 @@ const ChattingPageShin: React.FC = () => {
           <div className="relative flex items-center w-full max-w-md overflow-visible">
             <div className="w-full mx-4 overflow-visible">
               <ChatContainer
-                mentorBgColor="bg-[#FFF9DD]"
-                myBgColor="bg-[#FDF2BB]"
-                scrollbarColor="#FDA5FE"
+                mentorBgColor="bg-[#CCEBFF]"
+                myBgColor="bg-[#A3D4FD]"
+                scrollbarColor="#087EEE"
+
                 messages={messages}
                 onSendMessage={sendMessage}
                 mentorType="shin" // mentorType을 shin으로 설정
+                setIsLoading_chat={setIsLoading_chat} // 로딩 상태 설정 함수 전달
               />
             </div>
           </div>
