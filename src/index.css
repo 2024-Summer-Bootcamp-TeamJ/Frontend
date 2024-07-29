@@ -304,7 +304,7 @@ body,
   width: 20px;
 }
 
-@keyframes bounce {
+@keyframes bounce-alt {
   0%, 100% {
     transform: translateY(0);
   }
@@ -313,6 +313,6 @@ body,
   }
 }
 
-.bounce-animation {
-  animation: bounce 1s infinite ease-in-out;
+.bounce-animation-alt {
+  animation: bounce-alt 1s infinite ease-in-out;
 }
