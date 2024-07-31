@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { FiSend } from 'react-icons/fi';
-import _ from 'lodash';
+import React, { useState } from "react";
+import { FiSend } from "react-icons/fi";
+import _ from "lodash";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleSend = _.throttle(() => {
-    if (message.trim() !== '') {
-      console.log('Throttled handleSend called');
+    if (message.trim() !== "") {
+      console.log("Throttled handleSend called");
       onSend(message);
-      setMessage('');
+      setMessage("");
     }
   }, 1000);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSend();
     }
   };
@@ -36,6 +36,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
       <button
         onClick={handleSend}
         className="flex items-center justify-center p-2 text-gray-600 rounded-r-full hover:bg-gray-200"
+        style={{ cursor: "none" }}
       >
         <FiSend className="w-6 h-6" />
       </button>

@@ -8,7 +8,7 @@ import Button from "../../components/FirstPage/Button";
 import { useStore } from "../../store/store"; // Zustand store import
 import LoadingModal from "../../components/LoadingModal"; // LoadingModal import
 import "../../index.css";
-import _ from 'lodash';
+import _ from "lodash";
 
 // CSSProperties 타입 확장
 interface CustomCSSProperties extends React.CSSProperties {
@@ -37,7 +37,9 @@ const ChattingPageBaek: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
   const splitIntoSentences = (text: string) => {
-    return text.match(/[^\.!\?]+[\.!\?]+/g)?.map(sentence => sentence.trim()) || [];
+    return (
+      text.match(/[^\.!\?]+[\.!\?]+/g)?.map((sentence) => sentence.trim()) || []
+    );
   };
 
   const connectWebSocket = () => {
@@ -90,8 +92,7 @@ const ChattingPageBaek: React.FC = () => {
 
         // 문장 표시 시작
         displayNextMessage();
-    
-        
+
         if (data.audio) {
           const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
           audio
@@ -136,7 +137,7 @@ const ChattingPageBaek: React.FC = () => {
   };
 
   const endChatAndGoToPrescription = async () => {
-    console.log('Throttled endChatAndGoToPrescription called');
+    console.log("Throttled endChatAndGoToPrescription called");
     try {
       if (!chatroomId) {
         console.error("chatroomId is not defined");
@@ -237,7 +238,6 @@ const ChattingPageBaek: React.FC = () => {
                 onSendMessage={sendMessage}
                 mentorType="baek" // mentorType을 baek으로 설정
                 setIsLoading_chat={setIsLoading_chat} // 로딩 상태 설정 함수 전달
-
               />
             </div>
           </div>
@@ -255,7 +255,6 @@ const ChattingPageBaek: React.FC = () => {
                 onSendMessage={sendMessage}
                 mentorType="baek" // mentorType을 baek으로 설정
                 setIsLoading_chat={setIsLoading_chat} // 로딩 상태 설정 함수 전달
-
               />
             </div>
           </div>
