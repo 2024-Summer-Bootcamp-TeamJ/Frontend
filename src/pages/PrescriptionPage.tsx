@@ -111,6 +111,7 @@ const PrescriptionPage: React.FC = () => {
             alt="마이페이지 이동 아이콘"
             className="w-12 h-12 cursor-pointer"
             draggable="false"
+            style={{ cursor: "none" }}
           />
         </Link>
       </div>

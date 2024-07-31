@@ -146,6 +146,7 @@ const MyPage: React.FC = () => {
             alt="To Home Icon"
             className="cursor-pointer w-14"
             draggable="false"
+            style={{ cursor: "none" }}
           />
         </Link>
       </div>
@@ -157,6 +158,7 @@ const MyPage: React.FC = () => {
             alt="PostBox"
             className="mb-10 w-80 md:w-96"
             draggable="false"
+            style={{ cursor: "none" }}
           />
           <div className="absolute inset-0 flex items-center justify-center mt-24 md:mt-44">
             <span className="text-3xl md:text-4xl text-postboxNameColor font-MoonFlower">
@@ -177,6 +179,7 @@ const MyPage: React.FC = () => {
                 alt="RedButtonAll"
                 className="w-14 md:w-20"
                 draggable="false"
+                style={{ cursor: "none" }}
               />
               {(hoveredButton === "All" ||
                 (selectedButton === "All" && !hoveredButton)) && (
@@ -185,6 +188,7 @@ const MyPage: React.FC = () => {
                   alt="From All"
                   className="absolute top-[-15px] left-0 w-20 md:w-24 transition-transform transform scale-125"
                   draggable="false"
+                  style={{ cursor: "none" }}
                 />
               )}
             </div>
@@ -199,6 +203,7 @@ const MyPage: React.FC = () => {
                 alt="RedButtonOh"
                 className="w-14 md:w-20"
                 draggable="false"
+                style={{ cursor: "none" }}
               />
               {(hoveredButton === "Oh" ||
                 (selectedButton === "Oh" && !hoveredButton)) && (
@@ -207,6 +212,7 @@ const MyPage: React.FC = () => {
                   alt="From Oh"
                   className="absolute top-[-15px] left-0 w-20 md:w-24 transition-transform transform scale-125"
                   draggable="false"
+                  style={{ cursor: "none" }}
                 />
               )}
             </div>
@@ -221,6 +227,7 @@ const MyPage: React.FC = () => {
                 alt="RedButtonBaek"
                 className="w-14 md:w-20"
                 draggable="false"
+                style={{ cursor: "none" }}
               />
               {(hoveredButton === "Baek" ||
                 (selectedButton === "Baek" && !hoveredButton)) && (
@@ -229,6 +236,7 @@ const MyPage: React.FC = () => {
                   alt="From Baek"
                   className="absolute top-[-15px] left-0 w-20 md:w-24 transition-transform transform scale-125"
                   draggable="false"
+                  style={{ cursor: "none" }}
                 />
               )}
             </div>
@@ -243,6 +251,7 @@ const MyPage: React.FC = () => {
                 alt="RedButtonShin"
                 className="w-14 md:w-20"
                 draggable="false"
+                style={{ cursor: "none" }}
               />
               {(hoveredButton === "Shin" ||
                 (selectedButton === "Shin" && !hoveredButton)) && (
@@ -251,6 +260,7 @@ const MyPage: React.FC = () => {
                   alt="From Shin"
                   className="absolute top-[-15px] left-0 w-20 md:w-24 transition-transform transform scale-125"
                   draggable="false"
+                  style={{ cursor: "none" }}
                 />
               )}
             </div>
@@ -280,6 +290,7 @@ const MyPage: React.FC = () => {
                       alt="Mouse Icon"
                       className="w-12 md:w-16"
                       draggable="false"
+                      style={{ cursor: "none" }}
                     />
                   )}
                   <img
@@ -287,6 +298,7 @@ const MyPage: React.FC = () => {
                     alt="Letter Icon"
                     className="w-12 md:w-16 transform translate-y-1"
                     draggable="false"
+                    style={{ cursor: "none" }}
                   />
                   <span className="text-dateTextColor font-['NoticiaText'] text-lg md:text-2xl">
                     {new Date(prescription.created_at).toLocaleDateString()}

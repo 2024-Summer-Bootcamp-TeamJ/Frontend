@@ -1,3 +1,4 @@
+// src/components/MentorPage.tsx
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
@@ -69,7 +70,9 @@ const MentorPage: React.FC = () => {
     const fetchMentors = async () => {
       try {
         console.log("Fetching mentors...");
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/mentors`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/mentors`
+        );
         console.log("Server response:", response.data);
         const mentorsData = response.data
           .filter((mentor: any) => mentor.id >= 1 && mentor.id <= 3)
@@ -115,13 +118,21 @@ const MentorPage: React.FC = () => {
       return;
     }
 
-    console.log("Payload(왜 여기선..)userId:", userId, "멘토 아이디:", mentorId);
+    console.log(
+      "Payload(왜 여기선..)userId:",
+      userId,
+      "멘토 아이디:",
+      mentorId
+    );
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/chatrooms`, {
-        user_id: userId,
-        mentor_id: mentorId,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/chatrooms`,
+        {
+          user_id: userId,
+          mentor_id: mentorId,
+        }
+      );
 
       console.log("서버 응답:", response);
 
@@ -161,16 +172,20 @@ const MentorPage: React.FC = () => {
       setIsMobile(window.innerWidth <= 450);
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handlePrevClick = () => {
-    setCurrentMentorIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : mentors.length - 1));
+    setCurrentMentorIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : mentors.length - 1
+    );
   };
 
   const handleNextClick = () => {
-    setCurrentMentorIndex((prevIndex) => (prevIndex < mentors.length - 1 ? prevIndex + 1 : 0));
+    setCurrentMentorIndex((prevIndex) =>
+      prevIndex < mentors.length - 1 ? prevIndex + 1 : 0
+    );
   };
 
   const swipeHandlers = useSwipeable({
@@ -186,7 +201,7 @@ const MentorPage: React.FC = () => {
     },
     preventScrollOnSwipe: true,
     trackTouch: true,
-    trackMouse: true
+    trackMouse: true,
   });
 
   return (
@@ -195,13 +210,15 @@ const MentorPage: React.FC = () => {
       style={{ backgroundImage: `url(${backgroundGreen})` }}
     >
       <div
-        {...(isMobile ? swipeHandlers : {})} 
-        className="flex flex-row items-center justify-center gap-4">
+        {...(isMobile ? swipeHandlers : {})}
+        className="flex flex-row items-center justify-center gap-4"
+      >
         <img
           src={leftArrow}
           alt="arrowleft"
           className="absolute z-10 hidden cursor-pointer left-4 iphone:block"
           onClick={handlePrevClick}
+          style={{ cursor: "none" }} // 커서 변경 막기
         />
         {mentors.map((mentor, index) => (
           <div
@@ -210,6 +227,7 @@ const MentorPage: React.FC = () => {
               flippedMentorId === mentor.id ? "flip" : ""
             } ${index === currentMentorIndex ? "iphone:block" : "iphone:hidden"}`}
             onClick={() => toggleMentorImage(mentor.id)}
+            style={{ cursor: "none" }} // 커서 변경 막기
           >
             <div className="front-card-container iphone:w-[280px] iphone:left-[73px] iphone:h-full">
               <img
@@ -217,15 +235,17 @@ const MentorPage: React.FC = () => {
                 alt={mentor.name}
                 className={`absolute top-0 left-0 w-full h-full flip-card-front ${flippedMentorId === mentor.id ? "hidden" : ""}`}
                 draggable="false"
+                style={{ cursor: "none" }} // 커서 변경 막기
               />
               <img
                 src={mentor.frontCharImage}
                 alt={mentor.name}
                 className={`front-char-image ${flippedMentorId === mentor.id ? "hidden" : ""} iphone:h-[280px] iphone:top-[45%]`}
                 draggable="false"
+                style={{ cursor: "none" }} // 커서 변경 막기
               />
             </div>
-            
+
             <img
               src={mentor.backImage}
               alt={`${mentor.name} 뒷면`}
@@ -233,6 +253,7 @@ const MentorPage: React.FC = () => {
                 flippedMentorId === mentor.id ? "" : "hidden"
               }`}
               draggable="false"
+              style={{ cursor: "none" }} // 커서 변경 막기
             />
             {flippedMentorId === mentor.id && (
               <img
@@ -241,7 +262,7 @@ const MentorPage: React.FC = () => {
                 className="absolute inset-0 mx-auto mt-136 w-50 iphone:w-40 iphone:mt-[490px] iphone:mx-[142px]"
                 draggable="false"
                 onClick={() => createChatroom(mentor.id)}
-                style={{ zIndex: 10 }}
+                style={{ zIndex: 10, cursor: "none" }} // 커서 변경 막기
               />
             )}
           </div>
@@ -251,9 +272,13 @@ const MentorPage: React.FC = () => {
           alt="arrowright"
           className="absolute z-10 hidden cursor-pointer right-3 iphone:block"
           onClick={handleNextClick}
-        />  
+          style={{ cursor: "none" }} // 커서 변경 막기
+        />
       </div>
-      <div onClick={handleIconClick} className="absolute bottom-4 right-4 iphone:top-5 iphone:right-5">
+      <div
+        onClick={handleIconClick}
+        className="absolute bottom-4 right-4 iphone:top-5 iphone:right-5"
+      >
         <Link to="/mypage">
           <img
             src={IconToMyPage}
