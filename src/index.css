@@ -1,3 +1,4 @@
+/* index.css */
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -5,7 +6,23 @@
 
 body {
   font-family: "Noto Sans KR", sans-serif;
+  cursor: none; /* 기본 커서를 숨깁니다 */
 }
+
+.custom-cursor {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  pointer-events: none; /* 이 요소는 클릭을 무시합니다 */
+  user-select: none; /* 텍스트 선택 방지 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px; /* 이모티콘 크기 */
+  transform: translate(-50%, -50%);
+}
+
+/* 나머지 기존 CSS 코드 생략 */
 
 @font-face {
   font-family: "NoticiaText";
@@ -89,10 +106,6 @@ body,
 .scrollbar2::-webkit-scrollbar {
   width: 16px;
 }
-
-/* .scrollbar2::-webkit-scrollbar-track 
-  border-radius: 8px;
-} */
 
 .scrollbar2::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-color, #c11218); /* 기본 색상은 #c11218 */
@@ -180,8 +193,6 @@ body,
   animation: bounce 2s infinite;
   animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
-
-
 
 /**
   * Dots fade
@@ -305,7 +316,8 @@ body,
 }
 
 @keyframes bounce-alt {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
