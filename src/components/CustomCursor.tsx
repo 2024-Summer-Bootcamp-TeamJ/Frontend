@@ -1,6 +1,7 @@
 // src/components/CustomCursor.tsx
 import React, { useEffect, useState } from "react";
 import "../index.css"; // CustomCursor에 대한 스타일이 index.css에 있으므로 import
+import mousePointer from "../assets/images/mousePointer.svg";
 
 const CustomCursor: React.FC = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -22,7 +23,7 @@ const CustomCursor: React.FC = () => {
       className="custom-cursor"
       style={{ left: `${position.x}px`, top: `${position.y}px` }}
     >
-      😊
+      <img src={mousePointer} alt="Custom Mouse Pointer" />
     </div>
   );
 };
